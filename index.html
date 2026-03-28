@@ -1,187 +1,135 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KScript.gg | Elite Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; }
-        
-        body { 
-            background-color: var(--bg); 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            text-align: center; 
-            overflow: hidden; 
-        }
+<style>
+  /* Bilgilendirme Butonu Tasarımı */
+  .kscript-main-container {
+    text-align: center;
+    margin: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-        .glow { 
-            position: absolute; 
-            width: 600px; 
-            height: 600px; 
-            background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, rgba(112, 0, 255, 0.05) 100%); 
-            filter: blur(120px); 
-            z-index: -1; 
-        }
+  .kscript-btn {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-        .logo { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: clamp(2.5rem, 8vw, 5rem); 
-            font-weight: bold; 
-            background: linear-gradient(to right, var(--primary), var(--secondary)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            text-shadow: 0 0 30px rgba(0, 242, 255, 0.3); 
-            margin-bottom: 40px; 
-        }
+  .kscript-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(110, 142, 251, 0.4);
+    filter: brightness(1.1);
+  }
 
-        .btn-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+  /* Modal (Arka Plan Karartma) */
+  .ks-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+  }
 
-        .nav-btn { 
-            width: 250px; 
-            padding: 15px; 
-            background: rgba(255, 255, 255, 0.03); 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 0.9rem; 
-            letter-spacing: 2px; 
-            transition: 0.3s; 
-            backdrop-filter: blur(5px); 
-            cursor: pointer; 
-            border: 1px solid rgba(0, 242, 255, 0.3);
-        }
+  /* Modal Penceresi */
+  .ks-modal-content {
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #333;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  }
 
-        .nav-btn:hover { 
-            background: rgba(0, 242, 255, 0.1); 
-            border-color: var(--primary); 
-            transform: scale(1.05); 
-        }
+  /* Kapatma (X) Butonu */
+  .ks-close {
+    color: #666;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-        .overlay { 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.97); 
-            display: none; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-start; 
-            z-index: 100; 
-            overflow-y: auto; 
-            padding-top: 50px; 
-        }
+  .ks-close:hover { color: #ff4d4d; }
 
-        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
+  /* Metin Detayları */
+  .ks-modal-content h2 { color: #fff; margin-top: 0; border-bottom: 2px solid #a777e3; padding-bottom: 10px; }
+  .ks-section { margin-bottom: 15px; padding: 10px; background: #1e1e1e; border-radius: 8px; }
+  .ks-section strong { color: #a777e3; }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
 
-        .script-card { 
-            background: #111; 
-            border: 1px solid #222; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            transition: 0.3s; 
-            cursor: pointer; 
-            width: 320px; 
-            margin-top: 20px;
-        }
+<div class="kscript-main-container">
+  <button id="ksInfoBtn" class="kscript-btn">
+    ℹ️ Bilgilendirme & Kullanım Rehberi
+  </button>
+</div>
 
-        .script-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        
-        .script-card .card-img { 
-            width: 100%; 
-            height: 180px; 
-            background-image: url('winters wallpaper.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
-
-        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #222; margin-bottom: 50px; }
-        
-        .code-box { 
-            background: #000; 
-            padding: 20px; 
-            border-radius: 10px; 
-            border: 1px solid #333; 
-            font-family: 'Courier New', monospace; 
-            color: #00ff88; 
-            margin-top: 20px; 
-            overflow-x: auto; 
-            white-space: pre-wrap; 
-            font-size: 0.7rem; 
-            max-height: 400px;
-            border-left: 4px solid var(--primary);
-            line-height: 1.4;
-        }
-
-        .copy-btn { 
-            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            width: 100%; 
-            font-family: 'Orbitron'; 
-        }
-    </style>
-</head>
-<body>
-
-    <div class="glow"></div>
-
-    <div id="main-page">
-        <div class="logo">KSCRIPT.GG</div>
-        <div class="btn-container">
-            <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
-            <a href="https://www.mediafire.com/file/w0oiiip3vqril0i/Xeno-v1.3.25b2.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
-        </div>
+<div id="ksInfoModal" class="ks-modal">
+  <div class="ks-modal-content">
+    <span class="ks-close" id="ksCloseBtn">&times;</span>
+    <h2>📋 Script Rehberi</h2>
+    
+    <div class="ks-section">
+      <p>📸 <strong>Geliştirici:</strong> Bu script 📸 <strong>kscript.gg1</strong> tarafından yazılmıştır.</p>
     </div>
 
-    <div id="script-overlay" class="overlay">
-        <span class="close-btn" onclick="closeMenu()">&times;</span>
-        <h2 style="font-family:'Orbitron'; color:var(--primary);">AVAILABLE HUB</h2>
-        
-        <div id="menu-list">
-            <div class="script-card" onclick="openDetail()">
-                <div class="card-img"></div>
-                <h3>Universal Hub V1</h3>
-                <p style="color:#777; font-size:0.8rem; margin: 0 15px 15px;">Encrypted & High Performance</p>
-            </div>
-        </div>
-
-        <div id="detail-area" class="detail-page">
-            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:5px; margin-bottom:20px;">← Geri Dön</button>
-            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Script</h1>
-            <p style="color:#aaa; margin-top:10px;">Aşağıdaki şifreli kodu kopyalayıp Executor'ınıza yapıştırın.</p>
-            
-            <div class="code-box"><code id="script-kod">local StrToNumber=tonumber;local Byte=string.byte;local Char=string.char;local Sub=string.sub;local Subg=string.gsub;local Rep=string.rep;local Concat=table.concat;local Insert=table.insert;local LDExp=math.ldexp;local GetFEnv=getfenv or function() return _ENV;end ;local Setmetatable=setmetatable;local PCall=pcall;local Select=select;local Unpack=unpack or table.unpack ;local ToNumber=tonumber;local function VMCall(ByteString,vmenv,...) local DIP=1;local repeatNext;ByteString=Subg(Sub(ByteString,5),"..",function(byte) if (Byte(byte,2)==81) then repeatNext=StrToNumber(Sub(byte,1,1));return "";else local a=Char(StrToNumber(byte,16));if repeatNext then local b=Rep(a,repeatNext);repeatNext=nil;return b;else return a;end end end);local function gBit(Bit,Start,End) if End then local Res=(Bit/(2^(Start-1)))%(2^(((End-1) -(Start-1)) + 1)) ;return Res-(Res%1) ;else local Plc=2^(Start-1) ;return (((Bit%(Plc + Plc))>=Plc) and 1) or 0 ;end end local function gBits8() local a=Byte(ByteString,DIP,DIP);DIP=DIP + 1 ;return a;end local function gBits16() local a,b=Byte(ByteString,DIP,DIP + 2 );DIP=DIP + 2 ;return (b * 256) + a ;end local function gBits32() local a,b,c,d=Byte(ByteString,DIP,DIP + 3 );DIP=DIP + 4 ;return (d * 16777216) + (c * 65536) + (b * 256) + a ;end local function gFloat() local Left=gBits32();local Right=gBits32();local IsNormal=1;local Mantissa=(gBit(Right,1,20) * (2^32)) + Left ;local Exponent=gBit(Right,21,31);local Sign=((gBit(Right,32)==1) and -1) or 1 ;if (Exponent==0) then if (Mantissa==0) then return Sign * 0 ;else Exponent=1;IsNormal=0;end elseif (Exponent==2047) then return ((Mantissa==0) and (Sign * (1/0))) or (Sign * NaN) ;end return LDExp(Sign,Exponent-1023 ) * (IsNormal + (Mantissa/(2^52))) ;end local function gString(Len) local Str;if not Len then Len=gBits32();if (Len==0) then return "";end end Str=Sub(ByteString,DIP,(DIP + Len) -1 );DIP=DIP + Len ;local FStr={};for Idx=1, #Str do FStr[Idx]=Char(Byte(Sub(Str,Idx,Idx)));end return Concat(FStr);end local gInt=gBits32;local function _R(...) return {...},Select("#",...);end local function Deserialize() local Instrs={};local Functions={};local Lines={};local Chunk={Instrs,Functions,nil,Lines};local ConstCount=gBits32();local Consts={};for Idx=1,ConstCount do local Type=gBits8();local Cons;if (Type==1) then Cons=gBits8()~=0 ;elseif (Type==2) then Cons=gFloat();elseif (Type==3) then Cons=gString();end Consts[Idx]=Cons;end Chunk[3]=gBits8();for Idx=1,gBits32() do local Descriptor=gBits8();if (gBit(Descriptor,1,1)==0) then local Type=gBit(Descriptor,2,3);local Mask=gBit(Descriptor,4,6);local Inst={gBits16(),gBits16(),nil,nil};if (Type==0) then Inst[3]=gBits16();Inst[4]=gBits16();elseif (Type==1) then Inst[3]=gBits32();elseif (Type==2) then Inst[3]=gBits32() -(2^16) ;elseif (Type==3) then Inst[3]=gBits32() -(2^16) ;Inst[4]=gBits16();end if (gBit(Mask,1,1)==1) then Inst[2]=Consts[Inst[2]];end if (gBit(Mask,2,2)==1) then Inst[3]=Consts[Inst[3]];end if (gBit(Mask,3,3)==1) then Inst[4]=Consts[Inst[4]];end Instrs[Idx]=Inst;end end for Idx=1,gBits32() do Functions[Idx-1 ]=Deserialize();end return Chunk;end local function Wrap(Chunk,Upvalues,Env) local Instr=Chunk[1];local Proto=Chunk[2];local Params=Chunk[3];return function(...) local Instr=Instr;local Proto=Proto;local Params=Params;local _R=_R;local VIP=1;local Top= -1;local Vararg={};local Args={...};local PCount=Select("#",...) -1 ;local Lupvals={};local Stk={};for Idx=0,PCount do if (Idx>=Params) then Vararg[Idx-Params ]=Args[Idx + 1 ];else Stk[Idx]=Args[Idx + 1 ];end end local Varargsz=(PCount-Params) + 1 ;local Inst;local Enum;while true do Inst=Instr[VIP];Enum=Inst[1];if (Enum<=120) then if (Enum<=59) then if (Enum<=29) then if (Enum<=14) then if (Enum<=6) then if (Enum<=2) then if (Enum<=0) then if (Stk[Inst[2]]==Inst[4]) then VIP=VIP + 1 ;else VIP=Inst[3];end elseif (Enum>1) then local A=Inst[2];do return Unpack(Stk,A,A + Inst[3] );end else local A;Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];end elseif (Enum<=4) then if (Enum>3) then local A;Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]={};else local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));end elseif (Enum>5) then local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];else local B=Stk[Inst[4]];if B then VIP=VIP + 1 ;else Stk[Inst[2]]=B;VIP=Inst[3];end end elseif (Enum<=10) then if (Enum<=8) then if (Enum==7) then local A=Inst[2];Stk[A](Unpack(Stk,A + 1 ,Inst[3]));else local B;local Edx;local Results,Limit;local A;Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];B=Stk[Inst[3]];Stk[A + 1 ]=B;Stk[A]=B[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];end elseif (Enum==9) then local B;local A;A=Inst[2];B=Stk[Inst[3]];Stk[A + 1 ]=B;Stk[A]=B[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];if Stk[Inst[2]] then VIP=VIP + 1 ;else VIP=Inst[3];end else Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]= not Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];VIP=VIP + 1 ;Inst=Instr[VIP];if Stk[Inst[2]] then VIP=VIP + 1 ;else VIP=Inst[3];end end elseif (Enum<=12) then if (Enum==11) then Stk[Inst[2]][Stk[Inst[3]]]=Stk[Inst[4]];else local K;local B;local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];B=Inst[3];K=Stk[B];for Idx=B + 1 ,Inst[4] do K=K .. Stk[Idx] ;end Stk[Inst[2]]=K;VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];end elseif (Enum>13) then Stk[Inst[2]]=Inst[3] + Stk[Inst[4]] ;else local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Stk[Inst[3]]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];end elseif (Enum<=21) then if (Enum<=17) then if (Enum<=15) then if (Stk[Inst[2]]<Inst[4]) then VIP=VIP + 1 ;else VIP=Inst[3];end elseif (Enum>16) then local A;Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];do return;end elseif not Stk[Inst[2]] then VIP=VIP + 1 ;else VIP=Inst[3];end elseif (Enum<=19) then if (Enum>18) then local A;A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];else local Edx;local Results,Limit;local A;Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];if (Stk[Inst[2]]==Inst[4]) then VIP=VIP + 1 ;else VIP=Inst[3];end end elseif (Enum==20) then Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];else local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];end elseif (Enum<=25) then if (Enum<=23) then if (Enum>22) then local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];if not Stk[Inst[2]] then VIP=VIP + 1 ;else VIP=Inst[3];end else Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];end elseif (Enum==24) then local K;local B;local Edx;local Results,Limit;local A;Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));VIP=VIP + 1 ;Inst=Instr[VIP];B=Inst[3];K=Stk[B];for Idx=B + 1 ,Inst[4] do K=K .. Stk[Idx] ;end Stk[Inst[2]]=K;VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];else Stk[Inst[2]]=Stk[Inst[3]][Stk[Inst[4]]];end elseif (Enum<=27) then if (Enum==26) then Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];if Stk[Inst[2]] then VIP=VIP + 1 ;else VIP=Inst[3];end else local A;Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];do return Stk[A](Unpack(Stk,A + 1 ,Inst[3]));end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];do return Unpack(Stk,A,Top);end VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];end elseif (Enum>28) then for Idx=Inst[2],Inst[3] do Stk[Idx]=nil;end else Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Inst[4];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Env[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];end elseif (Enum<=44) then if (Enum<=36) then if (Enum<=32) then if (Enum<=30) then local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Inst[3]));VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];elseif (Enum==31) then local A=Inst[2];local Cls={};for Idx=1, #Lupvals do local List=Lupvals[Idx];for Idz=0, #List do local Upv=List[Idz];local NStk=Upv[1];local DIP=Upv[2];if ((NStk==Stk) and (DIP>=A)) then Cls[DIP]=NStk[DIP];Upv[1]=Cls;end end end else Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Stk[Inst[3]] * Stk[Inst[4]] ;VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]][Inst[3]]=Stk[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];VIP=Inst[3];end elseif (Enum<=34) then if (Enum==33) then local Edx;local Results,Limit;local B;local A;Stk[Inst[2]]=Stk[Inst[3]][Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];B=Stk[Inst[3]];Stk[A + 1 ]=B;Stk[A]=B[Inst[4]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Upvalues[Inst[3]];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Results,Limit=_R(Stk[A](Unpack(Stk,A + 1 ,Inst[3])));Top=(Limit + A) -1 ;Edx=0;for Idx=A,Top do Edx=Edx + 1 ;Stk[Idx]=Results[Edx];end VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=Stk[A](Unpack(Stk,A + 1 ,Top));else local K;local B;local A;Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];Stk[Inst[2]]=Inst[3];VIP=VIP + 1 ;Inst=Instr[VIP];A=Inst[2];Stk[A]=...</code></div>
-            
-            <button class="copy-btn" onclick="copyCode()">COPY SCRIPT</button>
-        </div>
+    <div class="ks-section">
+      <p>💻 <strong>Cihaz Uyumluluğu:</strong><br>
+      Bu executor <strong>sadece bilgisayarlar</strong> içindir. Ancak script kodlarımız <strong>her executorde</strong> sorunsuz çalışır.</p>
     </div>
 
-    <script>
-        function openMenu() { document.getElementById('script-overlay').style.display = 'flex'; }
-        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; backToMenu(); }
-        function openDetail() { document.getElementById('menu-list').style.display = 'none'; document.getElementById('detail-area').style.display = 'block'; }
-        function backToMenu() { document.getElementById('menu-list').style.display = 'block'; document.getElementById('detail-area').style.display = 'none'; }
-        
-        function copyCode() {
-            const code = document.getElementById('script-kod').innerText;
-            navigator.clipboard.writeText(code);
-            alert("Script successfully copied!");
-        }
-    </script>
-</body>
-</html>
+    <div class="ks-section">
+      <p>🔑 <strong>Key Sistemi:</strong><br>
+      Çalıştırmak için gereken keyler <strong>ücretsizdir</strong>. Keyinizi almak için Instagram'dan 📸 <strong>kscript.gg1</strong> adresine yazın.</p>
+    </div>
+
+    <div class="ks-section">
+      <p>📽️ <strong>Detaylı Anlatım:</strong><br>
+      Kurulum ve kullanım videoları için 🎬 <strong>kscript.gg1</strong> YouTube kanalına bakabilirsiniz.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ksModal = document.getElementById("ksInfoModal");
+  const ksBtn = document.getElementById("ksInfoBtn");
+  const ksClose = document.getElementById("ksCloseBtn");
+
+  // Butona tıklayınca aç
+  ksBtn.onclick = function() {
+    ksModal.style.display = "block";
+  }
+
+  // X'e tıklayınca kapat
+  ksClose.onclick = function() {
+    ksModal.style.display = "none";
+  }
+
+  // Dışarıya tıklayınca kapat
+  window.onclick = function(event) {
+    if (event.target == ksModal) {
+      ksModal.style.display = "none";
+    }
+  }
+</script>
