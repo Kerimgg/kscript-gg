@@ -6,19 +6,10 @@
     <title>KScript.gg | Elite Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --primary: #00f2ff; 
-            --secondary: #7000ff; 
-            --bg: #05050a; 
-        }
+        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; }
         
         body { 
-            background-color: var(--bg); 
-            /* SENİN FOTOĞRAFINI ARKA PLAN YAPTIK */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('winters wallpaper.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: var(--bg); /* ANA ARKA PLAN SİYAH KALDI */
             color: white; 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
@@ -30,6 +21,15 @@
             overflow: hidden; 
         }
 
+        .glow { 
+            position: absolute; 
+            width: 600px; 
+            height: 600px; 
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, rgba(112, 0, 255, 0.05) 100%); 
+            filter: blur(120px); 
+            z-index: -1; 
+        }
+
         .logo { 
             font-family: 'Orbitron', sans-serif; 
             font-size: clamp(2.5rem, 8vw, 5rem); 
@@ -37,40 +37,39 @@
             background: linear-gradient(to right, var(--primary), var(--secondary)); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
-            text-shadow: 0 0 30px rgba(0, 242, 255, 0.4); 
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.3); 
             margin-bottom: 40px; 
         }
 
         .btn-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 
         .nav-btn { 
-            width: 260px; 
-            padding: 16px; 
-            background: rgba(0, 0, 0, 0.5); 
+            width: 250px; 
+            padding: 15px; 
+            background: rgba(255, 255, 255, 0.03); 
             color: white; 
             text-decoration: none; 
-            border-radius: 12px; 
+            border-radius: 8px; 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
             letter-spacing: 2px; 
             transition: 0.3s; 
-            backdrop-filter: blur(15px); 
+            backdrop-filter: blur(5px); 
             cursor: pointer; 
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            border: 1px solid rgba(0, 242, 255, 0.3);
         }
 
         .nav-btn:hover { 
-            background: rgba(0, 242, 255, 0.15); 
+            background: rgba(0, 242, 255, 0.1); 
             border-color: var(--primary); 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transform: scale(1.05); 
         }
 
         .overlay { 
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.94); 
+            background: rgba(0,0,0,0.97); 
             display: none; 
             flex-direction: column; 
             align-items: center; 
@@ -78,7 +77,6 @@
             z-index: 100; 
             overflow-y: auto; 
             padding-top: 50px; 
-            backdrop-filter: blur(8px);
         }
 
         .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
@@ -86,19 +84,18 @@
         .script-card { 
             background: #111; 
             border: 1px solid #222; 
-            border-radius: 20px; 
+            border-radius: 15px; 
             overflow: hidden; 
             transition: 0.3s; 
             cursor: pointer; 
             width: 320px; 
             margin-top: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
 
-        .script-card:hover { border-color: var(--primary); transform: scale(1.03); }
+        .script-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         
-        /* KARTIN İÇİNDEKİ FOTOĞRAF */
-        .card-img { 
+        /* FOTOĞRAF BURAYA EKLENDİ */
+        .script-card .card-img { 
             width: 100%; 
             height: 180px; 
             background-image: url('winters wallpaper.jpg');
@@ -108,70 +105,68 @@
 
         .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
 
-        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #333; margin-bottom: 50px; }
+        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #222; margin-bottom: 50px; }
         
         .code-box { 
             background: #000; 
             padding: 20px; 
-            border-radius: 12px; 
-            border: 1px solid #222; 
+            border-radius: 10px; 
+            border: 1px solid #333; 
             font-family: 'Courier New', monospace; 
             color: #00ff88; 
             margin-top: 20px; 
             overflow-x: auto; 
-            white-space: pre-wrap; 
+            white-space: pre; 
             font-size: 0.75rem; 
-            max-height: 350px;
-            border-left: 5px solid var(--primary);
+            max-height: 400px;
+            border-left: 4px solid var(--primary);
         }
 
         .copy-btn { 
             background: linear-gradient(45deg, var(--primary), var(--secondary)); 
             color: white; 
             border: none; 
-            padding: 16px; 
-            border-radius: 10px; 
+            padding: 15px; 
+            border-radius: 8px; 
             cursor: pointer; 
             font-weight: bold; 
-            margin-top: 25px; 
+            margin-top: 20px; 
             width: 100%; 
             font-family: 'Orbitron'; 
-            transition: 0.3s;
-            text-transform: uppercase;
         }
-        .copy-btn:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
     </style>
 </head>
 <body>
+
+    <div class="glow"></div>
 
     <div id="main-page">
         <div class="logo">KSCRIPT.GG</div>
         <div class="btn-container">
             <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
-            <a href="https://www.mediafire.com/file/w0oiiip3vqril0i/Xeno-v1.3.25b2.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">DOWNLOAD EXECUTOR</a>
+            <a href="https://www.mediafire.com/file/w0oiiip3vqril0i/Xeno-v1.3.25b2.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
         </div>
     </div>
 
     <div id="script-overlay" class="overlay">
         <span class="close-btn" onclick="closeMenu()">&times;</span>
-        <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing: 4px;">SCRIPTS</h2>
+        <h2 style="font-family:'Orbitron'; color:var(--primary);">AVAILABLE HUB</h2>
         
         <div id="menu-list">
             <div class="script-card" onclick="openDetail()">
-                <div class="card-img"></div>
-                <h3>Universal Hub</h3>
-                <p style="color:#666; font-size:0.8rem; margin: 0 15px 15px;">Encrypted | Performance V1</p>
+                <div class="card-img"></div> <h3>Universal Hub V1</h3>
+                <p style="color:#777; font-size:0.8rem; margin: 0 15px 15px;">Encrypted & High Performance</p>
             </div>
         </div>
 
         <div id="detail-area" class="detail-page">
-            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:8px; margin-bottom:20px;">← Back to Menu</button>
-            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Hub</h1>
-            <p style="color:#aaa; margin-top:10px;">Copy the code below and paste it into your executor.</p>
+            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:5px; margin-bottom:20px;">← Geri Dön</button>
+            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Script</h1>
+            <p style="color:#aaa; margin-top:10px;">Aşağıdaki şifreli kodu kopyalayıp Executor'ınıza yapıştırın.</p>
             
             <div class="code-box"><code id="script-kod">local StrToNumber=tonumber;local Byte=string.byte;local Char=string.char;local Sub=string.sub;local Subg=string.gsub;local Rep=string.rep;local Concat=table.concat;local Insert=table.insert;local LDExp=math.ldexp;local GetFEnv=getfenv or function() return _ENV;end ;local Setmetatable=setmetatable;local PCall=pcall;local Select=select;local Unpack=unpack or table.unpack ;local ToNumber=tonumber;local function VMCall(ByteString,vmenv,...) local DIP=1;local repeatNext;ByteString=Subg(Sub(ByteString,5),"..",function(byte) if (Byte(byte,2)==81) then repeatNext=StrToNumber(Sub(byte,1,1));return "";else local a=Char(StrToNumber(byte,16));if repeatNext then local b=Rep(a,repeatNext);repeatNext=nil;return b;else return a;end end end);</code></div>
             
-            <button class="copy-btn" onclick="copyCode()">COPY SCRIPT</button>
+            <button class="copy-btn" onclick="copyCode()">KODU KOPYALA</button>
         </div>
     </div>
 
@@ -184,7 +179,7 @@
         function copyCode() {
             const code = document.getElementById('script-kod').innerText;
             navigator.clipboard.writeText(code);
-            alert("Script successfully copied!");
+            alert("Script kopyalandı!");
         }
     </script>
 </body>
