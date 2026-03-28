@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KScript.gg | Elite Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #00f2ff; 
+            --secondary: #7000ff; 
+            --bg: #05050a; 
+        }
+        
+        body { 
+            background-color: var(--bg); 
+            /* SENİN FOTOĞRAFINI ARKA PLAN YAPTIK */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('winters wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            text-align: center; 
+            overflow: hidden; 
+        }
+
+        .logo { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: bold; 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.4); 
+            margin-bottom: 40px; 
+        }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+
+        .nav-btn { 
+            width: 260px; 
+            padding: 16px; 
+            background: rgba(0, 0, 0, 0.5); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 0.85rem; 
+            letter-spacing: 2px; 
+            transition: 0.3s; 
+            backdrop-filter: blur(15px); 
+            cursor: pointer; 
+            border: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        .nav-btn:hover { 
+            background: rgba(0, 242, 255, 0.15); 
+            border-color: var(--primary); 
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .overlay { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.94); 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start; 
+            z-index: 100; 
+            overflow-y: auto; 
+            padding-top: 50px; 
+            backdrop-filter: blur(8px);
+        }
+
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
+
+        .script-card { 
+            background: #111; 
+            border: 1px solid #222; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            width: 320px; 
+            margin-top: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+        }
+
+        .script-card:hover { border-color: var(--primary); transform: scale(1.03); }
+        
+        /* KARTIN İÇİNDEKİ FOTOĞRAF */
+        .card-img { 
+            width: 100%; 
+            height: 180px; 
+            background-image: url('winters wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
+
+        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #333; margin-bottom: 50px; }
+        
+        .code-box { 
+            background: #000; 
+            padding: 20px; 
+            border-radius: 12px; 
+            border: 1px solid #222; 
+            font-family: 'Courier New', monospace; 
+            color: #00ff88; 
+            margin-top: 20px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            font-size: 0.75rem; 
+            max-height: 350px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .copy-btn { 
+            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            width: 100%; 
+            font-family: 'Orbitron'; 
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .copy-btn:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
+    </style>
+</head>
+<body>
+
+    <div id="main-page">
+        <div class="logo">KSCRIPT.GG</div>
+        <div class="btn-container">
+            <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
+            <a href="https://www.mediafire.com/file/w0oiiip3vqril0i/Xeno-v1.3.25b2.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">DOWNLOAD EXECUTOR</a>
+        </div>
+    </div>
+
+    <div id="script-overlay" class="overlay">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing: 4px;">SCRIPTS</h2>
+        
+        <div id="menu-list">
+            <div class="script-card" onclick="openDetail()">
+                <div class="card-img"></div>
+                <h3>Universal Hub</h3>
+                <p style="color:#666; font-size:0.8rem; margin: 0 15px 15px;">Encrypted | Performance V1</p>
+            </div>
+        </div>
+
+        <div id="detail-area" class="detail-page">
+            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:8px; margin-bottom:20px;">← Back to Menu</button>
+            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Hub</h1>
+            <p style="color:#aaa; margin-top:10px;">Copy the code below and paste it into your executor.</p>
+            
+            <div class="code-box"><code id="script-kod">local StrToNumber=tonumber;local Byte=string.byte;local Char=string.char;local Sub=string.sub;local Subg=string.gsub;local Rep=string.rep;local Concat=table.concat;local Insert=table.insert;local LDExp=math.ldexp;local GetFEnv=getfenv or function() return _ENV;end ;local Setmetatable=setmetatable;local PCall=pcall;local Select=select;local Unpack=unpack or table.unpack ;local ToNumber=tonumber;local function VMCall(ByteString,vmenv,...) local DIP=1;local repeatNext;ByteString=Subg(Sub(ByteString,5),"..",function(byte) if (Byte(byte,2)==81) then repeatNext=StrToNumber(Sub(byte,1,1));return "";else local a=Char(StrToNumber(byte,16));if repeatNext then local b=Rep(a,repeatNext);repeatNext=nil;return b;else return a;end end end);</code></div>
+            
+            <button class="copy-btn" onclick="copyCode()">COPY SCRIPT</button>
+        </div>
+    </div>
+
+    <script>
+        function openMenu() { document.getElementById('script-overlay').style.display = 'flex'; }
+        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; backToMenu(); }
+        function openDetail() { document.getElementById('menu-list').style.display = 'none'; document.getElementById('detail-area').style.display = 'block'; }
+        function backToMenu() { document.getElementById('menu-list').style.display = 'block'; document.getElementById('detail-area').style.display = 'none'; }
+        
+        function copyCode() {
+            const code = document.getElementById('script-kod').innerText;
+            navigator.clipboard.writeText(code);
+            alert("Script successfully copied!");
+        }
+    </script>
+</body>
+</html>
