@@ -3,196 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSCRIPT.GG1 Executor</title>
+    <title>KScript.gg | Elite Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* GENEL SAYFA TASARIMI */
-        body {
-            background-color: #0f0f0f;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
+        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            text-align: center; 
+            overflow: hidden; 
+        }
+
+        .glow { 
+            position: absolute; 
+            width: 600px; 
+            height: 600px; 
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.1) 0%, rgba(112, 0, 255, 0.05) 100%); 
+            filter: blur(120px); 
+            z-index: -1; 
+        }
+
+        .logo { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: bold; 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.3); 
+            margin-bottom: 40px; 
+        }
+
+        .btn-container { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+
+        .nav-btn { 
+            width: 250px; 
+            padding: 15px; 
+            background: rgba(255, 255, 255, 0.03); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 0.9rem; 
+            letter-spacing: 2px; 
+            transition: 0.3s; 
+            backdrop-filter: blur(5px); 
+            cursor: pointer; 
+            border: 1px solid rgba(0, 242, 255, 0.3);
+        }
+
+        .nav-btn:hover { 
+            background: rgba(0, 242, 255, 0.1); 
+            border-color: var(--primary); 
+            transform: scale(1.05); 
+        }
+
+        /* --- SENİN BİLGİLENDİRME BUTONU STİLLERİN (ELITE HUB UYUMLU) --- */
+        .kscript-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: inline-flex;
             align-items: center;
-            padding-top: 50px;
-        }
-
-        /* EXECUTOR ANA KUTUSU */
-        .executor-container {
-            width: 600px;
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-        }
-
-        /* KOD YAZMA ALANI */
-        textarea {
-            width: 100%;
-            height: 250px;
-            background: #252525;
-            color: #00ff00;
-            border: 1px solid #444;
-            border-radius: 5px;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            resize: none;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        /* ANA BUTONLAR (Çalıştır, Temizle vb.) */
-        .main-btns {
-            margin-top: 15px;
-            display: flex;
+            justify-content: center;
             gap: 10px;
         }
 
-        .btn-action {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .execute-btn { background: #28a745; color: white; }
-        .clear-btn { background: #dc3545; color: white; }
-        .btn-action:hover { opacity: 0.8; }
-
-        /* --- BİLGİLENDİRME BUTONU VE MODAL STİLLERİ --- */
-        .info-wrapper {
-            margin-top: 20px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .kscript-btn {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .kscript-btn:hover {
-            filter: brightness(1.2);
-            transform: scale(1.02);
-        }
-
-        /* Modal (Arka Plan) */
         .ks-modal {
             display: none; 
             position: fixed; 
-            z-index: 999; 
+            z-index: 9999; 
             left: 0; top: 0;
             width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.9);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
         }
 
-        /* Pencere İçeriği */
         .ks-modal-content {
-            background-color: #121212;
+            background-color: #0c0c14;
+            color: #e0e0e0;
             margin: 10% auto;
-            padding: 25px;
-            width: 80%;
-            max-width: 450px;
-            border-radius: 15px;
-            border: 1px solid #a777e3;
+            padding: 30px;
+            border: 1px solid var(--primary);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
             position: relative;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
             text-align: left;
         }
 
         .ks-close {
+            color: var(--primary);
             position: absolute;
-            right: 15px; top: 10px;
-            color: #fff;
-            font-size: 24px;
+            right: 20px; top: 15px;
+            font-size: 28px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .ks-section {
-            background: #1e1e1e;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            line-height: 1.5;
+        .ks-modal-content h2 { font-family: 'Orbitron'; color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .ks-section { margin-bottom: 15px; padding: 12px; background: #161625; border-radius: 10px; border-left: 3px solid var(--secondary); }
+        .ks-section strong { color: var(--primary); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* DİĞER SAYFA STİLLERİ */
+        .overlay { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.97); 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            z-index: 100; 
+            overflow-y: auto; 
+            padding-top: 50px; 
         }
 
-        .ks-section strong { color: #a777e3; }
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
+
+        .script-card { 
+            background: #111; 
+            border: 1px solid #222; 
+            border-radius: 15px; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            width: 320px; 
+            margin-top: 20px;
+        }
+
+        .script-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        
+        .script-card .card-img { 
+            width: 100%; 
+            height: 180px; 
+            background-color: #222; /* Resim yoksa gri durur */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
+
+        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #222; margin-bottom: 50px; }
+        
+        .code-box { 
+            background: #000; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #333; 
+            font-family: 'Courier New', monospace; 
+            color: #00ff88; 
+            margin-top: 20px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            font-size: 0.7rem; 
+            max-height: 400px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
 
-    <div class="executor-container">
-        <h2 style="margin-top:0; color:#a777e3;">KScript Executor</h2>
-        
-        <textarea placeholder="Buraya scriptinizi yapıştırın..."></textarea>
-        
-        <div class="main-btns">
-            <button class="btn-action execute-btn">Çalıştır</button>
-            <button class="btn-action clear-btn">Temizle</button>
-        </div>
+    <div class="glow"></div>
 
-        <div class="info-wrapper">
-            <button id="ksOpen" class="kscript-btn">ℹ️ Bilgilendirme & Kullanım Rehberi</button>
+    <div id="main-page">
+        <div class="logo">KSCRIPT.GG</div>
+        <div class="btn-container">
+            <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
+            <a href="https://www.mediafire.com/file/w0oiiip3vqril0i/Xeno-v1.3.25b2.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
+            
+            <button id="ksInfoBtn" class="nav-btn kscript-btn">ℹ️ BİLGİLENDİRME</button>
         </div>
     </div>
 
-    <div id="ksModal" class="ks-modal">
+    <div id="script-overlay" class="overlay">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <h2 style="font-family:'Orbitron'; color:var(--primary);">AVAILABLE HUB</h2>
+        
+        <div id="menu-list">
+            <div class="script-card" onclick="openDetail()">
+                <div class="card-img"></div>
+                <h3>Universal Hub V1</h3>
+                <p style="color:#777; font-size:0.8rem; margin: 0 15px 15px;">Encrypted & High Performance</p>
+            </div>
+        </div>
+
+        <div id="detail-area" class="detail-page">
+            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:5px; margin-bottom:20px;">← Geri Dön</button>
+            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Script</h1>
+            <p style="color:#aaa; margin-top:10px;">Kodu kopyalayıp Executor'ınıza yapıştırın.</p>
+            
+            <div class="code-box"><code id="script-kod">local StrToNumber=tonumber;local Byte=string.byte;local Char=string.char;local Sub=string.sub;--[Buraya senin o uzun şifreli kodun gelecek]--</code></div>
+            <button class="nav-btn" style="width:100%; margin-top:20px; background:var(--primary); color:black;" onclick="copyCode()">KODU KOPYALA</button>
+        </div>
+    </div>
+
+    <div id="ksInfoModal" class="ks-modal">
         <div class="ks-modal-content">
-            <span class="ks-close" id="ksClose">&times;</span>
-            <h3 style="margin-top:0;">📋 Script Rehberi</h3>
+            <span class="ks-close" id="ksCloseBtn">&times;</span>
+            <h2>📋 Script Rehberi</h2>
             
             <div class="ks-section">
-                📸 <strong>Geliştirici:</strong> Bu script 📸 <strong>kscript.gg1</strong> tarafından yazılmıştır.
+                <p>📸 <strong>Geliştirici:</strong> Bu script 📸 <strong>kscript.gg1</strong> tarafından yazılmıştır.</p>
             </div>
 
             <div class="ks-section">
-                💻 <strong>Cihaz Uyumluluğu:</strong><br>
-                Bu executor <strong>sadece bilgisayarlar</strong> içindir. Ancak script kodlarımız <strong>her executorde</strong> sorunsuz çalışır.
+                <p>💻 <strong>Cihaz Uyumluluğu:</strong><br>
+                Bu executor <strong>sadece bilgisayarlar</strong> içindir. Ancak script kodlarımız <strong>her executorde</strong> sorunsuz çalışır.</p>
             </div>
 
             <div class="ks-section">
-                🔑 <strong>Key Sistemi:</strong><br>
-                Çalıştırmak için gereken keyler <strong>ücretsizdir</strong>. Keyinizi almak için Instagram'dan 📸 <strong>kscript.gg1</strong> adresine yazın.
+                <p>🔑 <strong>Key Sistemi:</strong><br>
+                Çalıştırmak için gereken keyler <strong>ücretsizdir</strong>. Keyinizi almak için Instagram'dan 📸 <strong>kscript.gg1</strong> adresine yazın.</p>
             </div>
 
             <div class="ks-section">
-                📽️ <strong>Detaylı Anlatım:</strong><br>
-                Kurulum ve kullanım videoları için 🎬 <strong>kscript.gg1</strong> YouTube kanalına bakabilirsiniz.
+                <p>📽️ <strong>Detaylı Anlatım:</strong><br>
+                Kurulum ve kullanım videoları için 🎬 <strong>kscript.gg1</strong> YouTube kanalına bakabilirsiniz.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Modal Mantığı
-        const modal = document.getElementById("ksModal");
-        const btn = document.getElementById("ksOpen");
-        const span = document.getElementById("ksClose");
-
-        btn.onclick = () => modal.style.display = "block";
-        span.onclick = () => modal.style.display = "none";
-        window.onclick = (event) => {
-            if (event.target == modal) modal.style.display = "none";
+        // Menü Kontrolleri
+        function openMenu() { document.getElementById('script-overlay').style.display = 'flex'; }
+        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
+        function openDetail() {
+            document.getElementById('menu-list').style.display = 'none';
+            document.getElementById('detail-area').style.display = 'block';
+        }
+        function backToMenu() {
+            document.getElementById('menu-list').style.display = 'block';
+            document.getElementById('detail-area').style.display = 'none';
         }
 
-        // Executor Buton Fonksiyonları (Örnek)
-        document.querySelector('.clear-btn').onclick = () => {
-            document.querySelector('textarea').value = "";
-        };
-        document.querySelector('.execute-btn').onclick = () => {
-            alert("Script çalıştırılıyor...");
-        };
-    </script>
+        // Senin Bilgilendirme Modalı Scriptin
+        const ksModal = document.getElementById("ksInfoModal");
+        const ksBtn = document.getElementById("ksInfoBtn");
+        const ksClose = document.getElementById("ksCloseBtn");
 
+        ksBtn.onclick = () => ksModal.style.display = "block";
+        ksClose.onclick = () => ksModal.style.display = "none";
+        window.onclick = (event) => { if (event.target == ksModal) ksModal.style.display = "none"; }
+
+        // Kopyalama Fonksiyonu
+        function copyCode() {
+            const code = document.getElementById('script-kod').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("Kod kopyalandı!");
+            });
+        }
+    </script>
 </body>
 </html>
