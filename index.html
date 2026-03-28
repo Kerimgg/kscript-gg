@@ -122,7 +122,7 @@
 
         .ks-section strong { color: var(--primary); font-family: 'Orbitron'; font-size: 0.8rem; }
 
-        /* --- SCRIPT KARTI RESİM DÜZELTME --- */
+        /* --- SCRIPT KARTI VE RESİM (ELITE STYLE) --- */
         .overlay { 
             position: fixed; 
             top: 0; left: 0; 
@@ -144,21 +144,20 @@
             margin-top: 20px;
             overflow: hidden;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        /* Fotoğraf yerine şık gradyan ve ikon */
+        /* SENİN FOTOĞRAFIN BURAYA GELDİ */
         .card-img { 
             width: 100%; 
             height: 180px; 
-            background: linear-gradient(45deg, #05050a, #1a1a2e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            background-image: url('winters wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
             border-bottom: 1px solid #222;
         }
 
-        .script-card:hover { border-color: var(--primary); }
+        .script-card:hover { border-color: var(--primary); transform: translateY(-5px); }
     </style>
 </head>
 <body>
@@ -179,17 +178,17 @@
         <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing:5px;">DATABASE</h2>
         
         <div class="script-card" onclick="openDetail()">
-            <div class="card-img">⚡</div> <h3 style="font-family:'Orbitron'; color:var(--primary); margin:15px;">Universal Hub V1</h3>
+            <div class="card-img"></div> <h3 style="font-family:'Orbitron'; color:var(--primary); margin:15px;">Universal Hub V1</h3>
             <p style="color:#666; font-size:0.8rem; margin: 0 15px 15px;">STATUS: UNDETECTED</p>
         </div>
 
-        <div id="detail-area" style="display:none; width:90%; max-width:800px; margin-top:30px;">
+        <div id="detail-area" style="display:none; width:90%; max-width:800px; margin-top:30px; margin-bottom:50px;">
             <div style="background:#0a0a12; padding:30px; border-radius:20px; border:1px solid #222; text-align:left;">
                 <h2 style="font-family:'Orbitron'; color:var(--primary);">UNIVERSAL SCRIPT</h2>
                 <div style="background:#000; padding:20px; border-radius:10px; border:1px solid #333; color:#00ff88; font-family:monospace; font-size:0.7rem; max-height:300px; overflow:auto;">
                     <code id="script-kod">local StrToNumber=tonumber;local Byte=string.byte;--[ŞİFRELİ KODUN TAMAMI BURAYA]--</code>
                 </div>
-                <button onclick="copyCode()" style="width:100%; margin-top:20px; padding:15px; background:var(--primary); border:none; border-radius:8px; font-family:'Orbitron'; cursor:pointer;">COPY SOURCE</button>
+                <button onclick="copyCode()" style="width:100%; margin-top:20px; padding:15px; background:var(--primary); border:none; border-radius:8px; font-family:'Orbitron'; cursor:pointer; text-transform:uppercase; letter-spacing:2px;">COPY SOURCE</button>
             </div>
         </div>
     </div>
@@ -234,7 +233,7 @@
         // MENÜ KONTROL
         function openMenu() { document.getElementById('script-overlay').style.display = 'flex'; }
         function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
-        function openDetail() { document.getElementById('detail-area').style.display = 'block'; }
+        function openDetail() { document.getElementById('menu-list').style.display = 'none'; document.getElementById('detail-area').style.display = 'block'; }
         
         function copyCode() {
             const code = document.getElementById('script-kod').innerText;
