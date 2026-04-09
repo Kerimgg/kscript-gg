@@ -20,23 +20,13 @@
             font-family: 'Inter', sans-serif; 
             margin: 0; 
             display: flex; 
-            flex-direction: column; /* İçeriğin aşağı uzaması için eklendi */
+            flex-direction: column; 
             align-items: center; 
-            min-height: 100vh; /* Sabit 100vh yerine minimum 100vh yapıldı */
+            min-height: 100vh; 
             text-align: center; 
-            overflow-x: hidden; /* Sadece yatay kaymayı engeller, aşağı kaymaya izin verir */
+            overflow-x: hidden;
             background: radial-gradient(circle at center, #080815 0%, #030305 100%);
             scroll-behavior: smooth;
-        }
-
-        /* Ana sayfanın ilk açılışta tam ekran kalması için */
-        #main-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
         }
 
         .glow { 
@@ -52,6 +42,15 @@
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.5; }
             100% { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        #main-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .logo { 
@@ -94,19 +93,8 @@
             letter-spacing: 5px; 
         }
 
-        .overlay {
-            display: none; 
-            position: fixed; 
-            z-index: 10000; 
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.95);
-            backdrop-filter: blur(25px);
-            overflow-y: auto;
-        }
-
-        /* YORUM BÖLÜMÜ STİLLERİ */
-        #review-container {
+        /* Yorum Bölümü Tasarımı */
+        #review-section {
             width: 100%;
             max-width: 800px;
             margin: 100px 0;
@@ -114,72 +102,35 @@
             background: var(--glass);
             border: 1px solid var(--border);
             border-radius: 8px;
-            backdrop-filter: blur(10px);
-        }
-
-        .review-title {
-            font-family: 'Orbitron';
-            letter-spacing: 5px;
-            color: var(--primary);
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-        }
-
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border);
         }
 
         .comment-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
-            padding: 15px;
             color: white;
-            font-family: 'Inter';
             border-radius: 4px;
-            outline: none;
+            box-sizing: border-box;
         }
 
-        .comment-input:focus { border-color: var(--primary); }
-
-        .stars {
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-
-        .star.active { color: #ffca08; filter: drop-shadow(0 0 5px #ffca08); }
+        .stars { font-size: 25px; cursor: pointer; margin: 10px 0; }
+        .star { color: #333; transition: 0.3s; }
+        .star.active { color: #ffca08; }
 
         .review-card {
             text-align: left;
             padding: 20px;
-            background: rgba(255,255,255,0.01);
             border-left: 3px solid var(--primary);
+            background: rgba(255,255,255,0.01);
             margin-bottom: 15px;
         }
 
-        .review-card h4 {
-            margin: 0;
-            font-family: 'Orbitron';
-            font-size: 0.9rem;
-            color: #fff;
-        }
-
-        .review-card p {
-            color: #888;
-            font-size: 0.85rem;
-            margin: 10px 0 0 0;
-        }
-
-        /* Mevcut Modal Stilleri */
-        .ks-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(25px); }
-        .ks-modal-content { background: linear-gradient(145deg, #0a0a10 0%, #050507 100%); margin: 8% auto; padding: 40px; width: 85%; max-width: 520px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); position: relative; text-align: left; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
-        .ks-close, .close-btn { position: absolute; right: 30px; top: 25px; color: var(--primary); font-size: 30px; cursor: pointer; transition: 0.3s; opacity: 0.5; }
+        /* Modal ve Overlay Stilleri */
+        .ks-modal, .overlay { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(25px); }
+        .ks-modal-content { background: linear-gradient(145deg, #0a0a10 0%, #050507 100%); margin: 8% auto; padding: 40px; width: 85%; max-width: 520px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); position: relative; text-align: left; }
+        .ks-close, .close-btn { position: absolute; right: 30px; top: 25px; color: var(--primary); font-size: 30px; cursor: pointer; opacity: 0.5; }
         .ks-section { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 4px; margin-bottom: 12px; border-left: 2px solid var(--primary); font-size: 0.85rem; line-height: 1.6; color: #bbb; }
         #menu-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; width: 90%; max-width: 1150px; margin: 50px auto; }
         .script-card { background: rgba(255,255,255,0.01); border: 1px solid var(--border); border-radius: 4px; transition: 0.4s; cursor: pointer; width: 310px; padding: 30px; text-align: left; position: relative; overflow: hidden; }
@@ -196,144 +147,111 @@
             <a href="https://www.mediafire.com/file/uuo8gogi2nnqdek/Xeno-v1.3.30.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
             <div class="nav-btn" id="ksInfoBtn" style="border-color: rgba(255,255,255,0.2);">INFO & GUIDE</div>
         </div>
-        <div style="margin-top: 50px; color: #444; font-size: 0.7rem; letter-spacing: 2px; animation: bounce 2s infinite;">
-            SCROLL DOWN TO REVIEWS ↓
-        </div>
+        <p style="margin-top: 50px; color: #333; font-size: 0.7rem; letter-spacing: 3px;">SCROLL FOR REVIEWS</p>
     </div>
 
-    <div id="review-container">
-        <h2 class="review-title">COMMUNITY REVIEWS</h2>
+    <div id="review-section">
+        <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing:5px;">USER REVIEWS</h2>
         
-        <div id="comment-form-wrapper" class="comment-form">
-            <input type="text" id="username" class="comment-input" placeholder="Enter Username...">
-            
-            <div class="stars" id="star-rating">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
+        <div id="comment-form-box">
+            <input type="text" id="username" class="comment-input" placeholder="Your Name">
+            <div class="stars" id="star-box">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
             </div>
-            
-            <textarea id="comment-text" class="comment-input" style="height: 100px; resize: none;" placeholder="Write your review about KScript.gg..."></textarea>
-            
-            <button onclick="submitReview()" class="nav-btn" style="width: 100%; font-size: 0.7rem; border-color: var(--primary);">POST REVIEW</button>
+            <textarea id="comment-text" class="comment-input" style="height:100px;" placeholder="Your comment..."></textarea>
+            <button onclick="postReview()" class="nav-btn" style="width:100%; border-color:var(--primary);">SUBMIT REVIEW</button>
         </div>
 
-        <div id="reviews-list">
-            </div>
+        <div id="reviews-display" style="margin-top: 50px;"></div>
     </div>
 
     <div id="script-overlay" class="overlay">
         <span class="close-btn" onclick="closeMenu()">&times;</span>
         <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 70px; letter-spacing: 8px;">AVAILABLE SCRIPTS</h2>
         <div id="menu-list">
-            <div class="script-card" onclick="window.open('URL_BURAYA')"><h3>Universal Script</h3><p>Everything is here.</p></div>
+            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/ew78sgtz8ucy99i/Script_By_Kerim.lua/file')">
+                <h3>Universal Script</h3>
+                <p>Everything You Are Looking For İs Here</p>
             </div>
+            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
+                <h3>The Button Script</h3>
+                <p>The Script Of The Button Game İn Roblox</p>
+            </div>
+        </div>
     </div>
 
     <div id="ksInfoModal" class="ks-modal">
         <div class="ks-modal-content">
             <span class="ks-close" id="ksCloseBtn">&times;</span>
             <h2>SYSTEM PROTOCOL</h2>
-            <div class="ks-section"><strong>DEVELOPER ACCESS:</strong><br>kscript.gg1</div>
+            <div class="ks-section"><strong>DEVELOPER ACCESS:</strong><br>Bu yazılım kscript.gg1 tarafından kodlanmıştır.</div>
         </div>
     </div>
 
+    <script src="comments.js"></script>
+
     <script>
-        // --- Mevcut Fonksiyonlar ---
+        // Orijinal Navigasyon Fonksiyonları
         function openMenu() { document.getElementById('script-overlay').style.display = 'block'; }
         function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
         
         const modal = document.getElementById("ksInfoModal");
         const btn = document.getElementById("ksInfoBtn");
         const close = document.getElementById("ksCloseBtn");
-
         btn.onclick = () => modal.style.display = "block";
         close.onclick = () => modal.style.display = "none";
-        window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
 
-        // --- Yorum Sistemi Fonksiyonları ---
-        let currentRating = 0;
-        const stars = document.querySelectorAll('.star');
-
-        // Yıldız seçimi
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                currentRating = star.getAttribute('data-value');
-                updateStars();
-            });
-        });
-
-        function updateStars() {
-            stars.forEach(s => {
-                s.classList.toggle('active', s.getAttribute('data-value') <= currentRating);
-            });
+        // YORUM SİSTEMİ
+        let userRating = 0;
+        function setRating(n) {
+            userRating = n;
+            const s = document.querySelectorAll('.star');
+            s.forEach((star, i) => star.classList.toggle('active', i < n));
         }
 
-        // Yorum Gönderme
-        function submitReview() {
-            const user = document.getElementById('username').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
+        function postReview() {
+            const name = document.getElementById('username').value;
+            const text = document.getElementById('comment-text').value;
 
-            if (localStorage.getItem('kscript_voted')) {
-                alert("You have already posted a review from this device!");
-                return;
-            }
+            if(localStorage.getItem('kscript_voted')) return alert("Zaten yorum yaptınız!");
+            if(!name || !text || userRating == 0) return alert("Tüm alanları doldurun!");
 
-            if (!user || !text || currentRating == 0) {
-                alert("Please fill all fields and select a rating!");
-                return;
-            }
+            // LocalStorage'a kaydet (Sadece bu cihazda görünür)
+            let local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
+            local.unshift({username: name, comment: text, rating: userRating});
+            localStorage.setItem('kscript_local', JSON.stringify(local));
+            localStorage.setItem('kscript_voted', 'true');
 
-            const newReview = {
-                username: user,
-                comment: text,
-                rating: currentRating,
-                date: new Date().toLocaleDateString()
-            };
-
-            let reviews = JSON.parse(localStorage.getItem('kscript_reviews') || "[]");
-            reviews.unshift(newReview);
-            
-            localStorage.setItem('kscript_reviews', JSON.stringify(reviews));
-            localStorage.setItem('kscript_voted', 'true'); // Tek yorum sınırı
-
-            loadReviews();
-            checkVotedStatus();
+            renderReviews();
         }
 
-        // Yorumları Yükleme (F5 atınca gitmez)
-        function loadReviews() {
-            const list = document.getElementById('reviews-list');
-            const reviews = JSON.parse(localStorage.getItem('kscript_reviews') || "[]");
+        function renderReviews() {
+            const display = document.getElementById('reviews-display');
+            const local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
             
-            list.innerHTML = reviews.map(r => `
+            // comments.js'den gelenler (globalComments) + Yerel yapılanlar
+            const all = [...local, ...globalComments];
+
+            display.innerHTML = all.map(r => `
                 <div class="review-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4>${r.username}</h4>
-                        <div style="color: #ffca08; font-size: 12px;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username}</span>
+                        <span style="color:#ffca08;">${'★'.repeat(r.rating)}</span>
                     </div>
-                    <p>${r.comment}</p>
-                    <div style="font-size: 10px; color: #444; margin-top: 10px; font-family: 'Orbitron';">${r.date}</div>
+                    <p style="color:#888; font-size:0.85rem; margin-top:10px;">${r.comment}</p>
                 </div>
             `).join('');
-        }
-
-        function checkVotedStatus() {
-            if (localStorage.getItem('kscript_voted')) {
-                document.getElementById('comment-form-wrapper').innerHTML = `
-                    <div style="padding: 20px; border: 1px dashed var(--primary); color: var(--primary); font-family: 'Orbitron'; font-size: 0.8rem;">
-                        ACCESS GRANTED: THANKS FOR YOUR REVIEW!
-                    </div>`;
+            
+            if(localStorage.getItem('kscript_voted')) {
+                document.getElementById('comment-form-box').innerHTML = "<p style='color:var(--primary)'>Review Submitted. Thank you!</p>";
             }
         }
 
-        // Sayfa açıldığında çalışacaklar
-        window.onload = () => {
-            loadReviews();
-            checkVotedStatus();
-        };
+        window.onload = renderReviews;
     </script>
 </body>
 </html>
