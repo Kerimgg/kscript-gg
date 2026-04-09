@@ -9,7 +9,7 @@
         :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; }
         
         body { 
-            background-color: var(--bg); /* ANA ARKA PLAN SİYAH KALDI */
+            background-color: var(--bg);
             color: white; 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
@@ -102,6 +102,7 @@
         .ks-section { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 3px solid var(--secondary); font-size: 0.85rem; line-height: 1.4; }
         .ks-section strong { color: var(--primary); font-size: 0.75rem; font-family: 'Orbitron'; }
 
+        /* SCRIPT MENÜSÜ EKRANI */
         .overlay { 
             position: fixed; 
             top: 0; left: 0; 
@@ -114,9 +115,21 @@
             z-index: 100; 
             overflow-y: auto; 
             padding-top: 50px; 
+            padding-bottom: 50px;
         }
 
         .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
+
+        /* 6'lı ızgara sistemi (Grid) eklendi */
+        #menu-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            width: 90%;
+            max-width: 1100px;
+            margin-top: 20px;
+        }
 
         .script-card { 
             background: #111; 
@@ -126,50 +139,26 @@
             transition: 0.3s; 
             cursor: pointer; 
             width: 320px; 
-            margin-top: 20px;
         }
 
-        .script-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .script-card:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.15);
+        }
         
         .script-card .card-img { 
             width: 100%; 
             height: 180px; 
-            background-image: url('winters wallpaper.jpg');
+            background-color: #1a1a24; /* Resim yoksa arka plan rengi */
             background-size: cover;
             background-position: center;
+            border-bottom: 1px solid #333;
         }
 
         .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
+        .script-card p { color:#aaa; font-size:0.85rem; margin: 0 15px 15px; line-height: 1.5;}
 
-        .detail-page { display: none; width: 90%; max-width: 850px; text-align: left; background: #0c0c14; padding: 30px; border-radius: 20px; border: 1px solid #222; margin-bottom: 50px; }
-        
-        .code-box { 
-            background: #000; 
-            padding: 20px; 
-            border-radius: 10px; 
-            border: 1px solid #333; 
-            font-family: 'Courier New', monospace; 
-            color: #00ff88; 
-            margin-top: 20px; 
-            overflow-x: auto; 
-            white-space: pre; 
-            font-size: 0.75rem; 
-            max-height: 400px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .copy-btn { 
-            background: linear-gradient(45deg, var(--primary), var(--secondary)); 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            width: 100%; 
-            font-family: 'Orbitron'; 
-        }
     </style>
 </head>
 <body>
@@ -187,20 +176,47 @@
 
     <div id="script-overlay" class="overlay">
         <span class="close-btn" onclick="closeMenu()">&times;</span>
-        <h2 style="font-family:'Orbitron'; color:var(--primary);">AVAILABLE HUB</h2>
+        <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom: 10px;">AVAILABLE SCRIPTS</h2>
+        <p style="color: #888; font-family: 'Inter'; margin-bottom: 30px;">İndirmek istediğiniz scripti seçin.</p>
         
         <div id="menu-list">
-            <div class="script-card" onclick="openDetail()">
-                <div class="card-img"></div> <h3>Universal Hub V1</h3>
-                <p style="color:#777; font-size:0.8rem; margin: 0 15px 15px;">A Script Written For Roblox</p>
+            
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_1', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_1.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 1</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
-        </div>
 
-        <div id="detail-area" class="detail-page">
-            <button onclick="backToMenu()" style="background:none; border:1px solid #444; color:#888; cursor:pointer; padding:8px 20px; border-radius:5px; margin-bottom:20px;">← Geri Dön</button>
-            <h1 style="font-family:'Orbitron'; color:var(--primary); margin:0;">Universal Script</h1>
-            <p style="color:#aaa; margin-top:10px;">Aşağıdaki şifreli kodu kopyalayıp Executor'ınıza yapıştırın.</p>
-            <button class="copy-btn" onclick="copyCode()">KODU KOPYALA</button>
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_2', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_2.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 2</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            </div>
+
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_3', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_3.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 3</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            </div>
+
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_4', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_4.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 4</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            </div>
+
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_5', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_5.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 5</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            </div>
+
+            <div class="script-card" onclick="window.open('LİNK_BURAYA_6', '_blank')">
+                <div class="card-img" style="background-image: url('RESİM_LİNKİ_6.jpg');"></div> 
+                <h3>BAŞLIK BURAYA 6</h3>
+                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            </div>
+
         </div>
     </div>
 
@@ -232,30 +248,26 @@
     </div>
 
     <script>
-        // SCRIPTS BUTONUNA TIKLANINCA ÇALIŞACAK YENİ FONKSİYON
+        // SCRIPTS BUTONUNA TIKLANINCA OVERLAY PENCERESİNİ AÇAR
         function openMenu() { 
-            // BURADAKİ LINKI ISTEDIĞIN LINKLE DEĞIŞTIR
-            window.location.href = "https://www.mediafire.com/file/s56b13bqafoqck4/Script_By_Kerim.lua/file"; 
+            document.getElementById('script-overlay').style.display = 'flex'; 
         }
 
-        // DİĞER FONKSİYONLAR BOZULMADAN DURUYOR
-        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; backToMenu(); }
-        function openDetail() { document.getElementById('menu-list').style.display = 'none'; document.getElementById('detail-area').style.display = 'block'; }
-        function backToMenu() { document.getElementById('menu-list').style.display = 'block'; document.getElementById('detail-area').style.display = 'none'; }
+        // ÇARPIYA BASINCA OVERLAY PENCERESİNİ KAPATIR
+        function closeMenu() { 
+            document.getElementById('script-overlay').style.display = 'none'; 
+        }
         
-        function copyCode() {
-            const code = document.getElementById('script-kod').innerText;
-            navigator.clipboard.writeText(code);
-            alert("Script kopyalandı!");
-        }
-
+        // INFO & GUIDE MODAL İŞLEMLERİ
         const modal = document.getElementById("ksInfoModal");
         const btn = document.getElementById("ksInfoBtn");
         const close = document.getElementById("ksCloseBtn");
 
         btn.onclick = () => modal.style.display = "block";
         close.onclick = () => modal.style.display = "none";
-        window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
+        window.onclick = (e) => { 
+            if(e.target == modal) modal.style.display = "none"; 
+        }
     </script>
 </body>
 </html>
