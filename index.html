@@ -22,9 +22,9 @@
  display: flex; 
  justify-content: center; 
  align-items: center; 
- min-height: 100vh;
+ height: 100vh; 
  text-align: center; 
- overflow-x: hidden;
+ overflow: hidden;
  background: radial-gradient(circle at center, #080815 0%, #030305 100%);
  }
 
@@ -95,7 +95,6 @@
  width: 100%; height: 100%;
  background-color: rgba(0,0,0,0.95);
  backdrop-filter: blur(25px);
- overflow-y: auto;
  }
 
  .ks-modal-content {
@@ -171,116 +170,6 @@
  .script-card h3 { font-family: 'Orbitron'; margin: 0 0 12px 0; color: #fff; font-size: 1rem; letter-spacing: 1px; }
  .script-card p { color:#777; font-size:0.8rem; margin: 0; line-height: 1.6; }
 
- /* ========== YORUM SİSTEMİ CSS (ENTEGRE) ========== */
- .reviews-section {
-     margin-top: 80px;
-     padding: 40px 20px;
-     border-top: 1px solid var(--border);
-     background: rgba(0,0,0,0.2);
- }
-
- .reviews-container {
-     max-width: 700px;
-     margin: 0 auto;
- }
-
- .section-title {
-     font-family: 'Orbitron';
-     font-size: 1.5rem;
-     letter-spacing: 5px;
-     margin-bottom: 30px;
-     color: #fff;
- }
-
- .rating-stars {
-     display: flex;
-     justify-content: center;
-     gap: 10px;
-     margin: 15px 0;
- }
-
- .star {
-     font-size: 28px;
-     color: #444;
-     cursor: pointer;
-     transition: 0.2s;
- }
-
- .star.active {
-     color: #ffca08;
-     text-shadow: 0 0 15px #ffca08;
- }
-
- .comment-input-group {
-     display: flex;
-     flex-direction: column;
-     gap: 12px;
-     margin: 20px 0;
- }
-
- .comment-input-group input,
- .comment-input-group textarea {
-     background: rgba(255,255,255,0.03);
-     border: 1px solid var(--border);
-     padding: 14px 16px;
-     border-radius: 4px;
-     color: #fff;
-     font-family: 'Inter', sans-serif;
-     font-size: 0.9rem;
-     resize: vertical;
-     transition: 0.3s;
- }
-
- .comment-input-group input:focus,
- .comment-input-group textarea:focus {
-     outline: none;
-     border-color: var(--primary);
-     background: rgba(0,242,255,0.03);
- }
-
- .comment-input-group input::placeholder,
- .comment-input-group textarea::placeholder {
-     color: #555;
-     font-size: 0.8rem;
- }
-
- .submit-review-btn {
-     background: transparent;
-     border: 1px solid var(--primary);
-     color: var(--primary);
-     padding: 14px 30px;
-     font-family: 'Orbitron';
-     letter-spacing: 3px;
-     font-size: 0.8rem;
-     cursor: pointer;
-     border-radius: 4px;
-     transition: 0.4s;
-     margin-top: 10px;
- }
-
- .submit-review-btn:hover {
-     background: var(--primary);
-     color: #000;
-     box-shadow: 0 0 25px rgba(0,242,255,0.3);
- }
-
- #reviews-display {
-     margin-top: 40px;
-     text-align: left;
- }
-
- .review-card {
-     background: rgba(255,255,255,0.02);
-     border-left: 2px solid var(--primary);
-     padding: 18px 20px;
-     margin-bottom: 15px;
-     border-radius: 0 4px 4px 0;
-     backdrop-filter: blur(5px);
- }
-
- #comment-form-box {
-     margin-bottom: 20px;
- }
  </style>
 </head>
 <body>
@@ -293,32 +182,6 @@
  <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
  <a href="https://www.mediafire.com/file/uuo8gogi2nnqdek/Xeno-v1.3.30.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
  <div class="nav-btn" id="ksInfoBtn" style="border-color: rgba(255,255,255,0.2);">INFO & GUIDE</div>
- </div>
-
- <!-- YORUM SİSTEMİ BÖLÜMÜ (Ana sayfaya entegre) -->
- <div class="reviews-section">
- <div class="reviews-container">
- <h3 class="section-title">USER REVIEWS</h3>
- 
- <div id="comment-form-box">
- <div class="rating-stars">
- <span class="star" onclick="setRating(1)">★</span>
- <span class="star" onclick="setRating(2)">★</span>
- <span class="star" onclick="setRating(3)">★</span>
- <span class="star" onclick="setRating(4)">★</span>
- <span class="star" onclick="setRating(5)">★</span>
- </div>
- 
- <div class="comment-input-group">
- <input type="text" id="username" placeholder="Your Name" maxlength="20">
- <textarea id="comment-text" placeholder="Write your review..." rows="3"></textarea>
- </div>
- 
- <button class="submit-review-btn" onclick="postReview()">SUBMIT REVIEW</button>
- </div>
- 
- <div id="reviews-display"></div>
- </div>
  </div>
  </div>
 
@@ -359,7 +222,106 @@
  </div>
  </div>
  </div>
+<div id="review-section">
+        <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing:5px;">USER REVIEWS</h2>
+        
+        <div id="comment-form-box">
+            <input type="text" id="username" class="comment-input" placeholder="Your Name">
+            <div class="stars" id="star-box">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+            </div>
+            <textarea id="comment-text" class="comment-input" style="height:100px;" placeholder="Your comment..."></textarea>
+            <button onclick="postReview()" class="nav-btn" style="width:100%; border-color:var(--primary);">SUBMIT REVIEW</button>
+        </div>
 
+        <div id="reviews-display" style="margin-top: 50px;"></div>
+    </div>
+
+    <div id="script-overlay" class="overlay">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 70px; letter-spacing: 8px;">AVAILABLE SCRIPTS</h2>
+        <div id="menu-list">
+            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/ew78sgtz8ucy99i/Script_By_Kerim.lua/file')">
+                <h3>Universal Script</h3>
+                <p>Everything You Are Looking For İs Here</p>
+            </div>
+            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
+                <h3>The Button Script</h3>
+                <p>The Script Of The Button Game İn Roblox</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="ksInfoModal" class="ks-modal">
+        <div class="ks-modal-content">
+            <span class="ks-close" id="ksCloseBtn">&times;</span>
+            <h2>SYSTEM PROTOCOL</h2>
+            <div class="ks-section"><strong>DEVELOPER ACCESS:</strong><br>Bu yazılım kscript.gg1 tarafından kodlanmıştır.</div>
+        </div>
+    </div>
+
+    <script src="comments.js"></script>
+
+    <script>
+        // Orijinal Navigasyon Fonksiyonları
+        function openMenu() { document.getElementById('script-overlay').style.display = 'block'; }
+        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
+        
+        const modal = document.getElementById("ksInfoModal");
+        const btn = document.getElementById("ksInfoBtn");
+        const close = document.getElementById("ksCloseBtn");
+        btn.onclick = () => modal.style.display = "block";
+        close.onclick = () => modal.style.display = "none";
+
+        // YORUM SİSTEMİ
+        let userRating = 0;
+        function setRating(n) {
+            userRating = n;
+            const s = document.querySelectorAll('.star');
+            s.forEach((star, i) => star.classList.toggle('active', i < n));
+        }
+
+        function postReview() {
+            const name = document.getElementById('username').value;
+            const text = document.getElementById('comment-text').value;
+
+            if(localStorage.getItem('kscript_voted')) return alert("Zaten yorum yaptınız!");
+            if(!name || !text || userRating == 0) return alert("Tüm alanları doldurun!");
+
+            // LocalStorage'a kaydet (Sadece bu cihazda görünür)
+            let local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
+            local.unshift({username: name, comment: text, rating: userRating});
+            localStorage.setItem('kscript_local', JSON.stringify(local));
+            localStorage.setItem('kscript_voted', 'true');
+
+            renderReviews();
+        }
+
+        function renderReviews() {
+            const display = document.getElementById('reviews-display');
+            const local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
+            
+            // comments.js'den gelenler (globalComments) + Yerel yapılanlar
+            const all = [...local, ...globalComments];
+
+            display.innerHTML = all.map(r => `
+                <div class="review-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username}</span>
+                        <span style="color:#ffca08;">${'★'.repeat(r.rating)}</span>
+                    </div>
+                    <p style="color:#888; font-size:0.85rem; margin-top:10px;">${r.comment}</p>
+                </div>
+            `).join('');
+            
+            if(localStorage.getItem('kscript_voted')) {
+                document.getElementById('comment-form-box').innerHTML = "<p style='color:var(--primary)'>Review Submitted. Thank you!</p>";
+            }
+        }
  <div id="ksInfoModal" class="ks-modal">
  <div class="ks-modal-content">
  <span class="ks-close" id="ksCloseBtn">&times;</span>
@@ -388,7 +350,6 @@
  </div>
 
  <script>
- // ========== ORİJİNAL NAVİGASYON FONKSİYONLARI ==========
  function openMenu() { 
  document.getElementById('script-overlay').style.display = 'block'; 
  }
@@ -406,89 +367,6 @@
  window.onclick = (e) => { 
  if(e.target == modal) modal.style.display = "none"; 
  }
-
- // ========== YORUM SİSTEMİ (ENTEGRE) ==========
- // Global yorumlar (comments.js simülasyonu)
- const globalComments = [
- { username: "KScriptUser", comment: "Best executor hub ever! Scripts work flawlessly.", rating: 5 },
- { username: "RobloxMaster", comment: "Universal script is OP. Thank you!", rating: 4 },
- { username: "XenoFan", comment: "Executor runs smooth on my PC.", rating: 5 }
- ];
-
- let userRating = 0;
- 
- function setRating(n) {
- userRating = n;
- const stars = document.querySelectorAll('.star');
- stars.forEach((star, i) => {
- star.classList.toggle('active', i < n);
- });
- }
-
- function postReview() {
- const name = document.getElementById('username').value.trim();
- const text = document.getElementById('comment-text').value.trim();
-
- if(localStorage.getItem('kscript_voted')) {
- alert("You have already submitted a review!");
- return;
- }
- 
- if(!name || !text || userRating === 0) {
- alert("Please fill in all fields and select a rating!");
- return;
- }
-
- // LocalStorage'a kaydet
- let localReviews = JSON.parse(localStorage.getItem('kscript_local') || "[]");
- localReviews.unshift({
- username: name, 
- comment: text, 
- rating: userRating
- });
- localStorage.setItem('kscript_local', JSON.stringify(localReviews));
- localStorage.setItem('kscript_voted', 'true');
-
- // Formu temizle
- document.getElementById('username').value = '';
- document.getElementById('comment-text').value = '';
- setRating(0);
-
- renderReviews();
- }
-
- function renderReviews() {
- const display = document.getElementById('reviews-display');
- const localReviews = JSON.parse(localStorage.getItem('kscript_local') || "[]");
- 
- // globalComments + localReviews birleştir (local önce gelsin)
- const allReviews = [...localReviews, ...globalComments];
-
- display.innerHTML = allReviews.map(r => `
- <div class="review-card">
- <div style="display:flex; justify-content:space-between; align-items:center;">
- <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username}</span>
- <span style="color:#ffca08;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
- </div>
- <p style="color:#888; font-size:0.85rem; margin-top:10px;">${r.comment}</p>
- </div>
- `).join('');
- 
- // Eğer oy kullanılmışsa formu gizle
- if(localStorage.getItem('kscript_voted')) {
- document.getElementById('comment-form-box').innerHTML = 
- "<p style='color:var(--primary); text-align:center; padding:20px;'>✓ Review Submitted. Thank you for your feedback!</p>";
- }
- }
-
- // Sayfa yüklendiğinde yorumları göster
- window.addEventListener('DOMContentLoaded', () => {
- renderReviews();
- // Overlay tıklama kapatma için ek güvenlik
- document.getElementById('script-overlay').addEventListener('click', function(e) {
- if(e.target === this) closeMenu();
- });
- });
  </script>
 </body>
 </html>
