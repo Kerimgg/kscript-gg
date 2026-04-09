@@ -518,4 +518,167 @@
 
  <div class="ks-section">
  <strong>RESOURCES:</strong><br><br>
- Kurulum videosu için <strong>kscript.gg1</strong> YouTube
+ Kurulum videosu için <strong>kscript.gg1</strong> YouTube kanalına göz atın.
+ </div>
+ </div>
+ </div>
+
+ <script>
+ function openMenu() { 
+ document.getElementById('script-overlay').style.display = 'block'; 
+ }
+
+ function closeMenu() { 
+ document.getElementById('script-overlay').style.display = 'none'; 
+ }
+
+ function scrollToReviews() {
+ document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+ }
+ 
+ const modal = document.getElementById("ksInfoModal");
+ const btn = document.getElementById("ksInfoBtn");
+ const close = document.getElementById("ksCloseBtn");
+
+ btn.onclick = () => modal.style.display = "block";
+ close.onclick = () => modal.style.display = "none";
+ 
+ window.onclick = (e) => { 
+ if(e.target == modal) modal.style.display = "none"; 
+ }
+
+ document.getElementById('script-overlay').addEventListener('click', function(e) {
+ if(e.target === this) closeMenu();
+ });
+
+ // ========== YORUM SİSTEMİ ==========
+ let selectedRating = 0;
+
+ // Yıldız seçimi
+ document.querySelectorAll('.star').forEach(star => {
+ star.addEventListener('click', function() {
+ selectedRating = parseInt(this.dataset.rating);
+ document.querySelectorAll('.star').forEach((s, i) => {
+ s.classList.toggle('active', i < selectedRating);
+ });
+ });
+ 
+ star.addEventListener('mouseover', function() {
+ const rating = parseInt(this.dataset.rating);
+ document.querySelectorAll('.star').forEach((s, i) => {
+ s.style.color = i < rating ? '#ffca08' : '#333';
+ });
+ });
+ });
+
+ document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
+ document.querySelectorAll('.star').forEach((s, i) => {
+ s.style.color = i < selectedRating ? '#ffca08' : '#333';
+ });
+ });
+
+ // Yorum gönder
+ function submitReview() {
+ const username = document.getElementById('reviewUsername').value.trim();
+ const comment = document.getElementById('reviewComment').value.trim();
+ 
+ if (localStorage.getItem('kscript_review_submitted')) {
+ alert('You have already submitted a review. Thank you!');
+ return;
+ }
+ 
+ if (!username) {
+ alert('Please enter your name!');
+ return;
+ }
+ 
+ if (!comment) {
+ alert('Please write your review!');
+ return;
+ }
+ 
+ if (selectedRating === 0) {
+ alert('Please select a rating!');
+ return;
+ }
+ 
+ // Yorumu kaydet
+ const newReview = {
+ username: username,
+ comment: comment,
+ rating: selectedRating,
+ date: new Date().toISOString()
+ };
+ 
+ let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+ localReviews.unshift(newReview);
+ localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
+ localStorage.setItem('kscript_review_submitted', 'true');
+ 
+ // Formu teşekkür mesajıyla değiştir
+ document.getElementById('reviewFormContainer').innerHTML = `
+ <div class="thank-you-message">
+ ★ THANK YOU FOR YOUR REVIEW! ★<br>
+ <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback means a lot to us.</span>
+ </div>
+ `;
+ 
+ // Yorumları yeniden göster
+ renderAllReviews();
+ }
+
+ // Yorumları yükle ve göster
+ async function loadReviewsFromFile() {
+ try {
+ const response = await fetch("./comments.js");
+ if (response.ok) {
+ const jsText = await response.text();
+ const globalComments = eval(jsText + "; globalComments;");
+ return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
+ }
+ } catch (error) {
+ console.log("comments.js yüklenemedi, sadece local yorumlar gösterilecek.");
+ }
+ return [];
+ }
+
+ function renderAllReviews() {
+ const reviewsList = document.getElementById('reviews-list');
+ 
+ Promise.all([
+ loadReviewsFromFile(),
+ Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
+ ]).then(([fileReviews, localReviews]) => {
+ const allReviews = [...localReviews, ...fileReviews];
+ 
+ if (allReviews.length === 0) {
+ reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+ return;
+ }
+ 
+ reviewsList.innerHTML = allReviews.map(r => `
+ <div class="review-card">
+ <div style="display:flex; justify-content:space-between; align-items:center;">
+ <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
+ <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+ </div>
+ <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
+ </div>
+ `).join('');
+ });
+ 
+ // Eğer daha önce yorum yapılmışsa formu gizle
+ if (localStorage.getItem('kscript_review_submitted')) {
+ document.getElementById('reviewFormContainer').innerHTML = `
+ <div class="thank-you-message">
+ ★ THANK YOU FOR YOUR REVIEW! ★<br>
+ <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback means a lot to us.</span>
+ </div>
+ `;
+ }
+ }
+
+ window.addEventListener('DOMContentLoaded', renderAllReviews);
+ </script>
+</body>
+</html>
