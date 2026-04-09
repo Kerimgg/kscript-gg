@@ -6,7 +6,7 @@
     <title>KScript.gg | Elite Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; }
+        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #05050a; --neon-green: #00ff88; }
         
         body { 
             background-color: var(--bg);
@@ -159,6 +159,106 @@
         .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
         .script-card p { color:#aaa; font-size:0.85rem; margin: 0 15px 15px; line-height: 1.5;}
 
+        /* RESİM GALERİSİ MODAL (SLIDER) CSS */
+        .ks-gallery-modal {
+            display: none; 
+            position: fixed; 
+            z-index: 20000; 
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .ks-gallery-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background-color: #0c0c14;
+            border-radius: 20px;
+            border: 2px solid var(--neon-green);
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.2);
+            text-align: center;
+        }
+
+        .ks-gallery-close {
+            position: absolute;
+            right: 25px; top: 20px;
+            color: var(--neon-green);
+            font-size: 35px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .ks-gallery-image {
+            width: 100%;
+            max-height: 50vh;
+            border-radius: 10px;
+            border: 1px solid #333;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Kaydırma Okları */
+        .ks-prev, .ks-next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -30px;
+            color: var(--neon-green);
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.3s;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(5px);
+        }
+
+        .ks-prev:hover, .ks-next:hover {
+            background-color: rgba(0, 255, 136, 0.1);
+        }
+
+        .ks-next {
+            right: 30px;
+            border-radius: 3px 0 0 3px;
+        }
+        .ks-prev {
+            left: 30px;
+        }
+
+        /* "Linke Git" Butonu */
+        .ks-go-link {
+            display: inline-block;
+            margin-top: 30px;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 255, 136, 0.05);
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 1px solid var(--neon-green);
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 2px;
+        }
+
+        .ks-go-link:hover {
+            background-color: rgba(0, 255, 136, 0.1);
+            transform: scale(1.02);
+        }
+
     </style>
 </head>
 <body>
@@ -177,46 +277,56 @@
     <div id="script-overlay" class="overlay">
         <span class="close-btn" onclick="closeMenu()">&times;</span>
         <h2 style="font-family:'Orbitron'; color:var(--primary); margin-bottom: 10px;">AVAILABLE SCRIPTS</h2>
-        <p style="color: #888; font-family: 'Inter'; margin-bottom: 30px;">İndirmek istediğiniz scripti seçin.</p>
+        <p style="color: #888; font-family: 'Inter'; margin-bottom: 30px;">Scriptlerin özelliklerini görmek için tıklayın.</p>
         
         <div id="menu-list">
             
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_1', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_1.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 1</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(0)">
+                <div class="card-img" style="background-image: url('image_0.png');"></div> 
+                <h3>PREMIUM HUB V1</h3>
+                <p>Bu scriptin indirme linkine galeri altından ulaşabilirsiniz.</p>
             </div>
 
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_2', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_2.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 2</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(1)">
+                <div class="card-img" style="background-image: url('image_1.png');"></div> 
+                <h3>AIMBOT HUB</h3>
+                <p>Görselleri kaydırın ve alttaki butona tıklayın.</p>
             </div>
 
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_3', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_3.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 3</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(2)">
+                <div class="card-img" style="background-image: url('image_2.png');"></div> 
+                <h3>HITBOX HUB</h3>
+                <p>Script özelliklerini galeri görselinden inceleyin.</p>
             </div>
 
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_4', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_4.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 4</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(3)">
+                <div class="card-img" style="background-image: url('image_3.png');"></div> 
+                <h3>VISUALS HUB</h3>
+                <p>Görseller arasında geçiş yapabilirsiniz.</p>
             </div>
 
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_5', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_5.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 5</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(4)">
+                <div class="card-img" style="background-image: url('image_4.png');"></div> 
+                <h3>TELEPORT HUB</h3>
+                <p>Resim galerisinin altındaki butondan linke gidin.</p>
             </div>
 
-            <div class="script-card" onclick="window.open('LİNK_BURAYA_6', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_6.jpg');"></div> 
-                <h3>BAŞLIK BURAYA 6</h3>
-                <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
+            <div class="script-card" onclick="openScriptGallery(5)">
+                <div class="card-img" style="background-image: url('image_5.png');"></div> 
+                <h3>TELEPORT V2 HUB</h3>
+                <p>Bu scriptin linkine ve resimlerine buradan ulaşın.</p>
             </div>
 
+        </div>
+    </div>
+
+    <div id="ksGalleryModal" class="ks-gallery-modal">
+        <div class="ks-gallery-content">
+            <span class="ks-gallery-close" onclick="closeGallery()">&times;</span>
+            <button class="ks-prev" onclick="changeSlide(-1)">&#10094;</button>
+            <img src="image_0.png" alt="Script Görseli" class="ks-gallery-image" id="ksCurrentSlideImage">
+            <button class="ks-next" onclick="changeSlide(1)">&#10095;</button>
+            <a href="#" target="_blank" class="ks-go-link" id="ksGoLinkButton">LİNKE GİT</a>
         </div>
     </div>
 
@@ -248,17 +358,69 @@
     </div>
 
     <script>
-        // SCRIPTS BUTONUNA TIKLANINCA OVERLAY PENCERESİNİ AÇAR
+        // --- SCRIPT VE GALERİ VERİLERİ ---
+        // 6 Script için görseller ve linkler buraya eklenecek.
+        // Görseller image_0.png'den image_5.png'ye kadar otomatik sıralanacak.
+        const allScriptsData = [
+            { link: "HREF_LİNK_BURAYA_1" }, // Script 1 Linki
+            { link: "HREF_LİNK_BURAYA_2" }, // Script 2 Linki
+            { link: "HREF_LİNK_BURAYA_3" }, // Script 3 Linki
+            { link: "HREF_LİNK_BURAYA_4" }, // Script 4 Linki
+            { link: "HREF_LİNK_BURAYA_5" }, // Script 5 Linki
+            { link: "HREF_LİNK_BURAYA_6" }  // Script 6 Linki
+        ];
+
+        // Galerideki görsellerin listesi (image_0.png, image_1.png...)
+        const allGalleryImages = ["image_0.png", "image_1.png", "image_2.png", "image_3.png", "image_4.png", "image_5.png"];
+
+        // --- GALERİ İŞLEVLERİ ---
+        let currentSlideIndex = 0;
+        let activeGalleryScriptData = null; // Şu an hangi script galerisinin açık olduğu
+
+        function openScriptGallery(scriptIndex) {
+            // "SCRIPTS" menüsünü kapatıp galeriyi açalım
+            document.getElementById('script-overlay').style.display = 'none';
+            document.getElementById('ksGalleryModal').style.display = 'flex';
+            activeGalleryScriptData = allScriptsData[scriptIndex]; // Tıklanan scriptin verisini al
+            showSlide(0); // İlk slayttan başla
+        }
+
+        function closeGallery() {
+            document.getElementById('ksGalleryModal').style.display = 'none';
+            // Galeriyi kapatınca tekrar "SCRIPTS" menüsüne dönmek için
+            document.getElementById('script-overlay').style.display = 'flex';
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlideIndex + n);
+        }
+
+        function showSlide(n) {
+            currentSlideIndex = n;
+            // Slayt döngüsü
+            if (currentSlideIndex >= allGalleryImages.length) { currentSlideIndex = 0; }
+            if (currentSlideIndex < 0) { currentSlideIndex = allGalleryImages.length - 1; }
+
+            // Görseli güncelle
+            const galleryImg = document.getElementById("ksCurrentSlideImage");
+            galleryImg.src = allGalleryImages[currentSlideIndex];
+
+            // "Linke Git" butonunun href değerini güncelle (Bu scriptin linkine göre)
+            const goLinkBtn = document.getElementById("ksGoLinkButton");
+            if (activeGalleryScriptData) {
+                goLinkBtn.href = activeGalleryScriptData.link; 
+            }
+        }
+
+        // --- MENÜ VE MODAL İŞLEVLERİ (DEĞİŞMEDİ) ---
         function openMenu() { 
             document.getElementById('script-overlay').style.display = 'flex'; 
         }
 
-        // ÇARPIYA BASINCA OVERLAY PENCERESİNİ KAPATIR
         function closeMenu() { 
             document.getElementById('script-overlay').style.display = 'none'; 
         }
         
-        // INFO & GUIDE MODAL İŞLEMLERİ
         const modal = document.getElementById("ksInfoModal");
         const btn = document.getElementById("ksInfoBtn");
         const close = document.getElementById("ksCloseBtn");
