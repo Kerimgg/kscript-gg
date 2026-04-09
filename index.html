@@ -461,3 +461,34 @@
  const display = document.getElementById('reviews-display');
  const localReviews = JSON.parse(localStorage.getItem('kscript_local') || "[]");
  
+ // globalComments + localReviews birleştir (local önce gelsin)
+ const allReviews = [...localReviews, ...globalComments];
+
+ display.innerHTML = allReviews.map(r => `
+ <div class="review-card">
+ <div style="display:flex; justify-content:space-between; align-items:center;">
+ <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username}</span>
+ <span style="color:#ffca08;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+ </div>
+ <p style="color:#888; font-size:0.85rem; margin-top:10px;">${r.comment}</p>
+ </div>
+ `).join('');
+ 
+ // Eğer oy kullanılmışsa formu gizle
+ if(localStorage.getItem('kscript_voted')) {
+ document.getElementById('comment-form-box').innerHTML = 
+ "<p style='color:var(--primary); text-align:center; padding:20px;'>✓ Review Submitted. Thank you for your feedback!</p>";
+ }
+ }
+
+ // Sayfa yüklendiğinde yorumları göster
+ window.addEventListener('DOMContentLoaded', () => {
+ renderReviews();
+ // Overlay tıklama kapatma için ek güvenlik
+ document.getElementById('script-overlay').addEventListener('click', function(e) {
+ if(e.target === this) closeMenu();
+ });
+ });
+ </script>
+</body>
+</html>
