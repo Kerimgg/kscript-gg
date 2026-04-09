@@ -14,37 +14,46 @@
  --border: rgba(255, 255, 255, 0.08);
  }
  
+ * { box-sizing: border-box; }
+
  body { 
  background-color: var(--bg);
  color: #ffffff; 
  font-family: 'Inter', sans-serif; 
  margin: 0; 
- display: flex; 
- justify-content: center; 
- align-items: center; 
- height: 100vh; 
- text-align: center; 
- overflow: hidden;
+ overflow-x: hidden;
  background: radial-gradient(circle at center, #080815 0%, #030305 100%);
  }
 
- /* VIP Arka Plan Parıltısı */
  .glow { 
- position: absolute; 
+ position: fixed;
  width: 800px; 
  height: 800px; 
  background: radial-gradient(circle, rgba(0, 242, 255, 0.07) 0%, transparent 70%); 
  filter: blur(80px); 
  z-index: -1; 
  animation: pulse 10s infinite alternate;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
  }
 
  @keyframes pulse {
- 0% { transform: scale(1); opacity: 0.5; }
- 100% { transform: scale(1.3); opacity: 0.8; }
+ 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+ 100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
  }
 
- /* LOGO: Yazı aynı, stil Premium */
+ #main-page {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ min-height: 100vh;
+ width: 100%;
+ padding: 20px;
+ position: relative;
+ }
+
  .logo { 
  font-family: 'Orbitron', sans-serif; 
  font-size: clamp(2.5rem, 8vw, 5rem); 
@@ -58,16 +67,20 @@
  text-transform: uppercase;
  }
 
- .btn-container { display: flex; flex-direction: column; gap: 18px; align-items: center; }
+ .btn-container { 
+ display: flex; 
+ flex-direction: column; 
+ gap: 18px; 
+ align-items: center; 
+ }
 
- /* BUTONLAR: Metinler aynı, Görünüm VIP */
  .nav-btn { 
  width: 270px; 
  padding: 18px; 
  background: var(--glass); 
  color: white; 
  text-decoration: none; 
- border-radius: 4px; /* Keskin modern VIP köşe */
+ border-radius: 4px;
  font-family: 'Orbitron', sans-serif; 
  font-size: 0.85rem; 
  letter-spacing: 3px; 
@@ -83,7 +96,101 @@
  border-color: var(--primary); 
  transform: translateY(-4px);
  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
- letter-spacing: 5px; /* Hafif genişleme efekti */
+ letter-spacing: 5px;
+ }
+
+ a.nav-btn:hover {
+ border-color: var(--secondary);
+ box-shadow: 0 0 30px rgba(112, 0, 255, 0.3);
+ }
+
+ /* Aşağı ok göstergesi */
+ .scroll-indicator {
+ position: absolute;
+ bottom: 40px;
+ left: 50%;
+ transform: translateX(-50%);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 10px;
+ cursor: pointer;
+ transition: 0.3s;
+ }
+
+ .scroll-indicator:hover {
+ transform: translateX(-50%) translateY(-3px);
+ }
+
+ .scroll-text {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.65rem;
+ letter-spacing: 6px;
+ color: rgba(255, 255, 255, 0.12);
+ text-transform: uppercase;
+ }
+
+ .scroll-arrow {
+ color: rgba(255, 255, 255, 0.08);
+ font-size: 24px;
+ animation: bounce 2s infinite;
+ }
+
+ @keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+ 40% { transform: translateY(-10px); }
+ 60% { transform: translateY(-5px); }
+ }
+
+ /* Yorumlar Bölümü */
+ .reviews-section {
+ min-height: 100vh;
+ width: 100%;
+ padding: 80px 20px;
+ background: rgba(0,0,0,0.3);
+ border-top: 1px solid rgba(255,255,255,0.03);
+ }
+
+ .reviews-container {
+ max-width: 700px;
+ margin: 0 auto;
+ }
+
+ .reviews-title {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.2rem;
+ letter-spacing: 8px;
+ color: rgba(255, 255, 255, 0.4);
+ text-align: center;
+ margin-bottom: 50px;
+ text-transform: uppercase;
+ }
+
+ .review-card {
+ background: rgba(255,255,255,0.015);
+ border-left: 2px solid var(--primary);
+ padding: 20px 25px;
+ margin-bottom: 18px;
+ border-radius: 0 4px 4px 0;
+ backdrop-filter: blur(5px);
+ transition: 0.3s;
+ }
+
+ .review-card:hover {
+ background: rgba(255,255,255,0.03);
+ border-left-width: 4px;
+ }
+
+ #reviews-list {
+ min-height: 200px;
+ }
+
+ .loading-text, .no-reviews {
+ color: #444;
+ text-align: center;
+ padding: 40px;
+ font-style: italic;
+ letter-spacing: 2px;
  }
 
  /* MODAL & OVERLAY */
@@ -95,6 +202,7 @@
  width: 100%; height: 100%;
  background-color: rgba(0,0,0,0.95);
  backdrop-filter: blur(25px);
+ overflow-y: auto;
  }
 
  .ks-modal-content {
@@ -122,10 +230,32 @@
 
  .ks-close:hover, .close-btn:hover { opacity: 1; transform: scale(1.2); }
 
- /* Metin stilleri (İçerik değişmedi) */
- .ks-modal-content h2 { font-family: 'Orbitron'; color: #fff; text-align: center; margin-bottom: 30px; font-size: 1.1rem; letter-spacing: 4px; }
- .ks-section { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 4px; margin-bottom: 12px; border-left: 2px solid var(--primary); font-size: 0.85rem; line-height: 1.6; color: #bbb; }
- .ks-section strong { color: var(--primary); font-family: 'Orbitron'; letter-spacing: 1px; font-size: 0.75rem; }
+ .ks-modal-content h2 { 
+ font-family: 'Orbitron'; 
+ color: #fff; 
+ text-align: center; 
+ margin-bottom: 30px; 
+ font-size: 1.1rem; 
+ letter-spacing: 4px; 
+ }
+
+ .ks-section { 
+ background: rgba(255,255,255,0.02); 
+ padding: 20px; 
+ border-radius: 4px; 
+ margin-bottom: 12px; 
+ border-left: 2px solid var(--primary); 
+ font-size: 0.85rem; 
+ line-height: 1.6; 
+ color: #bbb; 
+ }
+
+ .ks-section strong { 
+ color: var(--primary); 
+ font-family: 'Orbitron'; 
+ letter-spacing: 1px; 
+ font-size: 0.75rem; 
+ }
 
  /* SCRIPT KARTLARI */
  #menu-list {
@@ -170,6 +300,7 @@
  .script-card h3 { font-family: 'Orbitron'; margin: 0 0 12px 0; color: #fff; font-size: 1rem; letter-spacing: 1px; }
  .script-card p { color:#777; font-size:0.8rem; margin: 0; line-height: 1.6; }
 
+ html { scroll-behavior: smooth; }
  </style>
 </head>
 <body>
@@ -180,8 +311,22 @@
  <div class="logo">KSCRIPT.GG</div>
  <div class="btn-container">
  <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
- <a href="https://www.mediafire.com/file/uuo8gogi2nnqdek/Xeno-v1.3.30.exe/file" target="_blank" class="nav-btn" style="border-color: var(--secondary);">EXECUTOR</a>
- <div class="nav-btn" id="ksInfoBtn" style="border-color: rgba(255,255,255,0.2);">INFO & GUIDE</div>
+ <a href="https://www.mediafire.com/file/uuo8gogi2nnqdek/Xeno-v1.3.30.exe/file" target="_blank" class="nav-btn">EXECUTOR</a>
+ <div class="nav-btn" id="ksInfoBtn">INFO & GUIDE</div>
+ </div>
+
+ <div class="scroll-indicator" onclick="scrollToReviews()">
+ <span class="scroll-text">REVIEWS</span>
+ <span class="scroll-arrow">↓</span>
+ </div>
+ </div>
+
+ <div id="reviews" class="reviews-section">
+ <div class="reviews-container">
+ <h2 class="reviews-title">USER REVIEWS</h2>
+ <div id="reviews-list">
+ <div class="loading-text">Loading reviews...</div>
+ </div>
  </div>
  </div>
 
@@ -222,106 +367,7 @@
  </div>
  </div>
  </div>
-<div id="review-section">
-        <h2 style="font-family:'Orbitron'; color:var(--primary); letter-spacing:5px;">USER REVIEWS</h2>
-        
-        <div id="comment-form-box">
-            <input type="text" id="username" class="comment-input" placeholder="Your Name">
-            <div class="stars" id="star-box">
-                <span class="star" onclick="setRating(1)">★</span>
-                <span class="star" onclick="setRating(2)">★</span>
-                <span class="star" onclick="setRating(3)">★</span>
-                <span class="star" onclick="setRating(4)">★</span>
-                <span class="star" onclick="setRating(5)">★</span>
-            </div>
-            <textarea id="comment-text" class="comment-input" style="height:100px;" placeholder="Your comment..."></textarea>
-            <button onclick="postReview()" class="nav-btn" style="width:100%; border-color:var(--primary);">SUBMIT REVIEW</button>
-        </div>
 
-        <div id="reviews-display" style="margin-top: 50px;"></div>
-    </div>
-
-    <div id="script-overlay" class="overlay">
-        <span class="close-btn" onclick="closeMenu()">&times;</span>
-        <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 70px; letter-spacing: 8px;">AVAILABLE SCRIPTS</h2>
-        <div id="menu-list">
-            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/ew78sgtz8ucy99i/Script_By_Kerim.lua/file')">
-                <h3>Universal Script</h3>
-                <p>Everything You Are Looking For İs Here</p>
-            </div>
-            <div class="script-card" onclick="window.open('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
-                <h3>The Button Script</h3>
-                <p>The Script Of The Button Game İn Roblox</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="ksInfoModal" class="ks-modal">
-        <div class="ks-modal-content">
-            <span class="ks-close" id="ksCloseBtn">&times;</span>
-            <h2>SYSTEM PROTOCOL</h2>
-            <div class="ks-section"><strong>DEVELOPER ACCESS:</strong><br>Bu yazılım kscript.gg1 tarafından kodlanmıştır.</div>
-        </div>
-    </div>
-
-    <script src="comments.js"></script>
-
-    <script>
-        // Orijinal Navigasyon Fonksiyonları
-        function openMenu() { document.getElementById('script-overlay').style.display = 'block'; }
-        function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
-        
-        const modal = document.getElementById("ksInfoModal");
-        const btn = document.getElementById("ksInfoBtn");
-        const close = document.getElementById("ksCloseBtn");
-        btn.onclick = () => modal.style.display = "block";
-        close.onclick = () => modal.style.display = "none";
-
-        // YORUM SİSTEMİ
-        let userRating = 0;
-        function setRating(n) {
-            userRating = n;
-            const s = document.querySelectorAll('.star');
-            s.forEach((star, i) => star.classList.toggle('active', i < n));
-        }
-
-        function postReview() {
-            const name = document.getElementById('username').value;
-            const text = document.getElementById('comment-text').value;
-
-            if(localStorage.getItem('kscript_voted')) return alert("Zaten yorum yaptınız!");
-            if(!name || !text || userRating == 0) return alert("Tüm alanları doldurun!");
-
-            // LocalStorage'a kaydet (Sadece bu cihazda görünür)
-            let local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
-            local.unshift({username: name, comment: text, rating: userRating});
-            localStorage.setItem('kscript_local', JSON.stringify(local));
-            localStorage.setItem('kscript_voted', 'true');
-
-            renderReviews();
-        }
-
-        function renderReviews() {
-            const display = document.getElementById('reviews-display');
-            const local = JSON.parse(localStorage.getItem('kscript_local') || "[]");
-            
-            // comments.js'den gelenler (globalComments) + Yerel yapılanlar
-            const all = [...local, ...globalComments];
-
-            display.innerHTML = all.map(r => `
-                <div class="review-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username}</span>
-                        <span style="color:#ffca08;">${'★'.repeat(r.rating)}</span>
-                    </div>
-                    <p style="color:#888; font-size:0.85rem; margin-top:10px;">${r.comment}</p>
-                </div>
-            `).join('');
-            
-            if(localStorage.getItem('kscript_voted')) {
-                document.getElementById('comment-form-box').innerHTML = "<p style='color:var(--primary)'>Review Submitted. Thank you!</p>";
-            }
-        }
  <div id="ksInfoModal" class="ks-modal">
  <div class="ks-modal-content">
  <span class="ks-close" id="ksCloseBtn">&times;</span>
@@ -350,12 +396,17 @@
  </div>
 
  <script>
+ // ========== NAVİGASYON ==========
  function openMenu() { 
  document.getElementById('script-overlay').style.display = 'block'; 
  }
 
  function closeMenu() { 
  document.getElementById('script-overlay').style.display = 'none'; 
+ }
+
+ function scrollToReviews() {
+ document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
  }
  
  const modal = document.getElementById("ksInfoModal");
@@ -364,9 +415,59 @@
 
  btn.onclick = () => modal.style.display = "block";
  close.onclick = () => modal.style.display = "none";
+ 
  window.onclick = (e) => { 
  if(e.target == modal) modal.style.display = "none"; 
  }
+
+ document.getElementById('script-overlay').addEventListener('click', function(e) {
+ if(e.target === this) closeMenu();
+ });
+
+ // ========== SADECE comments.js'DEN YORUMLARI ÇEK ==========
+ async function loadReviews() {
+ const reviewsList = document.getElementById("reviews-list");
+ 
+ try {
+ // GitHub'dan comments.js çek - BU URL'Yİ KENDİ REPONA GÖRE DEĞİŞTİR
+ const response = await fetch("https://raw.githubusercontent.com/kscriptgg/kscript-reviews/main/comments.js");
+ 
+ if (!response.ok) {
+ throw new Error("Comments file not found");
+ }
+ 
+ const jsText = await response.text();
+ 
+ // globalComments değişkenini al
+ const globalComments = eval(jsText + "; globalComments;");
+ 
+ if (globalComments && Array.isArray(globalComments) && globalComments.length > 0) {
+ renderReviews(globalComments);
+ } else {
+ reviewsList.innerHTML = '<div class="no-reviews">No reviews yet.</div>';
+ }
+ } catch (error) {
+ console.error("Yorumlar yüklenemedi:", error);
+ reviewsList.innerHTML = '<div class="no-reviews">No reviews yet.</div>';
+ }
+ }
+
+ function renderReviews(comments) {
+ const reviewsList = document.getElementById("reviews-list");
+ 
+ reviewsList.innerHTML = comments.map(r => `
+ <div class="review-card">
+ <div style="display:flex; justify-content:space-between; align-items:center;">
+ <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
+ <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+ </div>
+ <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
+ </div>
+ `).join('');
+ }
+
+ // Sayfa yüklendiğinde yorumları getir
+ window.addEventListener('DOMContentLoaded', loadReviews);
  </script>
 </body>
 </html>
