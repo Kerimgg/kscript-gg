@@ -1,4 +1,14 @@
+// KSCRIPT.GG YORUM VERİTABANI
+// Yeni yorumları buraya ekleyebilir, istemediklerini silebilirsin.
 const globalComments = [
- { username: "Kullanici1", comment: "Harika site!", rating: 5 },
- { username: "Kullanici2", comment: "Scriptler çalışıyor", rating: 4 }
+    {
+        username: "Emuliu",
+        comment: "Thanks bro there are still people who provide such scripts for free without viruses",
+        rating: 5
+    },
+    {
+        username: "MastergovTR",
+        comment: "Helal olsun amk mükemmel olmuş hiçbirşeyde sorun yaşamadım bide virüssüz uffff amk",
+        rating: 5
+    },
 ];
