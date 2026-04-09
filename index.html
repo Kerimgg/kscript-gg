@@ -164,6 +164,111 @@
  text-transform: uppercase;
  }
 
+ /* Yorum Formu */
+ .review-form {
+ background: rgba(255,255,255,0.02);
+ padding: 30px;
+ border-radius: 8px;
+ border: 1px solid var(--border);
+ margin-bottom: 50px;
+ }
+
+ .form-group {
+ margin-bottom: 20px;
+ }
+
+ .form-group label {
+ display: block;
+ font-family: 'Orbitron';
+ font-size: 0.7rem;
+ letter-spacing: 2px;
+ color: rgba(255,255,255,0.5);
+ margin-bottom: 8px;
+ text-transform: uppercase;
+ }
+
+ .form-group input,
+ .form-group textarea {
+ width: 100%;
+ background: rgba(0,0,0,0.3);
+ border: 1px solid var(--border);
+ padding: 12px 15px;
+ border-radius: 4px;
+ color: #fff;
+ font-family: 'Inter', sans-serif;
+ font-size: 0.9rem;
+ resize: vertical;
+ transition: 0.3s;
+ }
+
+ .form-group input:focus,
+ .form-group textarea:focus {
+ outline: none;
+ border-color: var(--primary);
+ background: rgba(0,242,255,0.05);
+ }
+
+ .rating-stars {
+ display: flex;
+ gap: 10px;
+ margin-top: 5px;
+ }
+
+ .star {
+ font-size: 28px;
+ color: #333;
+ cursor: pointer;
+ transition: 0.2s;
+ }
+
+ .star:hover,
+ .star.active {
+ color: #ffca08;
+ text-shadow: 0 0 10px #ffca08;
+ }
+
+ .submit-btn {
+ background: transparent;
+ border: 1px solid var(--primary);
+ color: var(--primary);
+ padding: 14px 30px;
+ font-family: 'Orbitron';
+ letter-spacing: 3px;
+ font-size: 0.8rem;
+ cursor: pointer;
+ border-radius: 4px;
+ transition: 0.4s;
+ width: 100%;
+ margin-top: 10px;
+ }
+
+ .submit-btn:hover {
+ background: var(--primary);
+ color: #000;
+ box-shadow: 0 0 25px rgba(0,242,255,0.3);
+ }
+
+ .submit-btn:disabled {
+ opacity: 0.3;
+ cursor: not-allowed;
+ border-color: #444;
+ color: #444;
+ }
+
+ .submit-btn:disabled:hover {
+ background: transparent;
+ box-shadow: none;
+ }
+
+ .thank-you-message {
+ text-align: center;
+ color: var(--primary);
+ font-family: 'Orbitron';
+ letter-spacing: 2px;
+ padding: 20px;
+ font-size: 0.9rem;
+ }
+
  .review-card {
  background: rgba(255,255,255,0.015);
  border-left: 2px solid var(--primary);
@@ -320,6 +425,33 @@
  <div id="reviews" class="reviews-section">
  <div class="reviews-container">
  <h2 class="reviews-title">USER REVIEWS</h2>
+ 
+ <!-- Yorum Formu -->
+ <div id="reviewFormContainer" class="review-form">
+ <div class="form-group">
+ <label>Your Name</label>
+ <input type="text" id="reviewUsername" placeholder="Enter your name..." maxlength="30">
+ </div>
+ 
+ <div class="form-group">
+ <label>Your Review</label>
+ <textarea id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500"></textarea>
+ </div>
+ 
+ <div class="form-group">
+ <label>Rating</label>
+ <div class="rating-stars" id="ratingStars">
+ <span class="star" data-rating="1">★</span>
+ <span class="star" data-rating="2">★</span>
+ <span class="star" data-rating="3">★</span>
+ <span class="star" data-rating="4">★</span>
+ <span class="star" data-rating="5">★</span>
+ </div>
+ </div>
+ 
+ <button class="submit-btn" id="submitReviewBtn" onclick="submitReview()">SUBMIT REVIEW</button>
+ </div>
+ 
  <div id="reviews-list">
  <div class="loading-text">Loading reviews...</div>
  </div>
@@ -386,79 +518,4 @@
 
  <div class="ks-section">
  <strong>RESOURCES:</strong><br><br>
- Kurulum videosu için <strong>kscript.gg1</strong> YouTube kanalına göz atın.
- </div>
- </div>
- </div>
-
- <script>
- function openMenu() { 
- document.getElementById('script-overlay').style.display = 'block'; 
- }
-
- function closeMenu() { 
- document.getElementById('script-overlay').style.display = 'none'; 
- }
-
- function scrollToReviews() {
- document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
- }
- 
- const modal = document.getElementById("ksInfoModal");
- const btn = document.getElementById("ksInfoBtn");
- const close = document.getElementById("ksCloseBtn");
-
- btn.onclick = () => modal.style.display = "block";
- close.onclick = () => modal.style.display = "none";
- 
- window.onclick = (e) => { 
- if(e.target == modal) modal.style.display = "none"; 
- }
-
- document.getElementById('script-overlay').addEventListener('click', function(e) {
- if(e.target === this) closeMenu();
- });
-
- // ========== comments.js'DEN YORUMLARI ÇEK ==========
- async function loadReviews() {
- const reviewsList = document.getElementById("reviews-list");
- 
- try {
- const response = await fetch("./comments.js");
- 
- if (!response.ok) {
- throw new Error("Comments file not found");
- }
- 
- const jsText = await response.text();
- const globalComments = eval(jsText + "; globalComments;");
- 
- if (globalComments && Array.isArray(globalComments) && globalComments.length > 0) {
- renderReviews(globalComments);
- } else {
- reviewsList.innerHTML = '<div class="no-reviews">No reviews yet.</div>';
- }
- } catch (error) {
- console.error("Yorumlar yüklenemedi:", error);
- reviewsList.innerHTML = '<div class="no-reviews">No reviews yet.</div>';
- }
- }
-
- function renderReviews(comments) {
- const reviewsList = document.getElementById("reviews-list");
- 
- reviewsList.innerHTML = comments.map(r => `
- <div class="review-card">
- <div style="display:flex; justify-content:space-between; align-items:center;">
- <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
- <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
- </div>
- <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
- </div>
- `).join('');
- }
-
- window.addEventListener('DOMContentLoaded', loadReviews);
- </script>
-</body>
-</html>
+ Kurulum videosu için <strong>kscript.gg1</strong> YouTube
