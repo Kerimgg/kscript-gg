@@ -120,7 +120,6 @@
 
         .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; cursor: pointer; color: var(--primary); }
 
-        /* 6'lı ızgara sistemi (Grid) eklendi */
         #menu-list {
             display: flex;
             flex-wrap: wrap;
@@ -139,6 +138,7 @@
             transition: 0.3s; 
             cursor: pointer; 
             width: 320px; 
+            padding-bottom: 10px; /* Görsel kalktığı için alt boşluk eklendi */
         }
 
         .script-card:hover { 
@@ -147,16 +147,7 @@
             box-shadow: 0 10px 20px rgba(0, 242, 255, 0.15);
         }
         
-        .script-card .card-img { 
-            width: 100%; 
-            height: 180px; 
-            background-color: #1a1a24; /* Resim yoksa arka plan rengi */
-            background-size: cover;
-            background-position: center;
-            border-bottom: 1px solid #333;
-        }
-
-        .script-card h3 { font-family: 'Orbitron'; margin: 15px; color: var(--primary); }
+        .script-card h3 { font-family: 'Orbitron'; margin: 20px 15px 10px; color: var(--primary); }
         .script-card p { color:#aaa; font-size:0.85rem; margin: 0 15px 15px; line-height: 1.5;}
 
     </style>
@@ -182,37 +173,31 @@
         <div id="menu-list">
             
             <div class="script-card" onclick="window.open('https://www.mediafire.com/file/s56b13bqafoqck4/Script_By_Kerim.lua/file')">
-                <div class="card-img" style="background-image: url('file:///C:/Users/bakla/OneDrive/Resimler/Screenshots/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202026-04-09%20194706.png');"></div> 
                 <h3>Universal Script</h3>
                 <p>everything you are looking for is here</p>
             </div>
 
             <div class="script-card" onclick="window.open('LİNK_BURAYA_2', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_2.jpg');"></div> 
                 <h3>BAŞLIK BURAYA 2</h3>
                 <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
 
             <div class="script-card" onclick="window.open('LİNK_BURAYA_3', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_3.jpg');"></div> 
                 <h3>BAŞLIK BURAYA 3</h3>
                 <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
 
             <div class="script-card" onclick="window.open('LİNK_BURAYA_4', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_4.jpg');"></div> 
                 <h3>BAŞLIK BURAYA 4</h3>
                 <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
 
             <div class="script-card" onclick="window.open('LİNK_BURAYA_5', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_5.jpg');"></div> 
                 <h3>BAŞLIK BURAYA 5</h3>
                 <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
 
             <div class="script-card" onclick="window.open('LİNK_BURAYA_6', '_blank')">
-                <div class="card-img" style="background-image: url('RESİM_LİNKİ_6.jpg');"></div> 
                 <h3>BAŞLIK BURAYA 6</h3>
                 <p>Buraya scriptin ne işe yaradığını kısaca açıklayan bir metin yazın.</p>
             </div>
@@ -227,7 +212,7 @@
             
             <div class="ks-section">
                 <strong>DEVELOPER ACCESS:</strong><br>
-                Bu yazılım 📸 <strong>kscript.gg1</strong> tarafından kodlanmıştır.
+                Bu yazılım kscript.gg1 tarafından kodlanmıştır.
             </div>
 
             <div class="ks-section">
@@ -237,28 +222,25 @@
 
             <div class="ks-section">
                 <strong>AUTH KEY SYSTEM:</strong><br>
-                Keyler <strong>ÜCRETSİZDİR</strong>. Instagram 📸 <strong>kscript.gg1</strong> üzerinden talep edebilirsiniz.
+                Keyler <strong>ÜCRETSİZDİR</strong>. Instagram <strong>kscript.gg1</strong> üzerinden talep edebilirsiniz.
             </div>
 
             <div class="ks-section">
                 <strong>RESOURCES:</strong><br>
-                Kurulum videosu için 🎬 <strong>kscript.gg1</strong> YouTube kanalına göz atın.
+                Kurulum videosu için <strong>kscript.gg1</strong> YouTube kanalına göz atın.
             </div>
         </div>
     </div>
 
     <script>
-        // SCRIPTS BUTONUNA TIKLANINCA OVERLAY PENCERESİNİ AÇAR
         function openMenu() { 
             document.getElementById('script-overlay').style.display = 'flex'; 
         }
 
-        // ÇARPIYA BASINCA OVERLAY PENCERESİNİ KAPATIR
         function closeMenu() { 
             document.getElementById('script-overlay').style.display = 'none'; 
         }
         
-        // INFO & GUIDE MODAL İŞLEMLERİ
         const modal = document.getElementById("ksInfoModal");
         const btn = document.getElementById("ksInfoBtn");
         const close = document.getElementById("ksCloseBtn");
