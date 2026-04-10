@@ -299,6 +299,10 @@
  overflow-y: auto;
  }
 
+ .overlay {
+ padding-top: 0;
+ }
+
  .ks-modal-content {
  background: linear-gradient(145deg, #0a0a10 0%, #050507 100%);
  margin: 8% auto;
@@ -320,6 +324,7 @@
  cursor: pointer;
  transition: 0.3s;
  opacity: 0.5;
+ z-index: 10001;
  }
 
  .ks-close:hover { opacity: 1; transform: scale(1.2); }
