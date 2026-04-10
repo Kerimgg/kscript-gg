@@ -312,7 +312,7 @@
  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
  }
 
- .ks-close, .close-btn {
+ .ks-close {
  position: absolute;
  right: 30px; top: 25px;
  color: var(--primary);
@@ -322,7 +322,7 @@
  opacity: 0.5;
  }
 
- .ks-close:hover, .close-btn:hover { opacity: 1; transform: scale(1.2); }
+ .ks-close:hover { opacity: 1; transform: scale(1.2); }
 
  .ks-modal-content h2 { 
  font-family: 'Orbitron'; 
@@ -425,7 +425,6 @@
  <div class="reviews-container">
  <h2 class="reviews-title">USER REVIEWS</h2>
  
- <!-- Yorum Formu -->
  <div id="reviewFormContainer">
  <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
  <div class="form-group">
@@ -462,12 +461,12 @@
  </div>
 
  <div id="script-overlay" class="overlay">
- <<h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
-<p style="color: #555; font-size: 0.8rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
+ <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
+ <p style="color: #555; font-size: 0.8rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
  <br> 
  <div id="menu-list">
  <div class="script-card" onclick="window.open('https://www.mediafire.com/file/ew78sgtz8ucy99i/Script_By_Kerim.lua/file')">
- <h3>Universal Script V1.3</h3>
+ <h3>Universal Script</h3>
  <p>Everything You Are Looking For İs Here</p>
  </div>
 
@@ -553,11 +552,9 @@
  if(e.target === this) closeMenu();
  });
 
- // ========== YORUM SİSTEMİ + FORMSPREE ==========
  let selectedRating = 0;
- const FORMSPREE_URL = "https://formspree.io/f/mojpokpa"; // BURAYI DEĞİŞTİR!
+ const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
- // Yıldız seçimi
  document.querySelectorAll('.star').forEach(star => {
  star.addEventListener('click', function() {
  selectedRating = parseInt(this.dataset.rating);
@@ -581,7 +578,6 @@
  });
  });
 
- // Form submit
  async function submitReview(event) {
  event.preventDefault();
  
@@ -590,7 +586,6 @@
  const rating = parseInt(document.getElementById('ratingInput').value);
  const errorDiv = document.getElementById('formError');
  
- // LocalStorage kontrolü
  if (localStorage.getItem('kscript_review_submitted')) {
  errorDiv.textContent = 'You have already submitted a review!';
  return;
@@ -608,7 +603,6 @@
  submitBtn.textContent = 'SENDING...';
  
  try {
- // Formspree'ye gönder
  const response = await fetch(FORMSPREE_URL, {
  method: 'POST',
  headers: { 'Content-Type': 'application/json' },
@@ -622,13 +616,11 @@
  });
  
  if (response.ok) {
- // LocalStorage'a kaydet
  let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
  localReviews.unshift({ username, comment, rating });
  localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
  localStorage.setItem('kscript_review_submitted', 'true');
  
- // Formu teşekkür mesajıyla değiştir
  document.getElementById('reviewFormContainer').innerHTML = `
  <div class="thank-you-message">
  ★ THANK YOU FOR YOUR REVIEW! ★<br>
@@ -648,7 +640,6 @@
  }
  }
 
- // Yorumları yükle
  async function loadReviewsFromFile() {
  try {
  const response = await fetch("./comments.js");
