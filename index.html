@@ -164,7 +164,6 @@
  text-transform: uppercase;
  }
 
- /* Yorum Formu */
  .review-form {
  background: rgba(255,255,255,0.02);
  padding: 30px;
@@ -249,15 +248,8 @@
  }
 
  .submit-btn:disabled {
- opacity: 0.3;
+ opacity: 0.5;
  cursor: not-allowed;
- border-color: #444;
- color: #444;
- }
-
- .submit-btn:disabled:hover {
- background: transparent;
- box-shadow: none;
  }
 
  .thank-you-message {
@@ -401,6 +393,13 @@
  .script-card h3 { font-family: 'Orbitron'; margin: 0 0 12px 0; color: #fff; font-size: 1rem; letter-spacing: 1px; }
  .script-card p { color:#777; font-size:0.8rem; margin: 0; line-height: 1.6; }
 
+ .error-message {
+ color: #ff4444;
+ font-size: 0.8rem;
+ text-align: center;
+ margin-top: 10px;
+ }
+
  html { scroll-behavior: smooth; }
  </style>
 </head>
@@ -427,15 +426,16 @@
  <h2 class="reviews-title">USER REVIEWS</h2>
  
  <!-- Yorum Formu -->
- <div id="reviewFormContainer" class="review-form">
+ <div id="reviewFormContainer">
+ <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
  <div class="form-group">
  <label>Your Name</label>
- <input type="text" id="reviewUsername" placeholder="Enter your name..." maxlength="30">
+ <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
  </div>
  
  <div class="form-group">
  <label>Your Review</label>
- <textarea id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500"></textarea>
+ <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500" required></textarea>
  </div>
  
  <div class="form-group">
@@ -447,9 +447,12 @@
  <span class="star" data-rating="4">★</span>
  <span class="star" data-rating="5">★</span>
  </div>
+ <input type="hidden" name="rating" id="ratingInput" value="0" required>
  </div>
  
- <button class="submit-btn" id="submitReviewBtn" onclick="submitReview()">SUBMIT REVIEW</button>
+ <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
+ <div id="formError" class="error-message"></div>
+ </form>
  </div>
  
  <div id="reviews-list">
@@ -551,13 +554,15 @@
  if(e.target === this) closeMenu();
  });
 
- // ========== YORUM SİSTEMİ ==========
+ // ========== YORUM SİSTEMİ + FORMSPREE ==========
  let selectedRating = 0;
+ const FORMSPREE_URL = "https://formspree.io/f/mojpokpa"; // BURAYI DEĞİŞTİR!
 
  // Yıldız seçimi
  document.querySelectorAll('.star').forEach(star => {
  star.addEventListener('click', function() {
  selectedRating = parseInt(this.dataset.rating);
+ document.getElementById('ratingInput').value = selectedRating;
  document.querySelectorAll('.star').forEach((s, i) => {
  s.classList.toggle('active', i < selectedRating);
  });
@@ -577,41 +582,50 @@
  });
  });
 
- // Yorum gönder
- function submitReview() {
+ // Form submit
+ async function submitReview(event) {
+ event.preventDefault();
+ 
  const username = document.getElementById('reviewUsername').value.trim();
  const comment = document.getElementById('reviewComment').value.trim();
+ const rating = parseInt(document.getElementById('ratingInput').value);
+ const errorDiv = document.getElementById('formError');
  
+ // LocalStorage kontrolü
  if (localStorage.getItem('kscript_review_submitted')) {
- alert('You have already submitted a review. Thank you!');
+ errorDiv.textContent = 'You have already submitted a review!';
  return;
  }
  
- if (!username) {
- alert('Please enter your name!');
+ if (rating === 0) {
+ errorDiv.textContent = 'Please select a rating!';
  return;
  }
  
- if (!comment) {
- alert('Please write your review!');
- return;
- }
+ errorDiv.textContent = '';
  
- if (selectedRating === 0) {
- alert('Please select a rating!');
- return;
- }
+ const submitBtn = document.getElementById('submitReviewBtn');
+ submitBtn.disabled = true;
+ submitBtn.textContent = 'SENDING...';
  
- // Yorumu kaydet
- const newReview = {
+ try {
+ // Formspree'ye gönder
+ const response = await fetch(FORMSPREE_URL, {
+ method: 'POST',
+ headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify({
  username: username,
  comment: comment,
- rating: selectedRating,
- date: new Date().toISOString()
- };
+ rating: rating,
+ date: new Date().toISOString(),
+ page: 'KScript.gg Reviews'
+ })
+ });
  
+ if (response.ok) {
+ // LocalStorage'a kaydet
  let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
- localReviews.unshift(newReview);
+ localReviews.unshift({ username, comment, rating });
  localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
  localStorage.setItem('kscript_review_submitted', 'true');
  
@@ -619,15 +633,23 @@
  document.getElementById('reviewFormContainer').innerHTML = `
  <div class="thank-you-message">
  ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback means a lot to us.</span>
+ <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
  </div>
  `;
  
- // Yorumları yeniden göster
  renderAllReviews();
+ } else {
+ throw new Error('Form gönderilemedi');
+ }
+ } catch (error) {
+ console.error('Hata:', error);
+ errorDiv.textContent = 'Something went wrong. Please try again.';
+ submitBtn.disabled = false;
+ submitBtn.textContent = 'SUBMIT REVIEW';
+ }
  }
 
- // Yorumları yükle ve göster
+ // Yorumları yükle
  async function loadReviewsFromFile() {
  try {
  const response = await fetch("./comments.js");
@@ -637,7 +659,7 @@
  return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
  }
  } catch (error) {
- console.log("comments.js yüklenemedi, sadece local yorumlar gösterilecek.");
+ console.log("comments.js yüklenemedi.");
  }
  return [];
  }
@@ -667,14 +689,16 @@
  `).join('');
  });
  
- // Eğer daha önce yorum yapılmışsa formu gizle
  if (localStorage.getItem('kscript_review_submitted')) {
- document.getElementById('reviewFormContainer').innerHTML = `
+ const container = document.getElementById('reviewFormContainer');
+ if (container.querySelector('form')) {
+ container.innerHTML = `
  <div class="thank-you-message">
  ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback means a lot to us.</span>
+ <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
  </div>
  `;
+ }
  }
  }
 
