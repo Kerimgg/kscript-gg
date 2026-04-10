@@ -299,10 +299,6 @@
  overflow-y: auto;
  }
 
- .overlay {
- padding-top: 0;
- }
-
  .ks-modal-content {
  background: linear-gradient(145deg, #0a0a10 0%, #050507 100%);
  margin: 8% auto;
@@ -316,7 +312,7 @@
  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
  }
 
- .ks-close {
+ .ks-close, .close-btn {
  position: absolute;
  right: 30px; top: 25px;
  color: var(--primary);
@@ -324,10 +320,9 @@
  cursor: pointer;
  transition: 0.3s;
  opacity: 0.5;
- z-index: 10001;
  }
 
- .ks-close:hover { opacity: 1; transform: scale(1.2); }
+ .ks-close:hover, .close-btn:hover { opacity: 1; transform: scale(1.2); }
 
  .ks-modal-content h2 { 
  font-family: 'Orbitron'; 
@@ -430,6 +425,7 @@
  <div class="reviews-container">
  <h2 class="reviews-title">USER REVIEWS</h2>
  
+ <!-- Yorum Formu -->
  <div id="reviewFormContainer">
  <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
  <div class="form-group">
@@ -466,7 +462,7 @@
  </div>
 
  <div id="script-overlay" class="overlay">
-  <span class="close-btn" onclick="closeMenu()">&times;</span>
+ <span class="close-btn" onclick="closeMenu()">&times;</span>
  <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
  <p style="color: #555; font-size: 0.8rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
  <br> 
@@ -558,6 +554,7 @@
  if(e.target === this) closeMenu();
  });
 
+ // ========== YORUM SİSTEMİ + FORMSPREE ==========
  let selectedRating = 0;
  const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
