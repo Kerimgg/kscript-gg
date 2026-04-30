@@ -11,4 +11,9 @@ const globalComments = [
         comment: "Helal olsun amk mükemmel olmuş hiçbirşeyde sorun yaşamadım bide virüssüz uffff amk",
         rating: 5
     },
+     {
+        username: "Siyahın asaleti",
+        comment: "vallahi çok iyi yapmışşsın hem siteyi hem scripti",
+        rating: 5
+    },
 ];
