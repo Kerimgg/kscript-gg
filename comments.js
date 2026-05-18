@@ -19,11 +19,16 @@ const globalComments = [
      {
         username: "Ereninyo",
         comment: "tam bir kuzi kuzi tenim gibi olmuş yani mükemmelllllllll",
-        rating: 5
+        rating: 4
     },
      {
-        username: "Polat Amımdar",
+        username: "Polat Amimdar",
         comment: "oooww yeaaaa ",
-        rating: 5
+        rating: 3
+    },
+     {
+        username: "Esseksıken356",
+        comment: "bu executor bayadır yoktu sonunda geldiiiiiiiiiiiii",
+        rating: 4
     },
 ];
