@@ -5,6 +5,8 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>KScript.gg | Elite Hub</title>
  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+ <!-- FontAwesome İkon Kitaplığı (Sayaç ikonları için) -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  <style>
  :root { 
  --primary: #00f2ff; 
@@ -63,7 +65,7 @@
  -webkit-background-clip: text; 
  -webkit-text-fill-color: transparent; 
  filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.3));
- margin-bottom: 50px;
+ margin-bottom: 30px;
  text-transform: uppercase;
  }
 
@@ -102,6 +104,73 @@
  a.nav-btn:hover {
  border-color: var(--secondary);
  box-shadow: 0 0 30px rgba(112, 0, 255, 0.3);
+ }
+
+ /* --- Yeni Eklenen Sitedeki Sayaç Alanı Stilleri --- */
+ .stats-container {
+ display: flex;
+ gap: 20px;
+ margin-top: 40px;
+ justify-content: center;
+ flex-wrap: wrap;
+ z-index: 10;
+ }
+
+ .stat-box {
+ background: var(--glass);
+ border: 1px solid var(--border);
+ padding: 15px 25px;
+ border-radius: 4px;
+ text-align: center;
+ min-width: 170px;
+ backdrop-filter: blur(20px);
+ transition: all 0.3s ease;
+ }
+
+ .stat-box:hover {
+ border-color: var(--primary);
+ box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+ }
+
+ .stat-title {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.65rem;
+ letter-spacing: 2px;
+ color: rgba(255, 255, 255, 0.4);
+ display: block;
+ margin-bottom: 5px;
+ }
+
+ .stat-value {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 1.8rem;
+ font-weight: 700;
+ color: var(--primary);
+ text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+ }
+
+ .stat-icon {
+ font-size: 0.9rem;
+ margin-right: 6px;
+ color: rgba(255, 255, 255, 0.3);
+ }
+
+ /* Durum Toast Bildirim Kutusu */
+ .toast-notification {
+ position: fixed;
+ bottom: 20px;
+ right: 20px;
+ background: rgba(10, 10, 15, 0.9);
+ border: 1px solid var(--primary);
+ color: #fff;
+ padding: 12px 24px;
+ border-radius: 4px;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.75rem;
+ letter-spacing: 1px;
+ display: none;
+ z-index: 99999;
+ box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
  }
 
  .scroll-indicator {
@@ -411,8 +480,21 @@
  <div class="logo">KSCRIPT.GG</div>
  <div class="btn-container">
  <div class="nav-btn" onclick="openMenu()">SCRIPTS</div>
- <a href="https://www.mediafire.com/file/6jep5krm709tjq7/Solara.rar/file" target="_blank" class="nav-btn">EXECUTOR</a>
+ <!-- Linki doğrudan açmak yerine Firebase'e tıklamayı işleyen recordExecClick fonksiyonunu tetikliyoruz -->
+ <div class="nav-btn" style="border-color: var(--secondary); box-shadow: 0 0 15px rgba(112, 0, 255, 0.15);" onclick="recordExecClick('https://www.mediafire.com/file/6jep5krm709tjq7/Solara.rar/file')">EXECUTOR</div>
  <div class="nav-btn" id="ksInfoBtn">INFO & GUIDE</div>
+ </div>
+
+ <!-- Yeni Canlı Global Sayaç Paneli -->
+ <div class="stats-container">
+   <div class="stat-box">
+     <span class="stat-title"><i class="fa-solid fa-cloud-arrow-down stat-icon"></i>SCRIPT DOWNLOADS</span>
+     <span id="web-counter" class="stat-value">...</span>
+   </div>
+   <div class="stat-box">
+     <span class="stat-title"><i class="fa-solid fa-terminal stat-icon"></i>EXECUTOR CLICKS</span>
+     <span id="exec-counter" class="stat-value">...</span>
+   </div>
  </div>
 
  <div class="scroll-indicator" onclick="scrollToReviews()">
@@ -467,32 +549,32 @@
  <p style="color: #555; font-size: 0.8rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
  <br> 
  <div id="menu-list">
- <div class="script-card" onclick="window.open('https://www.mediafire.com/file/fvnt2938sc9y161/Kscript.lua/file')">
+ <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/fvnt2938sc9y161/Kscript.lua/file')">
  <h3>Universal Script V1.3</h3>
  <p>Everything You Are Looking For İs Here</p>
  </div>
 
- <div class="script-card" onclick="window.open('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
+ <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
  <h3>The Button Script</h3>
  <p>The Script Of The Button Game İn Roblox</p>
  </div>
 
- <div class="script-card" onclick="window.open('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
+ <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
  <h3>Steal A Brainrot Script</h3>
  <p>The Script Of Steal A Brainrot Game İn Roblox</p>
  </div>
 
- <div class="script-card" onclick="window.open('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
+ <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
  <h3>C00lkid Gui</h3>
  <p>You might think you're like c00lkid :) </p>
  </div>
 
- <div class="script-card"  onclick="window.open('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
+ <div class="script-card"  onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
  <h3>Murder Mystery 2 Script</h3>
  <p>MM2 Also Do What You Want</p>
  </div>
 
- <div class="script-card" onclick="window.open('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
+ <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
  <h3>Fling Script</h3>
  <p>This İs A Fling Script  You Can Select A Player From The Menu And Make Them Fly.</p>
  </div>
@@ -526,7 +608,174 @@
  </div>
  </div>
 
+ <!-- Özel Bildirim Toast Elemanı -->
+ <div id="toast" class="toast-notification"></div>
+
+ <!-- Firebase Entegrasyonu ve Global Fonksiyonlar -->
+ <script type="module">
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+   import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+   import { getFirestore, doc, updateDoc, onSnapshot, increment, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+   // Mediafire verilerinden gelen başlangıç (baseline) değerleri
+   const BASE_SCRIPTS = 1202;
+   const BASE_EXECUTOR = 2394;
+
+   // Firebase Yapılandırması (Sistem tarafından doldurulacaktır)
+   const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+       apiKey: "",
+       authDomain: "default-app-id.firebaseapp.com",
+       projectId: "default-app-id",
+       storageBucket: "default-app-id.appspot.com",
+       messagingSenderId: "123456789",
+       appId: "default-app-id"
+   };
+
+   // Firebase Servislerinin Başlatılması
+   const app = initializeApp(firebaseConfig);
+   const auth = getAuth(app);
+   const db = getFirestore(app);
+   const appId = typeof __app_id !== 'undefined' ? __app_id : 'kscript-counter-app';
+
+   // Güvenli Veri Yolu
+   const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'stats');
+
+   const webCounterEl = document.getElementById('web-counter');
+   const execCounterEl = document.getElementById('exec-counter');
+   let isFirebaseReady = false;
+
+   // Kullanıcı Bilgilendirme Kutusu Gösterimi
+   function showToast(message) {
+       const toast = document.getElementById('toast');
+       toast.textContent = message;
+       toast.style.display = 'block';
+       setTimeout(() => {
+           toast.style.display = 'none';
+       }, 3000);
+   }
+
+   // Firebase Kimlik Doğrulama Süreci (Rule 3'e uygun öncelikli özel token)
+   const initFirebase = async () => {
+       try {
+           if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+               await signInWithCustomToken(auth, __initial_auth_token);
+           } else {
+               await signInAnonymously(auth);
+           }
+       } catch (error) {
+           console.error("Firebase Auth hatası:", error);
+           try {
+               await signInAnonymously(auth);
+           } catch (e) {
+               console.error("Yedek anonim giriş başarısız:", e);
+           }
+       }
+   };
+
+   initFirebase();
+
+   // Kimlik Doğrulama Durumu Değiştiğinde
+   onAuthStateChanged(auth, async (user) => {
+       if (user) {
+           isFirebaseReady = true;
+           try {
+               // Dökümanı canlı dinlemeye başla
+               onSnapshot(counterDocRef, (snap) => {
+                   if (snap.exists()) {
+                       const data = snap.data();
+                       // Veritabanı değerleri ile başlangıç değerlerini toplayarak ekrana yansıtıyoruz
+                       webCounterEl.textContent = BASE_SCRIPTS + (data.webClicks || 0);
+                       execCounterEl.textContent = BASE_EXECUTOR + (data.execClicks || 0);
+                   } else {
+                       // Döküman yoksa oluştur
+                       setDoc(counterDocRef, { webClicks: 0, execClicks: 0 })
+                        .catch(err => console.log("İlk döküman oluşturma yetki denemesi:", err));
+                       webCounterEl.textContent = BASE_SCRIPTS;
+                       execCounterEl.textContent = BASE_EXECUTOR;
+                   }
+               }, (err) => {
+                   console.error("Sayaç verileri canlı okunurken hata oluştu:", err);
+               });
+           } catch (e) {
+               console.error("Başlangıç döküman kurulum hatası:", e);
+           }
+       }
+   });
+
+   // Tıklama kayıt fonksiyonları (Global erişim için 'window' nesnesine bağlandı)
+   window.recordScriptClick = async function(downloadUrl) {
+       // Bu script linki için benzersiz bir tarayıcı depolama anahtarı oluşturuyoruz
+       const scriptId = btoa(downloadUrl).replace(/=/g, '');
+       const storageKey = 'kscript_clicked_' + scriptId;
+
+       // Eğer bu cihazdan bu script daha önce indirilmişse, veritabanını artırmadan doğrudan yönlendir
+       if (localStorage.getItem(storageKey)) {
+           showToast("Yönlendiriliyorsunuz...");
+           window.open(downloadUrl, '_blank');
+           return;
+       }
+
+       if (!isFirebaseReady) {
+           window.open(downloadUrl, '_blank');
+           return;
+       }
+
+       try {
+           await updateDoc(counterDocRef, {
+               webClicks: increment(1)
+           });
+           localStorage.setItem(storageKey, 'true'); // Cihaza kaydedildi
+           showToast("Script Tıklaması Kaydedildi!");
+       } catch (error) {
+           console.error("Web tık güncellenemedi:", error);
+           try {
+               await setDoc(counterDocRef, { webClicks: 1, execClicks: 0 }, { merge: true });
+               localStorage.setItem(storageKey, 'true');
+           } catch (err) {
+               console.error("SetDoc yedekleme yazma hatası:", err);
+           }
+       } finally {
+           window.open(downloadUrl, '_blank');
+       }
+   };
+
+   window.recordExecClick = async function(downloadUrl) {
+       const storageKey = 'kscript_exec_clicked';
+
+       // Eğer bu cihazdan executor daha önce indirilmişse, veritabanını artırmadan doğrudan yönlendir
+       if (localStorage.getItem(storageKey)) {
+           showToast("Yönlendiriliyorsunuz...");
+           window.open(downloadUrl, '_blank');
+           return;
+       }
+
+       if (!isFirebaseReady) {
+           window.open(downloadUrl, '_blank');
+           return;
+       }
+
+       try {
+           await updateDoc(counterDocRef, {
+               execClicks: increment(1)
+           });
+           localStorage.setItem(storageKey, 'true'); // Cihaza kaydedildi
+           showToast("Executor İndirmesi Kaydedildi!");
+       } catch (error) {
+           console.error("Executor tık güncellenemedi:", error);
+           try {
+               await setDoc(counterDocRef, { webClicks: 0, execClicks: 1 }, { merge: true });
+               localStorage.setItem(storageKey, 'true');
+           } catch (err) {
+               console.error("SetDoc yedekleme yazma hatası:", err);
+           }
+       } finally {
+           window.open(downloadUrl, '_blank');
+       }
+   };
+ </script>
+
  <script>
+ // Sitenin Orijinal Arayüz Scriptleri
  function openMenu() { 
  document.getElementById('script-overlay').style.display = 'block'; 
  }
