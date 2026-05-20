@@ -5,7 +5,6 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>KScript.gg | Elite Hub</title>
  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
- <!-- FontAwesome İkon Kitaplığı (Sayaç ikonları için) -->
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  <style>
  :root { 
@@ -31,7 +30,6 @@
    linear-gradient(to bottom, #020204 0%, #050508 100%);
  }
 
- /* --- CLOUDFLARE BOT & DDOS KORUMA SİMÜLASYONU (SECURITY GATE) --- */
  #security-gate {
  position: fixed;
  top: 0; left: 0; width: 100%; height: 100%;
@@ -67,7 +65,7 @@
 
  .cloudflare-shield {
  font-size: 3rem;
- color: #f6821f; /* Orijinal Cloudflare Turuncusu */
+ color: #f6821f;
  margin-bottom: 25px;
  filter: drop-shadow(0 0 15px rgba(246, 130, 31, 0.3));
  animation: shield-pulse 2s infinite alternate;
@@ -124,7 +122,6 @@
  gap: 8px;
  }
 
- /* Teknolojik Arka Plan Grid Deseni */
  .grid-overlay {
  position: fixed;
  top: 0; left: 0; width: 100%; height: 100%;
@@ -164,7 +161,6 @@
  position: relative;
  }
 
- /* Elit Terminal Üst Başlık Bilgisi */
  .system-badge {
  font-family: var(--font-code);
  font-size: 0.7rem;
@@ -269,7 +265,6 @@
  color: var(--primary);
  }
 
- /* EXECUTOR Özel Hover Efekti (Elit Kodcu Mor Parlama) */
  .exec-btn-style:hover {
  border-color: var(--secondary) !important;
  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.15) !important;
@@ -277,7 +272,6 @@
  background: rgba(139, 92, 246, 0.02) !important;
  }
 
- /* --- Elit Sayaç Tasarımı --- */
  .stats-container {
  display: flex;
  gap: 16px;
@@ -377,7 +371,6 @@
  60% { transform: translateY(-3px); }
  }
 
- /* --- Reviews (Yorumlar) Tasarımı --- */
  .reviews-section {
  min-height: 100vh;
  width: 100%;
@@ -544,7 +537,6 @@
  letter-spacing: 1px;
  }
 
- /* --- Elit Modallar & Overlay Tasarımları --- */
  .ks-modal, .overlay {
  display: none; 
  position: fixed; 
@@ -664,7 +656,6 @@
  margin-top: 12px;
  }
 
- /* Durum Toast Bildirim Kutusu */
  .toast-notification {
  position: fixed;
  bottom: 25px;
@@ -714,12 +705,10 @@
  <div class="logo">KSCRIPT.GG</div>
  <div class="btn-container">
  <div class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-code" style="font-size:0.75rem;"></i> SCRIPTS</div>
- <!-- Linki doğrudan açmak yerine Firebase'e tıklamayı işleyen recordExecClick fonksiyonunu tetikliyoruz -->
- <div class="nav-btn exec-btn-style" onclick="recordExecClick('https://www.mediafire.com/file/6jep5krm709tjq7/Solara.rar/file')"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
+ <div class="nav-btn exec-btn-style" onclick="handleExecDownload()"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
  <div class="nav-btn" id="ksInfoBtn"><i class="fa-solid fa-shield-halved" style="font-size:0.75rem;"></i> INFO & GUIDE</div>
  </div>
 
- <!-- Yeni Canlı Global Sayaç Paneli -->
  <div class="stats-container">
    <div class="stat-box">
      <span class="stat-title">DATABASE // SCRIPT DOWNS</span>
@@ -741,9 +730,8 @@
  <div class="reviews-container">
  <h2 class="reviews-title">USER REVIEWS</h2>
  
- <!-- Yorum Formu -->
  <div id="reviewFormContainer">
- <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
+ <form id="reviewForm" class="review-form" onsubmit="handleReviewSubmit(event)">
  <div class="form-group">
  <label>Your Name</label>
  <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
@@ -783,34 +771,34 @@
  <p style="color: #444; font-family: 'Fira Code', monospace; font-size: 0.7rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
  <br> 
  <div id="menu-list">
- <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/fvnt2938sc9y161/Kscript.lua/file')">
+ <div class="script-card" onclick="handleScriptDownload('https://www.mediafire.com/file/fvnt2938sc9y161/Kscript.lua/file')">
  <h3>Universal Script V1.3</h3>
  <p>Everything You Are Looking For İs Here</p>
  </div>
 
- <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
+ <div class="script-card" onclick="handleScriptDownload('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
  <h3>The Button Script</h3>
  <p>The Script Of The Button Game İn Roblox</p>
  </div>
 
- <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
+ <div class="script-card" onclick="handleScriptDownload('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
  <h3>Steal A Brainrot Script</h3>
  <p>The Script Of Steal A Brainrot Game İn Roblox</p>
  </div>
 
- <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
+ <div class="script-card" onclick="handleScriptDownload('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
  <h3>C00lkid Gui</h3>
  <p>You might think you're like c00lkid :) </p>
  </div>
 
- <div class="script-card"  onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
+ <div class="script-card"  onclick="handleScriptDownload('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
  <h3>Murder Mystery 2 Script</h3>
  <p>MM2 Also Do What You Want</p>
  </div>
 
- <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
+ <div class="script-card" onclick="handleScriptDownload('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
  <h3>Fling Script</h3>
- <p>This İs A Fling Script  You Can Select A Player From The Menu And Make Them Fly.</p>
+ <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
  </div>
  </div>
  </div>
@@ -842,17 +830,15 @@
  </div>
  </div>
 
- <!-- Özel Bildirim Toast Elemanı -->
  <div id="toast" class="toast-notification"></div>
 
- <!-- Cloudflare Simülasyonu Çalışma Mantığı -->
  <script>
+   // Cloudflare Simülasyonu
    document.addEventListener("DOMContentLoaded", () => {
      const gate = document.getElementById("security-gate");
      const fill = document.getElementById("gate-progress");
      const log = document.getElementById("gate-log");
 
-     // Eğer kullanıcı bu sekmede zaten doğrulandıysa doğrudan geçiş sağla
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
        return;
@@ -871,12 +857,11 @@
      let logIndex = 0;
 
      const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 8) + 3; // Rastgele artış
+       progress += Math.floor(Math.random() * 8) + 3;
        if (progress > 100) progress = 100;
 
        fill.style.width = progress + "%";
 
-       // Belirli yüzdelerde terminal logunu güncelle
        if (progress >= 15 && logIndex === 0) { logIndex = 1; }
        if (progress >= 35 && logIndex === 1) { logIndex = 2; }
        if (progress >= 55 && logIndex === 2) { logIndex = 3; }
@@ -891,7 +876,6 @@
 
        if (progress >= 100) {
          clearInterval(interval);
-         // 300ms sonra ekranı kaydırarak kapat
          setTimeout(() => {
            gate.style.opacity = "0";
            gate.style.transform = "scale(1.05)";
@@ -903,342 +887,193 @@
        }
      }, 100);
    });
- </script>
 
- <!-- Firebase Entegrasyonu ve Global Fonksiyonlar -->
- <script type="module">
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-   import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-   import { getFirestore, doc, updateDoc, onSnapshot, increment, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-   // Mediafire verilerinden gelen başlangıç (baseline) değerleri
-   const BASE_SCRIPTS = 1202;
-   const BASE_EXECUTOR = 2394;
-
-   // Firebase Yapılandırması (Sistem tarafından doldurulacaktır)
-   const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-       apiKey: "",
-       authDomain: "default-app-id.firebaseapp.com",
-       projectId: "default-app-id",
-       storageBucket: "default-app-id.appspot.com",
-       messagingSenderId: "123456789",
-       appId: "default-app-id"
-   };
-
-   // Firebase Servislerinin Başlatılması
-   const app = initializeApp(firebaseConfig);
-   const auth = getAuth(app);
-   const db = getFirestore(app);
-   const appId = typeof __app_id !== 'undefined' ? __app_id : 'kscript-counter-app';
-
-   // Güvenli Veri Yolu
-   const counterDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'stats');
-
-   const webCounterEl = document.getElementById('web-counter');
-   const execCounterEl = document.getElementById('exec-counter');
-   let isFirebaseReady = false;
-
-   // Kullanıcı Bilgilendirme Kutusu Gösterimi
-   function showToast(message) {
-       const toast = document.getElementById('toast');
-       toast.textContent = message;
-       toast.style.display = 'block';
-       setTimeout(() => {
-           toast.style.display = 'none';
-       }, 3000);
+   // Temel UI Fonksiyonları
+   function openMenu() { 
+     document.getElementById('script-overlay').style.display = 'block'; 
    }
 
-   // Firebase Kimlik Doğrulama Süreci (Rule 3'e uygun öncelikli özel token)
-   const initFirebase = async () => {
-       try {
-           if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-               await signInWithCustomToken(auth, __initial_auth_token);
-           } else {
-               await signInAnonymously(auth);
-           }
-       } catch (error) {
-           console.error("Firebase Auth hatası:", error);
-           try {
-               await signInAnonymously(auth);
-           } catch (e) {
-               console.error("Yedek anonim giriş başarısız:", e);
-           }
-       }
-   };
+   function closeMenu() { 
+     document.getElementById('script-overlay').style.display = 'none'; 
+   }
 
-   initFirebase();
+   function scrollToReviews() {
+     document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+   }
 
-   // Kimlik Doğrulama Durumu Değiştiğinde
-   onAuthStateChanged(auth, async (user) => {
-       if (user) {
-           isFirebaseReady = true;
-           try {
-               // Dökümanı canlı dinlemeye başla
-               onSnapshot(counterDocRef, (snap) => {
-                   if (snap.exists()) {
-                       const data = snap.data();
-                       // Veritabanı değerleri ile başlangıç değerlerini toplayarak ekrana yansıtıyoruz
-                       webCounterEl.innerHTML = `<i class="fa-solid fa-cloud-arrow-down stat-icon"></i> ` + (BASE_SCRIPTS + (data.webClicks || 0));
-                       execCounterEl.innerHTML = `<i class="fa-solid fa-terminal stat-icon"></i> ` + (BASE_EXECUTOR + (data.execClicks || 0));
-                   } else {
-                       // Döküman yoksa oluştur
-                       setDoc(counterDocRef, { webClicks: 0, execClicks: 0 })
-                        .catch(err => console.log("İlk döküman oluşturma yetki denemesi:", err));
-                       webCounterEl.innerHTML = `<i class="fa-solid fa-cloud-arrow-down stat-icon"></i> ` + BASE_SCRIPTS;
-                       execCounterEl.innerHTML = `<i class="fa-solid fa-terminal stat-icon"></i> ` + BASE_EXECUTOR;
-                   }
-               }, (err) => {
-                   console.error("Sayaç verileri canlı okunurken hata oluştu:", err);
-               });
-           } catch (e) {
-               console.error("Başlangıç döküman kurulum hatası:", e);
-           }
-       }
+   // Modal İşlemleri
+   const modal = document.getElementById("ksInfoModal");
+   const btn = document.getElementById("ksInfoBtn");
+   const close = document.getElementById("ksCloseBtn");
+
+   btn.onclick = () => modal.style.display = "block";
+   close.onclick = () => modal.style.display = "none";
+   
+   window.onclick = (e) => { 
+     if(e.target == modal) modal.style.display = "none"; 
+   }
+
+   document.getElementById('script-overlay').addEventListener('click', function(e) {
+     if(e.target === this) closeMenu();
    });
 
-   // Tıklama kayıt fonksiyonları (Global erişim için 'window' nesnesine bağlandı)
-   window.recordScriptClick = async function(downloadUrl) {
-       // Bu script linki için benzersiz bir tarayıcı depolama anahtarı oluşturuyoruz
-       const scriptId = btoa(downloadUrl).replace(/=/g, '');
-       const storageKey = 'kscript_clicked_' + scriptId;
+   // Toast Bildirimi
+   function showToast(message) {
+     const toast = document.getElementById('toast');
+     toast.textContent = message;
+     toast.style.display = 'block';
+     setTimeout(() => {
+       toast.style.display = 'none';
+     }, 3000);
+   }
 
-       // Eğer bu cihazdan bu script daha önce indirilmişse, veritabanını artırmadan doğrudan yönlendir
-       if (localStorage.getItem(storageKey)) {
-           showToast("Yönlendiriliyorsunuz...");
-           window.open(downloadUrl, '_blank');
-           return;
+   // Basit Sayaç Sistemi (LocalStorage Tabanlı)
+   function updateCounters() {
+     const scriptClicks = parseInt(localStorage.getItem('kscript_script_clicks') || '0');
+     const execClicks = parseInt(localStorage.getItem('kscript_exec_clicks') || '0');
+     
+     document.getElementById('web-counter').innerHTML = 
+       `<i class="fa-solid fa-cloud-arrow-down stat-icon"></i> ${1202 + scriptClicks}`;
+     document.getElementById('exec-counter').innerHTML = 
+       `<i class="fa-solid fa-terminal stat-icon"></i> ${2394 + execClicks}`;
+   }
+
+   // Script İndirme İşleyici
+   function handleScriptDownload(url) {
+     const scriptId = btoa(url).replace(/=/g, '');
+     const storageKey = 'kscript_clicked_' + scriptId;
+
+     if (!localStorage.getItem(storageKey)) {
+       const currentClicks = parseInt(localStorage.getItem('kscript_script_clicks') || '0');
+       localStorage.setItem('kscript_script_clicks', currentClicks + 1);
+       localStorage.setItem(storageKey, 'true');
+     }
+     
+     updateCounters();
+     showToast("Yönlendiriliyorsunuz...");
+     window.open(url, '_blank');
+   }
+
+   // Executor İndirme İşleyici
+   function handleExecDownload() {
+     const execUrl = 'https://www.mediafire.com/file/6jep5krm709tjq7/Solara.rar/file';
+     const storageKey = 'kscript_exec_clicked';
+
+     if (!localStorage.getItem(storageKey)) {
+       const currentClicks = parseInt(localStorage.getItem('kscript_exec_clicks') || '0');
+       localStorage.setItem('kscript_exec_clicks', currentClicks + 1);
+       localStorage.setItem(storageKey, 'true');
+     }
+     
+     updateCounters();
+     showToast("Executor İndirmesi Başlatılıyor...");
+     window.open(execUrl, '_blank');
+   }
+
+   // Yorum Sistemi
+   let selectedRating = 0;
+
+   document.querySelectorAll('.star').forEach(star => {
+     star.addEventListener('click', function() {
+       selectedRating = parseInt(this.dataset.rating);
+       document.getElementById('ratingInput').value = selectedRating;
+       document.querySelectorAll('.star').forEach((s, i) => {
+         s.classList.toggle('active', i < selectedRating);
+       });
+     });
+     
+     star.addEventListener('mouseover', function() {
+       const rating = parseInt(this.dataset.rating);
+       document.querySelectorAll('.star').forEach((s, i) => {
+         s.style.color = i < rating ? '#ffca08' : '#333';
+       });
+     });
+   });
+
+   document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
+     document.querySelectorAll('.star').forEach((s, i) => {
+       s.style.color = i < selectedRating ? '#ffca08' : '#333';
+     });
+   });
+
+   function handleReviewSubmit(event) {
+     event.preventDefault();
+     
+     const username = document.getElementById('reviewUsername').value.trim();
+     const comment = document.getElementById('reviewComment').value.trim();
+     const rating = parseInt(document.getElementById('ratingInput').value);
+     const errorDiv = document.getElementById('formError');
+     
+     if (localStorage.getItem('kscript_review_submitted')) {
+       errorDiv.textContent = 'You have already submitted a review!';
+       return;
+     }
+     
+     if (rating === 0) {
+       errorDiv.textContent = 'Please select a rating!';
+       return;
+     }
+     
+     errorDiv.textContent = '';
+     
+     // Yorumu LocalStorage'a Kaydet
+     let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+     localReviews.unshift({ 
+       username, 
+       comment, 
+       rating,
+       date: new Date().toISOString()
+     });
+     localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
+     localStorage.setItem('kscript_review_submitted', 'true');
+     
+     document.getElementById('reviewFormContainer').innerHTML = `
+       <div class="thank-you-message">
+         ★ THANK YOU FOR YOUR REVIEW! ★<br>
+         <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been saved locally.</span>
+       </div>
+     `;
+     
+     renderAllReviews();
+   }
+
+   function renderAllReviews() {
+     const reviewsList = document.getElementById('reviews-list');
+     const localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+     
+     if (localReviews.length === 0) {
+       reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+       return;
+     }
+     
+     reviewsList.innerHTML = localReviews.map(r => `
+       <div class="review-card">
+         <div style="display:flex; justify-content:space-between; align-items:center;">
+           <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
+           <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+         </div>
+         <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
+       </div>
+     `).join('');
+     
+     if (localStorage.getItem('kscript_review_submitted')) {
+       const container = document.getElementById('reviewFormContainer');
+       if (container.querySelector('form')) {
+         container.innerHTML = `
+           <div class="thank-you-message">
+             ★ THANK YOU FOR YOUR REVIEW! ★<br>
+             <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been saved locally.</span>
+           </div>
+         `;
        }
+     }
+   }
 
-       if (!isFirebaseReady) {
-           window.open(downloadUrl, '_blank');
-           return;
-       }
-
-       try {
-           await updateDoc(counterDocRef, {
-               webClicks: increment(1)
-           });
-           localStorage.setItem(storageKey, 'true'); // Cihaza kaydedildi
-           showToast("Script Tıklaması Kaydedildi!");
-       } catch (error) {
-           console.error("Web tık güncellenemedi:", error);
-           try {
-               await setDoc(counterDocRef, { webClicks: 1, execClicks: 0 }, { merge: true });
-               localStorage.setItem(storageKey, 'true');
-           } catch (err) {
-               console.error("SetDoc yedekleme yazma hatası:", err);
-           }
-       } finally {
-           window.open(downloadUrl, '_blank');
-       }
-   };
-
-   window.recordExecClick = async function(downloadUrl) {
-       const storageKey = 'kscript_exec_clicked';
-
-       // Eğer bu cihazdan executor daha önce indirilmişse, veritabanını artırmadan doğrudan yönlendir
-       if (localStorage.getItem(storageKey)) {
-           showToast("Yönlendiriliyorsunuz...");
-           window.open(downloadUrl, '_blank');
-           return;
-       }
-
-       if (!isFirebaseReady) {
-           window.open(downloadUrl, '_blank');
-           return;
-       }
-
-       try {
-           await updateDoc(counterDocRef, {
-               execClicks: increment(1)
-           });
-           localStorage.setItem(storageKey, 'true'); // Cihaza kaydedildi
-           showToast("Executor İndirmesi Kaydedildi!");
-       } catch (error) {
-           console.error("Executor tık güncellenemedi:", error);
-           try {
-               await setDoc(counterDocRef, { webClicks: 0, execClicks: 1 }, { merge: true });
-               localStorage.setItem(storageKey, 'true');
-           } catch (err) {
-               console.error("SetDoc yedekleme yazma hatası:", err);
-           }
-       } finally {
-           window.open(downloadUrl, '_blank');
-       }
-   };
- </script>
-
- <script>
- // Sitenin Orijinal Arayüz Scriptleri
- function openMenu() { 
- document.getElementById('script-overlay').style.display = 'block'; 
- }
-
- function closeMenu() { 
- document.getElementById('script-overlay').style.display = 'none'; 
- }
-
- function scrollToReviews() {
- document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
- }
- 
- const modal = document.getElementById("ksInfoModal");
- const btn = document.getElementById("ksInfoBtn");
- const close = document.getElementById("ksCloseBtn");
-
- btn.onclick = () => modal.style.display = "block";
- close.onclick = () => modal.style.display = "none";
- 
- window.onclick = (e) => { 
- if(e.target == modal) modal.style.display = "none"; 
- }
-
- document.getElementById('script-overlay').addEventListener('click', function(e) {
- if(e.target === this) closeMenu();
- });
-
- // ========== YORUM SİSTEMİ + FORMSPREE ==========
- let selectedRating = 0;
- const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
-
- document.querySelectorAll('.star').forEach(star => {
- star.addEventListener('click', function() {
- selectedRating = parseInt(this.dataset.rating);
- document.getElementById('ratingInput').value = selectedRating;
- document.querySelectorAll('.star').forEach((s, i) => {
- s.classList.toggle('active', i < selectedRating);
- });
- });
- 
- star.addEventListener('mouseover', function() {
- const rating = parseInt(this.dataset.rating);
- document.querySelectorAll('.star').forEach((s, i) => {
- s.style.color = i < rating ? '#ffca08' : '#333';
- });
- });
- });
-
- document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
- document.querySelectorAll('.star').forEach((s, i) => {
- s.style.color = i < selectedRating ? '#ffca08' : '#333';
- });
- });
-
- async function submitReview(event) {
- event.preventDefault();
- 
- const username = document.getElementById('reviewUsername').value.trim();
- const comment = document.getElementById('reviewComment').value.trim();
- const rating = parseInt(document.getElementById('ratingInput').value);
- const errorDiv = document.getElementById('formError');
- 
- if (localStorage.getItem('kscript_review_submitted')) {
- errorDiv.textContent = 'You have already submitted a review!';
- return;
- }
- 
- if (rating === 0) {
- errorDiv.textContent = 'Please select a rating!';
- return;
- }
- 
- errorDiv.textContent = '';
- 
- const submitBtn = document.getElementById('submitReviewBtn');
- submitBtn.disabled = true;
- submitBtn.textContent = 'SENDING...';
- 
- try {
- const response = await fetch(FORMSPREE_URL, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- username: username,
- comment: comment,
- rating: rating,
- date: new Date().toISOString(),
- page: 'KScript.gg Reviews'
- })
- });
- 
- if (response.ok) {
- let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
- localReviews.unshift({ username, comment, rating });
- localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
- localStorage.setItem('kscript_review_submitted', 'true');
- 
- document.getElementById('reviewFormContainer').innerHTML = `
- <div class="thank-you-message">
- ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
- </div>
- `;
- 
- renderAllReviews();
- } else {
- throw new Error('Form gönderilemedi');
- }
- } catch (error) {
- console.error('Hata:', error);
- errorDiv.textContent = 'Something went wrong. Please try again.';
- submitBtn.disabled = false;
- submitBtn.textContent = 'SUBMIT REVIEW';
- }
- }
-
- async function loadReviewsFromFile() {
- try {
- const response = await fetch("./comments.js");
- if (response.ok) {
- const jsText = await response.text();
- const globalComments = eval(jsText + "; globalComments;");
- return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
- }
- } catch (error) {
- console.log("comments.js yüklenemedi.");
- }
- return [];
- }
-
- function renderAllReviews() {
- const reviewsList = document.getElementById('reviews-list');
- 
- Promise.all([
- loadReviewsFromFile(),
- Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
- ]).then(([fileReviews, localReviews]) => {
- const allReviews = [...localReviews, ...fileReviews];
- 
- if (allReviews.length === 0) {
- reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
- return;
- }
- 
- reviewsList.innerHTML = allReviews.map(r => `
- <div class="review-card">
- <div style="display:flex; justify-content:space-between; align-items:center;">
- <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
- <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
- </div>
- <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
- </div>
- `).join('');
- });
- 
- if (localStorage.getItem('kscript_review_submitted')) {
- const container = document.getElementById('reviewFormContainer');
- if (container.querySelector('form')) {
- container.innerHTML = `
- <div class="thank-you-message">
- ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
- </div>
- `;
- }
- }
- }
-
- window.addEventListener('DOMContentLoaded', renderAllReviews);
+   // Sayfa Yüklendiğinde
+   window.addEventListener('DOMContentLoaded', () => {
+     updateCounters();
+     renderAllReviews();
+   });
  </script>
 </body>
 </html>
