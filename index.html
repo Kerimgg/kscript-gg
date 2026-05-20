@@ -314,172 +314,232 @@
  60% { transform: translateY(-3px); }
  }
 
- /* --- Reviews (Yorumlar) Tasarımı --- */
- .reviews-section {
- min-height: 100vh;
- width: 100%;
- padding: 100px 20px;
- background: rgba(2, 2, 4, 0.85);
- border-top: 1px solid rgba(255, 255, 255, 0.02);
- position: relative;
- }
+/* --- Reviews (Yorumlar) Tasarımı --- */
+.reviews-section {
+  min-height: 100vh;
+  width: 100%;
+  padding: 100px 20px;
+  background: rgba(2, 2, 4, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  position: relative;
+}
 
- .reviews-container {
- max-width: 680px;
- margin: 0 auto;
- }
+.reviews-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
- .reviews-title {
- font-family: 'Orbitron', sans-serif;
- font-size: 1.1rem;
- letter-spacing: 6px;
- color: rgba(255, 255, 255, 0.5);
- text-align: center;
- margin-bottom: 40px;
- text-transform: uppercase;
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 15px;
- }
+.reviews-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
 
- .reviews-title::before, .reviews-title::after {
- content: '';
- height: 1px;
- width: 40px;
- background: rgba(255, 255, 255, 0.1);
- }
+.reviews-title::before, .reviews-title::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: rgba(255, 255, 255, 0.1);
+}
 
- .review-form {
- background: rgba(5, 5, 8, 0.4);
- padding: 35px;
- border-radius: 4px;
- border: 1px solid var(--border);
- margin-bottom: 40px;
- backdrop-filter: blur(10px);
- }
+.review-form {
+  background: rgba(5, 5, 8, 0.4);
+  padding: 35px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
- .form-group {
- margin-bottom: 24px;
- }
+.form-group {
+  margin-bottom: 24px;
+}
 
- .form-group label {
- display: block;
- font-family: var(--font-code);
- font-size: 0.65rem;
- letter-spacing: 1.5px;
- color: rgba(255, 255, 255, 0.4);
- margin-bottom: 10px;
- text-transform: uppercase;
- }
+.form-group label {
+  display: block;
+  font-family: var(--font-code);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
 
- .form-group input,
- .form-group textarea {
- width: 100%;
- background: rgba(0, 0, 0, 0.4);
- border: 1px solid var(--border);
- padding: 14px 18px;
- border-radius: 4px;
- color: #fff;
- font-family: 'Inter', sans-serif;
- font-size: 0.85rem;
- resize: vertical;
- transition: 0.3s;
- }
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  resize: vertical;
+  transition: 0.3s;
+}
 
- .form-group input:focus,
- .form-group textarea:focus {
- outline: none;
- border-color: var(--primary);
- background: rgba(0, 242, 255, 0.01);
- box-shadow: 0 0 15px rgba(0, 242, 255, 0.05);
- }
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(0, 242, 255, 0.01);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.05);
+}
 
- .rating-stars {
- display: flex;
- gap: 8px;
- margin-top: 5px;
- }
+.rating-stars {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
 
- .star {
- font-size: 24px;
- color: #222;
- cursor: pointer;
- transition: 0.2s;
- }
+.star {
+  font-size: 24px;
+  color: #222;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
- .star:hover,
- .star.active {
- color: var(--primary);
- text-shadow: 0 0 12px rgba(0, 242, 255, 0.6);
- }
+.star:hover,
+.star.active {
+  color: var(--primary);
+  text-shadow: 0 0 12px rgba(0, 242, 255, 0.6);
+}
 
- .submit-btn {
- background: transparent;
- border: 1px solid var(--primary);
- color: var(--primary);
- padding: 15px 30px;
- font-family: 'Orbitron';
- letter-spacing: 3px;
- font-size: 0.75rem;
- cursor: pointer;
- border-radius: 4px;
- transition: 0.4s;
- width: 100%;
- margin-top: 10px;
- }
+.submit-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 15px 30px;
+  font-family: 'Orbitron';
+  letter-spacing: 3px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.4s;
+  width: 100%;
+  margin-top: 10px;
+}
 
- .submit-btn:hover {
- background: var(--primary);
- color: #000;
- box-shadow: 0 0 25px rgba(0, 242, 255, 0.25);
- }
+.submit-btn:hover {
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 25px rgba(0, 242, 255, 0.25);
+}
 
- .submit-btn:disabled {
- opacity: 0.4;
- cursor: not-allowed;
- }
+.submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
- .thank-you-message {
- text-align: center;
- color: var(--primary);
- font-family: 'Orbitron';
- letter-spacing: 2px;
- padding: 25px;
- font-size: 0.85rem;
- background: rgba(0, 242, 255, 0.02);
- border: 1px solid rgba(0, 242, 255, 0.1);
- border-radius: 4px;
- }
+.thank-you-message {
+  text-align: center;
+  color: var(--primary);
+  font-family: 'Orbitron';
+  letter-spacing: 2px;
+  padding: 25px;
+  font-size: 0.85rem;
+  background: rgba(0, 242, 255, 0.02);
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  border-radius: 4px;
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
 
- .review-card {
- background: rgba(255, 255, 255, 0.005);
- border: 1px solid rgba(255, 255, 255, 0.02);
- border-left: 2px solid var(--primary);
- padding: 24px;
- margin-bottom: 20px;
- border-radius: 4px;
- backdrop-filter: blur(5px);
- transition: 0.3s;
- }
+/* Grid yapısı */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
 
- .review-card:hover {
- background: rgba(255, 255, 255, 0.015);
- border-color: rgba(0, 242, 255, 0.15);
- }
+@media (max-width: 900px) {
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
- #reviews-list {
- min-height: 200px;
- }
+@media (max-width: 600px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
- .loading-text, .no-reviews {
- font-family: var(--font-code);
- color: #444;
- text-align: center;
- padding: 40px;
- font-size: 0.8rem;
- letter-spacing: 1px;
- }
+.review-card {
+  background: rgba(255, 255, 255, 0.005);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  border-left: 2px solid var(--primary);
+  padding: 24px;
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.review-card:hover {
+  background: rgba(255, 255, 255, 0.015);
+  border-color: rgba(0, 242, 255, 0.15);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.review-username {
+  font-family: 'Orbitron';
+  color: var(--primary);
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.review-rating {
+  color: #ffca08;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.review-comment {
+  color: #999;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  flex-grow: 1;
+  word-break: break-word;
+}
+
+.review-date {
+  color: #555;
+  font-size: 0.7rem;
+  margin-top: 15px;
+  font-family: 'Fira Code', monospace;
+}
+
+.loading-text, .no-reviews {
+  font-family: var(--font-code);
+  color: #444;
+  text-align: center;
+  padding: 40px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  grid-column: 1 / -1;
+}
 
  /* --- Elit Modallar & Overlay Tasarımları --- */
  .ks-modal, .overlay {
@@ -696,11 +756,9 @@
  </form>
  </div>
  
- <div id="reviews-list">
- <div class="loading-text">Loading reviews...</div>
- </div>
- </div>
- </div>
+ <div id="reviews-list" class="reviews-grid">
+  <div class="loading-text">Loading reviews...</div>
+</div>
 
  <div id="script-overlay" class="overlay">
  <span class="close-btn" onclick="closeMenu()">&times;</span>
@@ -881,148 +939,151 @@
  if(e.target === this) closeMenu();
  });
 
- // ========== YORUM SİSTEMİ + FORMSPREE ==========
- let selectedRating = 0;
- const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
+// ========== YORUM SİSTEMİ + FORMSPREE ==========
+let selectedRating = 0;
+const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
- document.querySelectorAll('.star').forEach(star => {
- star.addEventListener('click', function() {
- selectedRating = parseInt(this.dataset.rating);
- document.getElementById('ratingInput').value = selectedRating;
- document.querySelectorAll('.star').forEach((s, i) => {
- s.classList.toggle('active', i < selectedRating);
- });
- });
- 
- star.addEventListener('mouseover', function() {
- const rating = parseInt(this.dataset.rating);
- document.querySelectorAll('.star').forEach((s, i) => {
- s.style.color = i < rating ? '#ffca08' : '#333';
- });
- });
- });
+document.querySelectorAll('.star').forEach(star => {
+  star.addEventListener('click', function() {
+    selectedRating = parseInt(this.dataset.rating);
+    document.getElementById('ratingInput').value = selectedRating;
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.classList.toggle('active', i < selectedRating);
+    });
+  });
+  
+  star.addEventListener('mouseover', function() {
+    const rating = parseInt(this.dataset.rating);
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.style.color = i < rating ? '#ffca08' : '#333';
+    });
+  });
+});
 
- document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
- document.querySelectorAll('.star').forEach((s, i) => {
- s.style.color = i < selectedRating ? '#ffca08' : '#333';
- });
- });
+document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
+  document.querySelectorAll('.star').forEach((s, i) => {
+    s.style.color = i < selectedRating ? '#ffca08' : '#333';
+  });
+});
 
- async function submitReview(event) {
- event.preventDefault();
- 
- const username = document.getElementById('reviewUsername').value.trim();
- const comment = document.getElementById('reviewComment').value.trim();
- const rating = parseInt(document.getElementById('ratingInput').value);
- const errorDiv = document.getElementById('formError');
- 
- if (localStorage.getItem('kscript_review_submitted')) {
- errorDiv.textContent = 'You have already submitted a review!';
- return;
- }
- 
- if (rating === 0) {
- errorDiv.textContent = 'Please select a rating!';
- return;
- }
- 
- errorDiv.textContent = '';
- 
- const submitBtn = document.getElementById('submitReviewBtn');
- submitBtn.disabled = true;
- submitBtn.textContent = 'SENDING...';
- 
- try {
- const response = await fetch(FORMSPREE_URL, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- username: username,
- comment: comment,
- rating: rating,
- date: new Date().toISOString(),
- page: 'KScript.gg Reviews'
- })
- });
- 
- if (response.ok) {
- let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
- localReviews.unshift({ username, comment, rating });
- localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
- localStorage.setItem('kscript_review_submitted', 'true');
- 
- document.getElementById('reviewFormContainer').innerHTML = `
- <div class="thank-you-message">
- ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
- </div>
- `;
- 
- renderAllReviews();
- } else {
- throw new Error('Form gönderilemedi');
- }
- } catch (error) {
- console.error('Hata:', error);
- errorDiv.textContent = 'Something went wrong. Please try again.';
- submitBtn.disabled = false;
- submitBtn.textContent = 'SUBMIT REVIEW';
- }
- }
+async function submitReview(event) {
+  event.preventDefault();
+  
+  const username = document.getElementById('reviewUsername').value.trim();
+  const comment = document.getElementById('reviewComment').value.trim();
+  const rating = parseInt(document.getElementById('ratingInput').value);
+  const errorDiv = document.getElementById('formError');
+  
+  if (localStorage.getItem('kscript_review_submitted')) {
+    errorDiv.textContent = 'You have already submitted a review!';
+    return;
+  }
+  
+  if (rating === 0) {
+    errorDiv.textContent = 'Please select a rating!';
+    return;
+  }
+  
+  errorDiv.textContent = '';
+  
+  const submitBtn = document.getElementById('submitReviewBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'SENDING...';
+  
+  try {
+    const response = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: username,
+        comment: comment,
+        rating: rating,
+        date: new Date().toISOString(),
+        page: 'KScript.gg Reviews'
+      })
+    });
+    
+    if (response.ok) {
+      let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+      localReviews.unshift({ 
+        username, 
+        comment, 
+        rating,
+        date: new Date().toISOString()
+      });
+      localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
+      localStorage.setItem('kscript_review_submitted', 'true');
+      
+      document.getElementById('reviewFormContainer').innerHTML = `
+        <div class="thank-you-message">
+          ★ THANK YOU FOR YOUR REVIEW! ★<br>
+          <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
+        </div>
+      `;
+      
+      renderAllReviews();
+    } else {
+      throw new Error('Form gönderilemedi');
+    }
+  } catch (error) {
+    console.error('Hata:', error);
+    errorDiv.textContent = 'Something went wrong. Please try again.';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'SUBMIT REVIEW';
+  }
+}
 
- async function loadReviewsFromFile() {
- try {
- const response = await fetch("./comments.js");
- if (response.ok) {
- const jsText = await response.text();
- const globalComments = eval(jsText + "; globalComments;");
- return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
- }
- } catch (error) {
- console.log("comments.js yüklenemedi.");
- }
- return [];
- }
+async function loadReviewsFromFile() {
+  try {
+    const response = await fetch("./comments.js");
+    if (response.ok) {
+      const jsText = await response.text();
+      const globalComments = eval(jsText + "; globalComments;");
+      return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
+    }
+  } catch (error) {
+    console.log("comments.js yüklenemedi.");
+  }
+  return [];
+}
 
- function renderAllReviews() {
- const reviewsList = document.getElementById('reviews-list');
- 
- Promise.all([
- loadReviewsFromFile(),
- Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
- ]).then(([fileReviews, localReviews]) => {
- const allReviews = [...localReviews, ...fileReviews];
- 
- if (allReviews.length === 0) {
- reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
- return;
- }
- 
- reviewsList.innerHTML = allReviews.map(r => `
- <div class="review-card">
- <div style="display:flex; justify-content:space-between; align-items:center;">
- <span style="font-family:'Orbitron'; color:var(--primary); font-size:0.9rem;">${r.username || 'Anonymous'}</span>
- <span style="color:#ffca08;">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
- </div>
- <p style="color:#999; font-size:0.85rem; margin-top:12px; line-height:1.5;">${r.comment || ''}</p>
- </div>
- `).join('');
- });
- 
- if (localStorage.getItem('kscript_review_submitted')) {
- const container = document.getElementById('reviewFormContainer');
- if (container.querySelector('form')) {
- container.innerHTML = `
- <div class="thank-you-message">
- ★ THANK YOU FOR YOUR REVIEW! ★<br>
- <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
- </div>
- `;
- }
- }
- }
+function renderAllReviews() {
+  const reviewsList = document.getElementById('reviews-list');
+  
+  Promise.all([
+    loadReviewsFromFile(),
+    Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
+  ]).then(([fileReviews, localReviews]) => {
+    const allReviews = [...localReviews, ...fileReviews];
+    
+    if (allReviews.length === 0) {
+      reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+      return;
+    }
+    
+    reviewsList.innerHTML = allReviews.map(r => `
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-username">${r.username || 'Anonymous'}</span>
+          <span class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+        </div>
+        <p class="review-comment">${r.comment || ''}</p>
+        ${r.date ? `<div class="review-date">${new Date(r.date).toLocaleDateString('tr-TR')}</div>` : ''}
+      </div>
+    `).join('');
+  });
+  
+  if (localStorage.getItem('kscript_review_submitted')) {
+    const container = document.getElementById('reviewFormContainer');
+    if (container.querySelector('form')) {
+      container.innerHTML = `
+        <div class="thank-you-message">
+          ★ THANK YOU FOR YOUR REVIEW! ★<br>
+          <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
+        </div>
+      `;
+    }
+  }
+}
 
- window.addEventListener('DOMContentLoaded', renderAllReviews);
- </script>
-</body>
-</html>
+window.addEventListener('DOMContentLoaded', renderAllReviews);
