@@ -11,7 +11,7 @@
  --primary: #00f2ff; 
  --secondary: #8b5cf6; 
  --bg: #020204; 
- --glass: rgba(5, 5, 10, 0.65);
+ --glass: rgba(5, 5, 10, 0.92);
  --border: rgba(0, 242, 255, 0.08);
  --border-hover: rgba(0, 242, 255, 0.3);
  --font-code: 'Fira Code', monospace;
@@ -25,9 +25,9 @@
  font-family: 'Inter', sans-serif; 
  overflow-x: hidden;
  background-image: 
-   radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 55%),
-   radial-gradient(circle at 50% 70%, rgba(0, 242, 255, 0.05) 0%, transparent 60%),
-   linear-gradient(to bottom, #020204 0%, #050508 100%);
+  radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 55%),
+  radial-gradient(circle at 50% 70%, rgba(0, 242, 255, 0.05) 0%, transparent 60%),
+  linear-gradient(to bottom, #020204 0%, #050508 100%);
  }
 
  #security-gate {
@@ -42,13 +42,14 @@
  font-family: var(--font-code);
  padding: 20px;
  text-align: center;
- transition: opacity 0.6s ease, transform 0.6s ease;
+ transition: opacity 0.4s ease, transform 0.4s ease;
+ will-change: opacity, transform;
  }
 
  .gate-container {
  max-width: 450px;
  width: 100%;
- background: rgba(5, 5, 10, 0.8);
+ background: rgba(5, 5, 10, 0.95);
  border: 1px solid rgba(0, 242, 255, 0.15);
  padding: 40px 30px;
  border-radius: 4px;
@@ -69,11 +70,13 @@
  margin-bottom: 25px;
  filter: drop-shadow(0 0 15px rgba(246, 130, 31, 0.3));
  animation: shield-pulse 2s infinite alternate;
+ transform: translateZ(0);
+ will-change: transform;
  }
 
  @keyframes shield-pulse {
-   0% { transform: scale(1); opacity: 0.8; }
-   100% { transform: scale(1.05); opacity: 1; }
+   0% { transform: scale(1) translateZ(0); opacity: 0.8; }
+   100% { transform: scale(1.05) translateZ(0); opacity: 1; }
  }
 
  .gate-title {
@@ -126,7 +129,7 @@
  position: fixed;
  top: 0; left: 0; width: 100%; height: 100%;
  background-image: linear-gradient(rgba(255, 255, 255, 0.004) 1px, transparent 1px),
-                   linear-gradient(90deg, rgba(255, 255, 255, 0.004) 1px, transparent 1px);
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.004) 1px, transparent 1px);
  background-size: 40px 40px;
  pointer-events: none;
  z-index: -1;
@@ -142,12 +145,13 @@
  animation: pulse 12s infinite alternate;
  top: 50%;
  left: 50%;
- transform: translate(-50%, -50%);
+ transform: translate(-50%, -50%) translateZ(0);
+ will-change: transform;
  }
 
  @keyframes pulse {
- 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
- 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+ 0% { transform: translate(-50%, -50%) scale(1) translateZ(0); opacity: 0.4; }
+ 100% { transform: translate(-50%, -50%) scale(1.2) translateZ(0); opacity: 0.7; }
  }
 
  #main-page {
@@ -231,8 +235,7 @@
  font-family: 'Orbitron', sans-serif; 
  font-size: 0.8rem; 
  letter-spacing: 4px; 
- transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
- backdrop-filter: blur(12px); 
+ transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); 
  cursor: pointer; 
  border: 1px solid var(--border);
  text-align: center;
@@ -242,6 +245,7 @@
  align-items: center;
  justify-content: center;
  gap: 10px;
+ transform: translateZ(0);
  }
 
  .nav-btn::before {
@@ -259,7 +263,7 @@
  .nav-btn:hover { 
  background: rgba(0, 242, 255, 0.02); 
  border-color: var(--primary); 
- transform: translateY(-3px);
+ transform: translateY(-3px) translateZ(0);
  box-shadow: 0 10px 25px rgba(0, 242, 255, 0.1);
  letter-spacing: 5px;
  color: var(--primary);
@@ -346,12 +350,11 @@
  }
 
  .review-form {
- background: rgba(5, 5, 8, 0.4);
+ background: rgba(5, 5, 8, 0.6);
  padding: 35px;
  border-radius: 4px;
  border: 1px solid var(--border);
  margin-bottom: 40px;
- backdrop-filter: blur(10px);
  max-width: 680px;
  margin-left: auto;
  margin-right: auto;
@@ -461,13 +464,13 @@
 
  @media (max-width: 900px) {
  .reviews-grid {
-   grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
  }
  }
 
  @media (max-width: 600px) {
  .reviews-grid {
-   grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
  }
  }
 
@@ -477,8 +480,7 @@
  border-left: 2px solid var(--primary);
  padding: 24px;
  border-radius: 4px;
- backdrop-filter: blur(5px);
- transition: 0.3s;
+ transition: 0.25s;
  display: flex;
  flex-direction: column;
  height: 100%;
@@ -542,8 +544,7 @@
  z-index: 10000; 
  left: 0; top: 0;
  width: 100%; height: 100%;
- background-color: rgba(2, 2, 4, 0.96);
- backdrop-filter: blur(15px);
+ background-color: rgba(2, 2, 4, 0.98);
  overflow-y: auto;
  }
 
@@ -614,17 +615,17 @@
  }
 
  .script-card { 
- background: rgba(5, 5, 8, 0.4); 
+ background: rgba(5, 5, 8, 0.6); 
  border: 1px solid var(--border); 
  border-radius: 4px; 
- transition: all 0.3s ease; 
+ transition: all 0.25s ease; 
  cursor: pointer; 
  width: 320px; 
  padding: 25px;
  text-align: left;
  position: relative;
  overflow: hidden;
- backdrop-filter: blur(10px);
+ transform: translateZ(0);
  }
 
  .script-card::after {
@@ -640,7 +641,7 @@
  .script-card:hover { 
  background: rgba(0, 242, 255, 0.01);
  border-color: var(--primary);
- transform: translateY(-4px);
+ transform: translateY(-4px) translateZ(0);
  box-shadow: 0 10px 20px rgba(0, 242, 255, 0.05);
  }
  
@@ -677,400 +678,399 @@
 </head>
 <body>
 
- <!-- Cloudflare DDoS Protection Geçidi -->
  <div id="security-gate">
-   <div class="gate-container">
-     <div class="cloudflare-shield">
-       <i class="fa-solid fa-shield-halved"></i>
-     </div>
-     <h1 class="gate-title">CLOUDFLARE DDOS GUARD</h1>
-     <p class="gate-subtitle">Checking if the site connection is secure. This process is automatic. Your browser will redirect to <strong>KScript.gg</strong> shortly.</p>
-     
-     <div class="progress-bar-bg">
-       <div id="gate-progress" class="progress-bar-fill"></div>
-     </div>
-     
-     <div id="gate-log" class="terminal-log">
-       <i class="fa-solid fa-spinner fa-spin"></i> Analyzing browser parameters...
-     </div>
-   </div>
+    <div class="gate-container">
+      <div class="cloudflare-shield">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h1 class="gate-title">CLOUDFLARE DDOS GUARD</h1>
+      <p class="gate-subtitle">Checking if the site connection is secure. This process is automatic. Your browser will redirect to <strong>KScript.gg</strong> shortly.</p>
+      
+      <div class="progress-bar-bg">
+        <div id="gate-progress" class="progress-bar-fill"></div>
+      </div>
+      
+      <div id="gate-log" class="terminal-log">
+        <i class="fa-solid fa-spinner fa-spin"></i> Analyzing browser parameters...
+      </div>
+    </div>
  </div>
 
  <div class="grid-overlay"></div>
  <div class="glow"></div>
 
  <div id="main-page">
-   <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
-   <div class="logo">KSCRIPT.GG</div>
-   <div class="btn-container">
-     <div class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-code" style="font-size:0.75rem;"></i> SCRIPTS</div>
-     <div class="nav-btn exec-btn-style" onclick="recordExecClick('https://www.mediafire.com/file/y95roohbbqj3rby/Xeno-v1.3.55.rar/file')"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
-     <div class="nav-btn" id="ksInfoBtn"><i class="fa-solid fa-shield-halved" style="font-size:0.75rem;"></i> INFO & GUIDE</div>
-   </div>
+    <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
+    <div class="logo">KSCRIPT.GG</div>
+    <div class="btn-container">
+      <div class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-code" style="font-size:0.75rem;"></i> SCRIPTS</div>
+      <div class="nav-btn exec-btn-style" onclick="recordExecClick('https://www.mediafire.com/file/y95roohbbqj3rby/Xeno-v1.3.55.rar/file')"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
+      <div class="nav-btn" id="ksInfoBtn"><i class="fa-solid fa-shield-halved" style="font-size:0.75rem;"></i> INFO & GUIDE</div>
+    </div>
 
-   <div class="scroll-indicator" onclick="scrollToReviews()">
-     <span class="scroll-text">REVIEWS</span>
-     <span class="scroll-arrow">↓</span>
-   </div>
+    <div class="scroll-indicator" onclick="scrollToReviews()">
+      <span class="scroll-text">REVIEWS</span>
+      <span class="scroll-arrow">↓</span>
+    </div>
  </div>
 
  <div id="reviews" class="reviews-section">
-   <div class="reviews-container">
-     <h2 class="reviews-title">USER REVIEWS</h2>
-     
-     <div id="reviewFormContainer">
-       <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
-         <div class="form-group">
-           <label>Your Name</label>
-           <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
-         </div>
-         
-         <div class="form-group">
-           <label>Your Review</label>
-           <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500" required></textarea>
-         </div>
-         
-         <div class="form-group">
-           <label>Rating</label>
-           <div class="rating-stars" id="ratingStars">
-             <span class="star" data-rating="1">★</span>
-             <span class="star" data-rating="2">★</span>
-             <span class="star" data-rating="3">★</span>
-             <span class="star" data-rating="4">★</span>
-             <span class="star" data-rating="5">★</span>
-           </div>
-           <input type="hidden" name="rating" id="ratingInput" value="0" required>
-         </div>
-         
-         <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
-         <div id="formError" class="error-message"></div>
-       </form>
-     </div>
-     
-     <div id="reviews-list" class="reviews-grid"></div>
-   </div>
+    <div class="reviews-container">
+      <h2 class="reviews-title">USER REVIEWS</h2>
+      
+      <div id="reviewFormContainer">
+        <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Your Review</label>
+            <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="rating-stars" id="ratingStars">
+              <span class="star" data-rating="1">★</span>
+              <span class="star" data-rating="2">★</span>
+              <span class="star" data-rating="3">★</span>
+              <span class="star" data-rating="4">★</span>
+              <span class="star" data-rating="5">★</span>
+            </div>
+            <input type="hidden" name="rating" id="ratingInput" value="0" required>
+          </div>
+          
+          <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
+          <div id="formError" class="error-message"></div>
+        </form>
+      </div>
+      
+      <div id="reviews-list" class="reviews-grid"></div>
+    </div>
  </div>
 
  <div id="script-overlay" class="overlay">
-   <span class="close-btn" onclick="closeMenu()">&times;</span>
-   <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
-   <p style="color: #444; font-family: 'Fira Code', monospace; font-size: 0.7rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
-   <br> 
-   <div id="menu-list">
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/5bznhkqy745gyid/KscriptV6.lua/file')">
-       <h3>Universal Script V.6</h3>
-       <p>Everything You Are Looking For İs Here</p>
-     </div>
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
+    <p style="color: #444; font-family: 'Fira Code', monospace; font-size: 0.7rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
+    <br> 
+    <div id="menu-list">
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/5bznhkqy745gyid/KscriptV6.lua/file')">
+        <h3>Universal Script V.6</h3>
+        <p>Everything You Are Looking For İs Here</p>
+      </div>
 
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
-       <h3>The Button Script</h3>
-       <p>The Script Of The Button Game İn Roblox</p>
-     </div>
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
+        <h3>The Button Script</h3>
+        <p>The Script Of The Button Game İn Roblox</p>
+      </div>
 
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
-       <h3>Steal A Brainrot Script</h3>
-       <p>The Script Of Steal A Brainrot Game İn Roblox</p>
-     </div>
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
+        <h3>Steal A Brainrot Script</h3>
+        <p>The Script Of Steal A Brainrot Game İn Roblox</p>
+      </div>
 
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
-       <h3>C00lkid Gui</h3>
-       <p>You might think you're like c00lkid :) </p>
-     </div>
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
+        <h3>C00lkid Gui</h3>
+        <p>You might think you're like c00lkid :) </p>
+      </div>
 
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
-       <h3>Murder Mystery 2 Script</h3>
-       <p>MM2 Also Do What You Want</p>
-     </div>
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
+        <h3>Murder Mystery 2 Script</h3>
+        <p>MM2 Also Do What You Want</p>
+      </div>
 
-     <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
-       <h3>Fling Script</h3>
-       <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
-     </div>
-   </div>
+      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
+        <h3>Fling Script</h3>
+        <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
+      </div>
+    </div>
  </div>
 
  <div id="ksInfoModal" class="ks-modal">
-   <div class="ks-modal-content">
-     <span class="ks-close" id="ksCloseBtn">&times;</span>
-     <h2>SYSTEM PROTOCOL</h2>
-     <br> 
-     <div class="ks-section">
-       <strong>DEVELOPER ACCESS:</strong><br><br>
-       Bu yazılım kscript.gg1 tarafından kodlanmıştır.
-     </div>
+    <div class="ks-modal-content">
+      <span class="ks-close" id="ksCloseBtn">&times;</span>
+      <h2>SYSTEM PROTOCOL</h2>
+      <br> 
+      <div class="ks-section">
+        <strong>DEVELOPER ACCESS:</strong><br><br>
+        Bu yazılım kscript.gg1 tarafından kodlanmıştır.
+      </div>
 
-     <div class="ks-section">
-       <strong>HARDWARE INFO:</strong><br><br>
-       Executor sadece <strong>PC</strong> içindir. Script kodları tüm platformlarda çalışır.
-     </div>
+      <div class="ks-section">
+        <strong>HARDWARE INFO:</strong><br><br>
+        Executor sadece <strong>PC</strong> içindir. Script kodları tüm platformlarda çalışır.
+      </div>
 
-     <div class="ks-section">
-       <strong>AUTH KEY SYSTEM:</strong><br><br>
-       Keyler <strong>ÜCRETSİZDİR</strong>. Instagram <strong>kscript.gg1</strong> üzerinden talep edebilirsiniz.
-     </div>
+      <div class="ks-section">
+        <strong>AUTH KEY SYSTEM:</strong><br><br>
+        Keyler <strong>ÜCRETSİZDİR</strong>. Instagram <strong>kscript.gg1</strong> üzerinden talep edebilirsiniz.
+      </div>
 
-     <div class="ks-section">
-       <strong>RESOURCES:</strong><br><br>
-       Kurulum videosu için <strong>kscript.gg1</strong> YouTube kanalına göz atın. (EXECUTORÜ İNDİRİRKEN UYARI VERİCEK SİZ YİNEDE SAKLAYINA BASIN VE WİNDOWS AYARLARINDAN AKILLI UYGULAMA DENETİMİNİ KAPATIN)
-     </div>
-   </div>
+      <div class="ks-section">
+        <strong>RESOURCES:</strong><br><br>
+        Kurulum videosu için <strong>kscript.gg1</strong> YouTube kanalına göz atın. (EXECUTORÜ İNDİRİRKEN UYARI VERİCEK SİZ YİNEDE SAKLAYINA BASIN VE WİNDOWS AYARLARINDAN AKILLI UYGULAMA DENETİMİNİ KAPATIN)
+      </div>
+    </div>
  </div>
 
  <div id="toast" class="toast-notification"></div>
 
  <script>
-   // Cloudflare Simülasyonu
-   document.addEventListener("DOMContentLoaded", () => {
-     const gate = document.getElementById("security-gate");
-     const fill = document.getElementById("gate-progress");
-     const log = document.getElementById("gate-log");
+    // Cloudflare Simülasyonu
+    document.addEventListener("DOMContentLoaded", () => {
+      const gate = document.getElementById("security-gate");
+      const fill = document.getElementById("gate-progress");
+      const log = document.getElementById("gate-log");
 
-     if (sessionStorage.getItem("ks_verified") === "true") {
-       gate.style.display = "none";
-       return;
-     }
+      if (sessionStorage.getItem("ks_verified") === "true") {
+        gate.style.display = "none";
+        return;
+      }
 
-     const logs = [
-       "Connecting to secure gateway...",
-       "Filtering HTTP headers...",
-       "Checking browser handshake...",
-       "Verifying SSL certificates...",
-       "Analyzing behavioral patterns...",
-       "Access Granted! Redirecting..."
-     ];
+      const logs = [
+        "Connecting to secure gateway...",
+        "Filtering HTTP headers...",
+        "Checking browser handshake...",
+        "Verifying SSL certificates...",
+        "Analyzing behavioral patterns...",
+        "Access Granted! Redirecting..."
+      ];
 
-     let progress = 0;
-     let logIndex = 0;
+      let progress = 0;
+      let logIndex = 0;
 
-     const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 8) + 3;
-       if (progress > 100) progress = 100;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 8) + 3;
+        if (progress > 100) progress = 100;
 
-       fill.style.width = progress + "%";
+        fill.style.width = progress + "%";
 
-       if (progress >= 15 && logIndex === 0) { logIndex = 1; }
-       if (progress >= 35 && logIndex === 1) { logIndex = 2; }
-       if (progress >= 55 && logIndex === 2) { logIndex = 3; }
-       if (progress >= 75 && logIndex === 3) { logIndex = 4; }
-       if (progress >= 95 && logIndex === 4) { logIndex = 5; }
+        if (progress >= 15 && logIndex === 0) { logIndex = 1; }
+        if (progress >= 35 && logIndex === 1) { logIndex = 2; }
+        if (progress >= 55 && logIndex === 2) { logIndex = 3; }
+        if (progress >= 75 && logIndex === 3) { logIndex = 4; }
+        if (progress >= 95 && logIndex === 4) { logIndex = 5; }
 
-       if (logIndex === 5) {
-         log.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${logs[logIndex]}`;
-       } else {
-         log.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${logs[logIndex]}`;
-       }
+        if (logIndex === 5) {
+          log.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${logs[logIndex]}`;
+        } else {
+          log.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${logs[logIndex]}`;
+        }
 
-       if (progress >= 100) {
-         clearInterval(interval);
-         setTimeout(() => {
-           gate.style.opacity = "0";
-           gate.style.transform = "scale(1.05)";
-           sessionStorage.setItem("ks_verified", "true");
-           setTimeout(() => {
-             gate.style.display = "none";
-           }, 600);
-         }, 400);
-       }
-     }, 100);
-   });
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            gate.style.opacity = "0";
+            gate.style.transform = "scale(1.05)";
+            sessionStorage.setItem("ks_verified", "true");
+            setTimeout(() => {
+              gate.style.display = "none";
+            }, 600);
+          }, 400);
+        }
+      }, 100);
+    });
 
-   // UI Fonksiyonları
-   function openMenu() { 
-     document.getElementById('script-overlay').style.display = 'block'; 
-   }
+    // UI Fonksiyonları
+    function openMenu() { 
+      document.getElementById('script-overlay').style.display = 'block'; 
+    }
 
-   function closeMenu() { 
-     document.getElementById('script-overlay').style.display = 'none'; 
-   }
+    function closeMenu() { 
+      document.getElementById('script-overlay').style.display = 'none'; 
+    }
 
-   function scrollToReviews() {
-     document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
-   }
+    // ========== YORUM SİSTEMİ + FORMSPREE ==========
+    let selectedRating = 0;
+    const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
-   function showToast(message) {
-     const toast = document.getElementById('toast');
-     toast.textContent = message;
-     toast.style.display = 'block';
-     setTimeout(() => {
-       toast.style.display = 'none';
-     }, 3000);
-   }
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', function() {
+        selectedRating = parseInt(this.dataset.rating);
+        document.getElementById('ratingInput').value = selectedRating;
+        document.querySelectorAll('.star').forEach((s, i) => {
+          s.classList.toggle('active', i < selectedRating);
+        });
+      });
+      
+      star.addEventListener('mouseover', function() {
+        const rating = parseInt(this.dataset.rating);
+        document.querySelectorAll('.star').forEach((s, i) => {
+          s.style.color = i < rating ? '#ffca08' : '#333';
+        });
+      });
+    });
 
-   function recordScriptClick(url) {
-     showToast("Yönlendiriliyorsunuz...");
-     window.open(url, '_blank');
-   }
+    document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.style.color = i < selectedRating ? '#ffca08' : '#333';
+      });
+    });
 
-   function recordExecClick(url) {
-     showToast("Executor İndirmesi Başlatılıyor...");
-     window.open(url, '_blank');
-   }
+    async function submitReview(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('reviewUsername').value.trim();
+      const comment = document.getElementById('reviewComment').value.trim();
+      const rating = parseInt(document.getElementById('ratingInput').value);
+      const errorDiv = document.getElementById('formError');
+      
+      if (localStorage.getItem('kscript_review_submitted')) {
+        errorDiv.textContent = 'You have already submitted a review!';
+        return;
+      }
+      
+      if (rating === 0) {
+        errorDiv.textContent = 'Please select a rating!';
+        return;
+      }
+      
+      errorDiv.textContent = '';
+      
+      const submitBtn = document.getElementById('submitReviewBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SENDING...';
+      
+      try {
+        const response = await fetch(FORMSPREE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: username,
+            comment: comment,
+            rating: rating,
+            date: new Date().toISOString(),
+            page: 'KScript.gg Reviews'
+          })
+        });
+        
+        if (response.ok) {
+          let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+          localReviews.unshift({ 
+            username, 
+            comment, 
+            rating,
+            date: new Date().toISOString()
+          });
+          localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
+          localStorage.setItem('kscript_review_submitted', 'true');
+          
+          document.getElementById('reviewFormContainer').innerHTML = `
+            <div class="thank-you-message">
+              ★ THANK YOU FOR YOUR REVIEW! ★<br>
+              <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
+            </div>
+          `;
+          
+          renderAllReviews();
+        } else {
+          throw new Error('Form gönderilemedi');
+        }
+      } catch (error) {
+        console.error('Hata:', error);
+        errorDiv.textContent = 'Something went wrong. Please try again.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SUBMIT REVIEW';
+      }
+    }
 
-   // Modal İşlemleri
-   const modal = document.getElementById("ksInfoModal");
-   const btn = document.getElementById("ksInfoBtn");
-   const close = document.getElementById("ksCloseBtn");
+    async function loadReviewsFromFile() {
+      try {
+        const response = await fetch("./comments.js");
+        if (response.ok) {
+          const jsText = await response.text();
+          const globalComments = eval(jsText + "; globalComments;");
+          return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
+        }
+      } catch (error) {
+        console.log("comments.js yüklenemedi.");
+      }
+      return [];
+    }
 
-   btn.onclick = () => modal.style.display = "block";
-   close.onclick = () => modal.style.display = "none";
-   
-   window.onclick = (e) => { 
-     if(e.target == modal) modal.style.display = "none"; 
-   }
+    function renderAllReviews() {
+      const reviewsList = document.getElementById('reviews-list');
+      
+      Promise.all([
+        loadReviewsFromFile(),
+        Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
+      ]).then(([fileReviews, localReviews]) => {
+        const allReviews = [...localReviews, ...fileReviews];
+        
+        if (allReviews.length === 0) {
+          reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+          return;
+        }
+        
+        reviewsList.innerHTML = allReviews.map(r => `
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-username">${r.username || 'Anonymous'}</span>
+              <span class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+            </div>
+            <p class="review-comment">${r.comment || ''}</p>
+            ${r.date ? `<div class="review-date">${new Date(r.date).toLocaleDateString('tr-TR')}</div>` : ''}
+          </div>
+        `).join('');
+      });
+      
+      if (localStorage.getItem('kscript_review_submitted')) {
+        const container = document.getElementById('reviewFormContainer');
+        if (container.querySelector('form')) {
+          container.innerHTML = `
+            <div class="thank-you-message">
+              ★ THANK YOU FOR YOUR REVIEW! ★<br>
+              <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
+            </div>
+          `;
+        }
+      }
+    }
 
-   document.getElementById('script-overlay').addEventListener('click', function(e) {
-     if(e.target === this) closeMenu();
-   });
+    function scrollToReviews() {
+      document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+    }
 
-   // ========== YORUM SİSTEMİ + FORMSPREE ==========
-   let selectedRating = 0;
-   const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
 
-   document.querySelectorAll('.star').forEach(star => {
-     star.addEventListener('click', function() {
-       selectedRating = parseInt(this.dataset.rating);
-       document.getElementById('ratingInput').value = selectedRating;
-       document.querySelectorAll('.star').forEach((s, i) => {
-         s.classList.toggle('active', i < selectedRating);
-       });
-     });
-     
-     star.addEventListener('mouseover', function() {
-       const rating = parseInt(this.dataset.rating);
-       document.querySelectorAll('.star').forEach((s, i) => {
-         s.style.color = i < rating ? '#ffca08' : '#333';
-       });
-     });
-   });
+    function recordScriptClick(url) {
+      showToast("Yönlendiriliyorsunuz...");
+      window.open(url, '_blank');
+    }
 
-   document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
-     document.querySelectorAll('.star').forEach((s, i) => {
-       s.style.color = i < selectedRating ? '#ffca08' : '#333';
-     });
-   });
+    function recordExecClick(url) {
+      showToast("Executor İndirmesi Başlatılıyor...");
+      window.open(url, '_blank');
+    }
 
-   async function submitReview(event) {
-     event.preventDefault();
-     
-     const username = document.getElementById('reviewUsername').value.trim();
-     const comment = document.getElementById('reviewComment').value.trim();
-     const rating = parseInt(document.getElementById('ratingInput').value);
-     const errorDiv = document.getElementById('formError');
-     
-     if (localStorage.getItem('kscript_review_submitted')) {
-       errorDiv.textContent = 'You have already submitted a review!';
-       return;
-     }
-     
-     if (rating === 0) {
-       errorDiv.textContent = 'Please select a rating!';
-       return;
-     }
-     
-     errorDiv.textContent = '';
-     
-     const submitBtn = document.getElementById('submitReviewBtn');
-     submitBtn.disabled = true;
-     submitBtn.textContent = 'SENDING...';
-     
-     try {
-       const response = await fetch(FORMSPREE_URL, {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-           username: username,
-           comment: comment,
-           rating: rating,
-           date: new Date().toISOString(),
-           page: 'KScript.gg Reviews'
-         })
-       });
-       
-       if (response.ok) {
-         let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
-         localReviews.unshift({ 
-           username, 
-           comment, 
-           rating,
-           date: new Date().toISOString()
-         });
-         localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
-         localStorage.setItem('kscript_review_submitted', 'true');
-         
-         document.getElementById('reviewFormContainer').innerHTML = `
-           <div class="thank-you-message">
-             ★ THANK YOU FOR YOUR REVIEW! ★<br>
-             <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
-           </div>
-         `;
-         
-         renderAllReviews();
-       } else {
-         throw new Error('Form gönderilemedi');
-       }
-     } catch (error) {
-       console.error('Hata:', error);
-       errorDiv.textContent = 'Something went wrong. Please try again.';
-       submitBtn.disabled = false;
-       submitBtn.textContent = 'SUBMIT REVIEW';
-     }
-   }
+    // Modal İşlemleri
+    const modal = document.getElementById("ksInfoModal");
+    const btn = document.getElementById("ksInfoBtn");
+    const close = document.getElementById("ksCloseBtn");
 
-   async function loadReviewsFromFile() {
-     try {
-       const response = await fetch("./comments.js");
-       if (response.ok) {
-         const jsText = await response.text();
-         const globalComments = eval(jsText + "; globalComments;");
-         return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
-       }
-     } catch (error) {
-       console.log("comments.js yüklenemedi.");
-     }
-     return [];
-   }
+    btn.onclick = () => modal.style.display = "block";
+    close.onclick = () => modal.style.display = "none";
+    
+    window.onclick = (e) => { 
+      if(e.target == modal) modal.style.display = "none"; 
+    }
 
-   function renderAllReviews() {
-     const reviewsList = document.getElementById('reviews-list');
-     
-     Promise.all([
-       loadReviewsFromFile(),
-       Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
-     ]).then(([fileReviews, localReviews]) => {
-       const allReviews = [...localReviews, ...fileReviews];
-       
-       if (allReviews.length === 0) {
-         reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
-         return;
-       }
-       
-       reviewsList.innerHTML = allReviews.map(r => `
-         <div class="review-card">
-           <div class="review-header">
-             <span class="review-username">${r.username || 'Anonymous'}</span>
-             <span class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
-           </div>
-           <p class="review-comment">${r.comment || ''}</p>
-           ${r.date ? `<div class="review-date">${new Date(r.date).toLocaleDateString('tr-TR')}</div>` : ''}
-         </div>
-       `).join('');
-     });
-     
-     if (localStorage.getItem('kscript_review_submitted')) {
-       const container = document.getElementById('reviewFormContainer');
-       if (container.querySelector('form')) {
-         container.innerHTML = `
-           <div class="thank-you-message">
-             ★ THANK YOU FOR YOUR REVIEW! ★<br>
-             <span style="font-size:0.7rem; color:#555; margin-top:10px; display:block;">Your feedback has been sent for approval.</span>
-           </div>
-         `;
-       }
-     }
-   }
+    document.getElementById('script-overlay').addEventListener('click', function(e) {
+      if(e.target === this) closeMenu();
+    });
 
-   // Sayfa yüklendiğinde yorumları göster
-   renderAllReviews();
+    // Sayfa yüklendiğinde yorumları göster
+    renderAllReviews();
  </script>
 </body>
 </html>
