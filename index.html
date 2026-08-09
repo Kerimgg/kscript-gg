@@ -309,51 +309,68 @@
  60% { transform: translateY(-3px); }
  }
 
- /* --- Sağ Yan Panel (Cheat Drawer) Tasarımı --- */
- .cheat-toggle-btn {
+ /* --- SAĞ SLIDE-OUT PANEL (HİLE SHOWCASE) --- */
+ .cheat-drawer-trigger {
  position: fixed;
  right: 0;
  top: 50%;
  transform: translateY(-50%);
- z-index: 9999;
+ z-index: 9990;
  background: rgba(5, 5, 10, 0.85);
- border: 1px solid var(--border);
+ border: 1px solid var(--primary);
  border-right: none;
- color: var(--primary);
- width: 42px;
- height: 60px;
  border-radius: 8px 0 0 8px;
- display: flex;
- align-items: center;
- justify-content: center;
+ padding: 18px 10px;
  cursor: pointer;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 10px;
+ box-shadow: -5px 0 20px rgba(0, 242, 255, 0.2);
  transition: all 0.3s ease;
- backdrop-filter: blur(10px);
- box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
  }
 
- .cheat-toggle-btn:hover {
- background: rgba(0, 242, 255, 0.1);
- border-color: var(--primary);
+ .cheat-drawer-trigger:hover {
+ background: rgba(0, 242, 255, 0.15);
+ box-shadow: -5px 0 30px rgba(0, 242, 255, 0.4);
+ padding-right: 15px;
+ }
+
+ .cheat-drawer-trigger i.arrow-icon {
+ color: var(--primary);
+ font-size: 1.2rem;
+ animation: arrowPulse 1.5s infinite;
+ }
+
+ @keyframes arrowPulse {
+ 0%, 100% { transform: translateX(0); }
+ 50% { transform: translateX(-5px); }
+ }
+
+ .cheat-drawer-trigger span {
+ writing-mode: vertical-rl;
+ text-orientation: mixed;
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.65rem;
+ letter-spacing: 3px;
  color: #fff;
- box-shadow: -5px 0 25px rgba(0, 242, 255, 0.2);
+ text-transform: uppercase;
  }
 
  .cheat-drawer {
  position: fixed;
  top: 0;
  right: -420px;
- width: 400px;
+ width: 420px;
  height: 100vh;
- background: rgba(4, 4, 8, 0.95);
- border-left: 1px solid var(--border);
- z-index: 9998;
- transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+ background: rgba(4, 4, 7, 0.96);
  backdrop-filter: blur(20px);
- box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+ border-left: 1px solid var(--border-hover);
+ z-index: 9995;
+ transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+ box-shadow: -20px 0 50px rgba(0, 0, 0, 0.9);
  display: flex;
  flex-direction: column;
- padding: 30px 20px;
  overflow-y: auto;
  }
 
@@ -362,33 +379,166 @@
  }
 
  .cheat-drawer-header {
+ padding: 25px;
+ border-bottom: 1px solid rgba(0, 242, 255, 0.1);
  display: flex;
  justify-content: space-between;
  align-items: center;
- border-bottom: 1px solid rgba(0, 242, 255, 0.1);
- padding-bottom: 15px;
- margin-bottom: 20px;
+ background: rgba(0, 0, 0, 0.3);
  }
 
- .cheat-drawer-title {
+ .cheat-drawer-header h2 {
  font-family: 'Orbitron', sans-serif;
- font-size: 0.9rem;
+ font-size: 0.95rem;
  letter-spacing: 2px;
- color: #fff;
+ color: var(--primary);
  display: flex;
  align-items: center;
- gap: 8px;
+ gap: 10px;
  }
 
  .cheat-drawer-close {
- color: #888;
- cursor: pointer;
+ color: #64748b;
  font-size: 1.2rem;
+ cursor: pointer;
  transition: 0.2s;
  }
 
  .cheat-drawer-close:hover {
+ color: #fff;
+ transform: rotate(90deg);
+ }
+
+ .cheat-drawer-body {
+ padding: 20px;
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ }
+
+ /* Simulated Script UI Showcase */
+ .cheat-ui-container {
+ background: #0a0a0c;
+ border: 1px solid #1a1a22;
+ border-radius: 8px;
+ padding: 20px;
+ box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+ }
+
+ .cheat-ui-title {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.8rem;
+ color: #f0f0f5;
+ margin-bottom: 15px;
+ border-bottom: 1px solid #1a1a22;
+ padding-bottom: 8px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ .cheat-badge {
+ background: rgba(16, 185, 129, 0.1);
+ border: 1px solid #10b981;
+ color: #10b981;
+ font-size: 0.55rem;
+ padding: 2px 6px;
+ border-radius: 4px;
+ font-family: var(--font-code);
+ }
+
+ .cheat-feature-group {
+ margin-bottom: 15px;
+ }
+
+ .cheat-feature-title {
+ font-family: var(--font-code);
+ font-size: 0.65rem;
  color: var(--primary);
+ letter-spacing: 1px;
+ margin-bottom: 8px;
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ }
+
+ .cheat-item {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background: rgba(255, 255, 255, 0.02);
+ padding: 8px 12px;
+ border-radius: 4px;
+ margin-bottom: 6px;
+ border: 1px solid rgba(255, 255, 255, 0.03);
+ font-size: 0.75rem;
+ color: #ccc;
+ }
+
+ .cheat-toggle {
+ width: 32px;
+ height: 18px;
+ background: #1a1a22;
+ border-radius: 10px;
+ position: relative;
+ cursor: pointer;
+ border: 1px solid #333;
+ }
+
+ .cheat-toggle.active {
+ background: var(--primary);
+ border-color: var(--primary);
+ box-shadow: 0 0 8px rgba(0, 242, 255, 0.4);
+ }
+
+ .cheat-toggle.active::after {
+ left: 15px;
+ background: #000;
+ }
+
+ .cheat-toggle::after {
+ content: '';
+ position: absolute;
+ top: 2px;
+ left: 2px;
+ width: 12px;
+ height: 12px;
+ background: #888;
+ border-radius: 50%;
+ transition: 0.2s;
+ }
+
+ .cheat-slider-bg {
+ width: 100%;
+ height: 4px;
+ background: #1a1a22;
+ border-radius: 2px;
+ margin-top: 6px;
+ position: relative;
+ }
+
+ .cheat-slider-fill {
+ height: 100%;
+ background: var(--secondary);
+ border-radius: 2px;
+ width: 65%;
+ }
+
+ .cheat-overlay-bg {
+ position: fixed;
+ top: 0; left: 0; width: 100%; height: 100%;
+ background: rgba(0,0,0,0.6);
+ backdrop-filter: blur(4px);
+ z-index: 9994;
+ display: none;
+ }
+
+ @media (max-width: 480px) {
+ .cheat-drawer {
+ width: 100%;
+ right: -100%;
+ }
  }
 
  /* --- Reviews (Yorumlar) Tasarımı --- */
@@ -543,17 +693,13 @@
 
  @media (max-width: 900px) {
  .reviews-grid {
-     grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
  }
  }
 
  @media (max-width: 600px) {
  .reviews-grid {
-     grid-template-columns: 1fr;
- }
- .cheat-drawer {
-     width: 100%;
-     right: -100%;
+    grid-template-columns: 1fr;
  }
  }
 
@@ -784,24 +930,93 @@
  <div class="grid-overlay"></div>
  <div class="glow"></div>
 
- <!-- Sağ Orta Açılır Ok Butonu -->
- <div class="cheat-toggle-btn" id="cheatToggleBtn" onclick="toggleCheatDrawer()">
-   <i class="fa-solid fa-chevron-left" id="cheatToggleIcon"></i>
+ <!-- SAĞ ORTA - SLIDE DRAWER BUTONU & SEKME -->
+ <div class="cheat-drawer-trigger" onclick="toggleCheatDrawer()">
+   <i class="fa-solid fa-chevron-left arrow-icon"></i>
+   <span>KERNEL APEX UI</span>
  </div>
 
- <!-- Sağ Yan Sekme / Panel (Cheat UI Önizleme Alanı) -->
+ <div class="cheat-overlay-bg" id="cheatOverlay" onclick="toggleCheatDrawer()"></div>
+
  <div class="cheat-drawer" id="cheatDrawer">
    <div class="cheat-drawer-header">
-     <div class="cheat-drawer-title">
-       <i class="fa-solid fa-crosshair" style="color: var(--primary);"></i> CHEAT INTERFACE
-     </div>
+     <h2><i class="fa-solid fa-crosshair"></i> KERNEL-APEX vMAX</h2>
      <i class="fa-solid fa-xmark cheat-drawer-close" onclick="toggleCheatDrawer()"></i>
    </div>
-   <div id="cheat-ui-container">
-     <!-- Hilenin UI kodları buraya entegre edilecek -->
-     <p style="color: #64748b; font-size: 0.8rem; font-family: var(--font-code); text-align: center; margin-top: 20px;">
-       Hile kodlarını attığında arayüzü buraya tam uyumlu şekilde ekleyeceğim...
-     </p>
+
+   <div class="cheat-drawer-body">
+     <div class="cheat-ui-container">
+       <div class="cheat-ui-title">
+         <span>SECURITY TERMINAL</span>
+         <span class="cheat-badge">ACTIVE</span>
+       </div>
+       <div style="font-size: 0.7rem; color: #888; font-family: var(--font-code); margin-bottom: 12px;">
+         AUTHENTICATED AS: <span style="color:#fff;">GUEST / MASTER</span>
+       </div>
+     </div>
+
+     <div class="cheat-ui-container">
+       <div class="cheat-ui-title">
+         <span>INTERNAL FEATURES</span>
+       </div>
+
+       <!-- Section 1 -->
+       <div class="cheat-feature-group">
+         <div class="cheat-feature-title"><i class="fa-solid fa-eye"></i> VISUALS & ESP</div>
+         <div class="cheat-item">
+           <span>Player ESP (Box & Lines)</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Stream-Proof Mode</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Valorant Bullet Tracers</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Rainbow Sky & Lighting</span>
+           <div class="cheat-toggle"></div>
+         </div>
+       </div>
+
+       <!-- Section 2 -->
+       <div class="cheat-feature-group">
+         <div class="cheat-feature-title"><i class="fa-solid fa-gun"></i> AIMBOT & STEALTH</div>
+         <div class="cheat-item">
+           <span>Silent Aim / FOV Lock</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Aim Smoothness</span>
+           <span style="font-family: var(--font-code); color: var(--primary); font-size: 0.7rem;">0.15</span>
+         </div>
+         <div class="cheat-slider-bg"><div class="cheat-slider-fill"></div></div>
+         <br>
+         <div class="cheat-item">
+           <span>360 Engine v2 (Auto Lock)</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+       </div>
+
+       <!-- Section 3 -->
+       <div class="cheat-feature-group">
+         <div class="cheat-feature-title"><i class="fa-solid fa-bolt"></i> MOVEMENT & BYPASS</div>
+         <div class="cheat-item">
+           <span>Spinbot / Desync</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Anti-Ragdoll & Anti-Admin</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+         <div class="cheat-item">
+           <span>Bypass Movement Checks</span>
+           <div class="cheat-toggle active"></div>
+         </div>
+       </div>
+     </div>
    </div>
  </div>
 
@@ -925,19 +1140,6 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
-   // Cheat Drawer Geçiş Fonksiyonu
-   function toggleCheatDrawer() {
-     const drawer = document.getElementById('cheatDrawer');
-     const icon = document.getElementById('cheatToggleIcon');
-     drawer.classList.toggle('open');
-     
-     if(drawer.classList.contains('open')) {
-       icon.className = 'fa-solid fa-chevron-right';
-     } else {
-       icon.className = 'fa-solid fa-chevron-left';
-     }
-   }
-
    // Cloudflare Simülasyonu
    document.addEventListener("DOMContentLoaded", () => {
      const gate = document.getElementById("security-gate");
@@ -992,6 +1194,14 @@
        }
      }, 100);
    });
+
+   // Cheat Drawer (Sağ Sekme) Aç/Kapa Fonksiyonu
+   function toggleCheatDrawer() {
+     const drawer = document.getElementById('cheatDrawer');
+     const overlay = document.getElementById('cheatOverlay');
+     drawer.classList.toggle('open');
+     overlay.style.display = drawer.classList.contains('open') ? 'block' : 'none';
+   }
 
    // UI Fonksiyonları
    function openMenu() { 
