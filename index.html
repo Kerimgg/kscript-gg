@@ -309,6 +309,88 @@
  60% { transform: translateY(-3px); }
  }
 
+ /* --- Sağ Yan Panel (Cheat Drawer) Tasarımı --- */
+ .cheat-toggle-btn {
+ position: fixed;
+ right: 0;
+ top: 50%;
+ transform: translateY(-50%);
+ z-index: 9999;
+ background: rgba(5, 5, 10, 0.85);
+ border: 1px solid var(--border);
+ border-right: none;
+ color: var(--primary);
+ width: 42px;
+ height: 60px;
+ border-radius: 8px 0 0 8px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ backdrop-filter: blur(10px);
+ box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+ }
+
+ .cheat-toggle-btn:hover {
+ background: rgba(0, 242, 255, 0.1);
+ border-color: var(--primary);
+ color: #fff;
+ box-shadow: -5px 0 25px rgba(0, 242, 255, 0.2);
+ }
+
+ .cheat-drawer {
+ position: fixed;
+ top: 0;
+ right: -420px;
+ width: 400px;
+ height: 100vh;
+ background: rgba(4, 4, 8, 0.95);
+ border-left: 1px solid var(--border);
+ z-index: 9998;
+ transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+ backdrop-filter: blur(20px);
+ box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+ display: flex;
+ flex-direction: column;
+ padding: 30px 20px;
+ overflow-y: auto;
+ }
+
+ .cheat-drawer.open {
+ right: 0;
+ }
+
+ .cheat-drawer-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+ padding-bottom: 15px;
+ margin-bottom: 20px;
+ }
+
+ .cheat-drawer-title {
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.9rem;
+ letter-spacing: 2px;
+ color: #fff;
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ }
+
+ .cheat-drawer-close {
+ color: #888;
+ cursor: pointer;
+ font-size: 1.2rem;
+ transition: 0.2s;
+ }
+
+ .cheat-drawer-close:hover {
+ color: var(--primary);
+ }
+
  /* --- Reviews (Yorumlar) Tasarımı --- */
  .reviews-section {
  min-height: 100vh;
@@ -461,13 +543,17 @@
 
  @media (max-width: 900px) {
  .reviews-grid {
-    grid-template-columns: repeat(2, 1fr);
+     grid-template-columns: repeat(2, 1fr);
  }
  }
 
  @media (max-width: 600px) {
  .reviews-grid {
-    grid-template-columns: 1fr;
+     grid-template-columns: 1fr;
+ }
+ .cheat-drawer {
+     width: 100%;
+     right: -100%;
  }
  }
 
@@ -698,6 +784,27 @@
  <div class="grid-overlay"></div>
  <div class="glow"></div>
 
+ <!-- Sağ Orta Açılır Ok Butonu -->
+ <div class="cheat-toggle-btn" id="cheatToggleBtn" onclick="toggleCheatDrawer()">
+   <i class="fa-solid fa-chevron-left" id="cheatToggleIcon"></i>
+ </div>
+
+ <!-- Sağ Yan Sekme / Panel (Cheat UI Önizleme Alanı) -->
+ <div class="cheat-drawer" id="cheatDrawer">
+   <div class="cheat-drawer-header">
+     <div class="cheat-drawer-title">
+       <i class="fa-solid fa-crosshair" style="color: var(--primary);"></i> CHEAT INTERFACE
+     </div>
+     <i class="fa-solid fa-xmark cheat-drawer-close" onclick="toggleCheatDrawer()"></i>
+   </div>
+   <div id="cheat-ui-container">
+     <!-- Hilenin UI kodları buraya entegre edilecek -->
+     <p style="color: #64748b; font-size: 0.8rem; font-family: var(--font-code); text-align: center; margin-top: 20px;">
+       Hile kodlarını attığında arayüzü buraya tam uyumlu şekilde ekleyeceğim...
+     </p>
+   </div>
+ </div>
+
  <div id="main-page">
    <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
    <div class="logo">KSCRIPT.GG</div>
@@ -818,6 +925,19 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
+   // Cheat Drawer Geçiş Fonksiyonu
+   function toggleCheatDrawer() {
+     const drawer = document.getElementById('cheatDrawer');
+     const icon = document.getElementById('cheatToggleIcon');
+     drawer.classList.toggle('open');
+     
+     if(drawer.classList.contains('open')) {
+       icon.className = 'fa-solid fa-chevron-right';
+     } else {
+       icon.className = 'fa-solid fa-chevron-left';
+     }
+   }
+
    // Cloudflare Simülasyonu
    document.addEventListener("DOMContentLoaded", () => {
      const gate = document.getElementById("security-gate");
@@ -1068,7 +1188,7 @@
      }
    }
 
-   // Sayfa yüklendiğinde yorumları göster
+   // Sayfa yüklendiğinde yorumları göster 
    renderAllReviews();
  </script>
 </body>
