@@ -609,28 +609,49 @@
  justify-content: center;
  gap: 20px;
  width: 90%;
- max-width: 1100px;
- margin: 50px auto;
+ max-width: 1200px;
+ margin: 40px auto;
  }
 
  .script-card { 
- background: rgba(5, 5, 8, 0.4); 
+ background: rgba(5, 5, 8, 0.6); 
  border: 1px solid var(--border); 
- border-radius: 4px; 
+ border-radius: 6px; 
  transition: all 0.3s ease; 
  cursor: pointer; 
  width: 320px; 
- padding: 25px;
+ padding: 0 0 20px 0;
  text-align: left;
  position: relative;
  overflow: hidden;
  backdrop-filter: blur(10px);
+ display: flex;
+ flex-direction: column;
+ }
+
+ .script-img {
+ width: 100%;
+ height: 160px;
+ object-fit: cover;
+ border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+ transition: transform 0.4s ease;
+ }
+
+ .script-card:hover .script-img {
+ transform: scale(1.05);
+ }
+
+ .script-card-content {
+ padding: 20px;
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
  }
 
  .script-card::after {
  content: '';
  position: absolute;
- bottom: 0; left: 0; width: 0; height: 1px;
+ bottom: 0; left: 0; width: 0; height: 2px;
  background: var(--primary);
  transition: 0.3s;
  }
@@ -638,10 +659,10 @@
  .script-card:hover::after { width: 100%; }
 
  .script-card:hover { 
- background: rgba(0, 242, 255, 0.01);
+ background: rgba(0, 242, 255, 0.02);
  border-color: var(--primary);
  transform: translateY(-4px);
- box-shadow: 0 10px 20px rgba(0, 242, 255, 0.05);
+ box-shadow: 0 10px 25px rgba(0, 242, 255, 0.12);
  }
  
  .script-card h3 { font-family: 'Orbitron'; margin: 0 0 10px 0; color: #fff; font-size: 0.95rem; letter-spacing: 1px; }
@@ -753,39 +774,148 @@
 
  <div id="script-overlay" class="overlay">
    <span class="close-btn" onclick="closeMenu()">&times;</span>
-   <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 120px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
+   <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 100px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
    <p style="color: #444; font-family: 'Fira Code', monospace; font-size: 0.7rem; letter-spacing: 2px; text-align: center; width: 100%;">Select The Script You Want To Download.</p>
    <br> 
    <div id="menu-list">
+     
+     <!-- 1. Universal Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/dltcfye5zo7rej9/KscriptV7.3.lua/file')">
-       <h3>Universal Script V.7.3</h3>
-       <p>Everything You Are Looking For İs Here</p>
+       <img src="./universal.png" alt="Universal Script" class="script-img" onerror="this.src='https://picsum.photos/seed/universal/320/160'">
+       <div class="script-card-content">
+         <h3>Universal Script V.7.3</h3>
+         <p>Everything You Are Looking For İs Here</p>
+       </div>
      </div>
 
+     <!-- 2. The Button Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/8ohlkr57ohqlgu6/The_button_script.lua/file')">
-       <h3>The Button Script</h3>
-       <p>The Script Of The Button Game İn Roblox</p>
+       <img src="./button.png" alt="The Button Script" class="script-img" onerror="this.src='https://picsum.photos/seed/button/320/160'">
+       <div class="script-card-content">
+         <h3>The Button Script</h3>
+         <p>The Script Of The Button Game İn Roblox</p>
+       </div>
      </div>
 
+     <!-- 3. Steal A Brainrot Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tsmxv09w5ofuuv4/brainrot_script.lua/file')">
-       <h3>Steal A Brainrot Script</h3>
-       <p>The Script Of Steal A Brainrot Game İn Roblox</p>
+       <img src="./brainrot.png" alt="Brainrot Script" class="script-img" onerror="this.src='https://picsum.photos/seed/brainrot/320/160'">
+       <div class="script-card-content">
+         <h3>Steal A Brainrot Script</h3>
+         <p>The Script Of Steal A Brainrot Game İn Roblox</p>
+       </div>
      </div>
 
+     <!-- 4. C00lkid Gui -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
-       <h3>C00lkid Gui</h3>
-       <p>You might think you're like c00lkid :) </p>
+       <img src="./c00lkid.png" alt="C00lkid Gui" class="script-img" onerror="this.src='https://picsum.photos/seed/c00lkid/320/160'">
+       <div class="script-card-content">
+         <h3>C00lkid Gui</h3>
+         <p>You might think you're like c00lkid :)</p>
+       </div>
      </div>
 
+     <!-- 5. Murder Mystery 2 Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
-       <h3>Murder Mystery 2 Script</h3>
-       <p>MM2 Also Do What You Want</p>
+       <img src="./mm2.png" alt="Murder Mystery 2" class="script-img" onerror="this.src='https://picsum.photos/seed/mm2/320/160'">
+       <div class="script-card-content">
+         <h3>Murder Mystery 2 Script</h3>
+         <p>MM2 Also Do What You Want</p>
+       </div>
      </div>
 
+     <!-- 6. Fling Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
-       <h3>Fling Script</h3>
-       <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
+       <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://picsum.photos/seed/fling/320/160'">
+       <div class="script-card-content">
+         <h3>Fling Script</h3>
+         <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
+       </div>
      </div>
+
+     <!-- YENİ EKLENEN 9 TANE SCRIPT -->
+
+     <!-- 7. Blox Fruits Hub -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./bloxfruits.png" alt="Blox Fruits Hub" class="script-img" onerror="this.src='https://picsum.photos/seed/bloxfruits/320/160'">
+       <div class="script-card-content">
+         <h3>Blox Fruits Auto-Farm</h3>
+         <p>Auto farm levels, fruits, and sea events with ultimate precision.</p>
+       </div>
+     </div>
+
+     <!-- 8. Pet Simulator 99 -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./ps99.png" alt="Pet Simulator 99" class="script-img" onerror="this.src='https://picsum.photos/seed/ps99/320/160'">
+       <div class="script-card-content">
+         <h3>Pet Simulator 99</h3>
+         <p>Auto hatch, infinite coin aura and best rank progression script.</p>
+       </div>
+     </div>
+
+     <!-- 9. Arsenal Aimbot & ESP -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./arsenal.png" alt="Arsenal Script" class="script-img" onerror="this.src='https://picsum.photos/seed/arsenal/320/160'">
+       <div class="script-card-content">
+         <h3>Arsenal Silent Aimbot</h3>
+         <p>Silent aimbot, wallhack ESP, infinite ammo, and wallbang features.</p>
+       </div>
+     </div>
+
+     <!-- 10. Bedwars Hub -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./bedwars.png" alt="Bedwars Script" class="script-img" onerror="this.src='https://picsum.photos/seed/bedwars/320/160'">
+       <div class="script-card-content">
+         <h3>Bedwars God Mode</h3>
+         <p>Killaura, fly, speed hack and auto-bridge utilities included.</p>
+       </div>
+     </div>
+
+     <!-- 11. Evade Speed & ESP -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./evade.png" alt="Evade Script" class="script-img" onerror="this.src='https://picsum.photos/seed/evade/320/160'">
+       <div class="script-card-content">
+         <h3>Evade Nextbot ESP</h3>
+         <p>Auto-revive, nextbot radar, fullbright and godspeed toggle.</p>
+       </div>
+     </div>
+
+     <!-- 12. Doors Floor 2 Hub -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./doors.png" alt="Doors Script" class="script-img" onerror="this.src='https://picsum.photos/seed/doors/320/160'">
+       <div class="script-card-content">
+         <h3>Doors Floor 2 Bypass</h3>
+         <p>Entity notify, auto-key finder, skip room and breaker solver.</p>
+       </div>
+     </div>
+
+     <!-- 13. Blade Ball Auto-Parry -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./bladeball.png" alt="Blade Ball Script" class="script-img" onerror="this.src='https://picsum.photos/seed/bladeball/320/160'">
+       <div class="script-card-content">
+         <h3>Blade Ball Auto-Parry</h3>
+         <p>100% accurate ping-based auto parry with visual indicator.</p>
+       </div>
+     </div>
+
+     <!-- 14. Da Hood Target Hub -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./dahood.png" alt="Da Hood Script" class="script-img" onerror="this.src='https://picsum.photos/seed/dahood/320/160'">
+       <div class="script-card-content">
+         <h3>Da Hood Lock & Fly</h3>
+         <p>Camlock, prediction aim, auto-buy armor and speed bypass.</p>
+       </div>
+     </div>
+
+     <!-- 15. Brookhaven RP Admin -->
+     <div class="script-card" onclick="recordScriptClick('#')">
+       <img src="./brookhaven.png" alt="Brookhaven Script" class="script-img" onerror="this.src='https://picsum.photos/seed/brookhaven/320/160'">
+       <div class="script-card-content">
+         <h3>Brookhaven Admin Panel</h3>
+         <p>Unlock all gamepasses, rainbow house, and vehicle modder.</p>
+       </div>
+     </div>
+
    </div>
  </div>
 
@@ -897,6 +1027,10 @@
    }
 
    function recordScriptClick(url) {
+     if(url === '#') {
+       showToast("Script linki yakında eklenecek!");
+       return;
+     }
      showToast("Yönlendiriliyorsunuz...");
      window.open(url, '_blank');
    }
