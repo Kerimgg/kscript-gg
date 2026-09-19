@@ -726,7 +726,6 @@
      <div class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-code" style="font-size:0.75rem;"></i> SCRIPTS</div>
      <div class="nav-btn exec-btn-style" onclick="recordExecClick('https://www.mediafire.com/file/j3kgf8cpx0qprp0/Xeno-v1.3.60.rar/file')"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
      <div class="nav-btn" onclick="window.open('https://www.mediafire.com/file/6awo2y0ckf94xcu/KscriptSpooferV2.rar/file', '_blank')"><i class="fa-brands fa-discord" style="font-size:0.75rem;"></i>SPOOFER</div>
-     <div class="nav-btn" id="ksInfoBtn"><i class="fa-solid fa-shield-halved" style="font-size:0.75rem;"></i> INFO & GUIDE</div>
    </div>
 
    <div class="scroll-indicator" onclick="scrollToReviews()">
@@ -832,31 +831,6 @@
          <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
        </div>
      </div>
-
- <div id="ksInfoModal" class="ks-modal">
-   <div class="ks-modal-content">
-     <span class="ks-close" id="ksCloseBtn">&times;</span>
-     <h2>SYSTEM PROTOCOL</h2>
-     <br> 
-     <div class="ks-section">
-       <strong>DEVELOPER ACCESS:</strong><br><br>
-       Bu yazılım kscript.gg1 tarafından kodlanmıştır.
-     </div>
-
-     <div class="ks-section">
-       <strong>HARDWARE INFO:</strong><br><br>
-       Executor sadece <strong>PC</strong> içindir. Script kodları tüm platformlarda çalışır.
-     </div>
-
-     <div class="ks-section">
-       <strong>AUTH KEY SYSTEM:</strong><br><br>
-       Keyler <strong>ÜCRETSİZDİR</strong>. Instagram <strong>kscript.gg</strong> üzerinden talep edebilirsiniz.
-     </div>
-
-     <div class="ks-section">
-       <strong>RESOURCES:</strong><br><br>
-       Kurulum videosu için <strong>kscript.GG</strong> YouTube kanalına göz atın. (EXECUTORÜ İNDİRİRKEN UYARI VERİCEK SİZ YİNEDE SAKLAYINA BASIN VE WİNDOWS AYARLARINDAN AKILLI UYGULAMA DENETİMİNİ KAPATIN)
-     </div>
    </div>
  </div>
 
@@ -952,18 +926,6 @@
    function recordExecClick(url) {
      showToast("Executor İndirmesi Başlatılıyor...");
      window.open(url, '_blank');
-   }
-
-   // Modal İşlemleri
-   const modal = document.getElementById("ksInfoModal");
-   const btn = document.getElementById("ksInfoBtn");
-   const close = document.getElementById("ksCloseBtn");
-
-   btn.onclick = () => modal.style.display = "block";
-   close.onclick = () => modal.style.display = "none";
-   
-   window.onclick = (e) => { 
-     if(e.target == modal) modal.style.display = "none"; 
    }
 
    document.getElementById('script-overlay').addEventListener('click', function(e) {
