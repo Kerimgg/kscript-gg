@@ -154,7 +154,7 @@
    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
  }
 
- /* --- ÜST NAVBAR (SOL ÜST MENÜ) --- */
+ /* --- ÜST NAVBAR (SOL ÜST MENÜ VE SAĞ LOGO/STATUS) --- */
  .navbar {
    position: fixed;
    top: 0; left: 0; width: 100%;
@@ -199,14 +199,51 @@
  }
 
  .nav-brand {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   justify-content: center;
+ }
+
+ .brand-title {
    font-family: 'Orbitron', sans-serif;
    font-size: 1.1rem;
    font-weight: 900;
    letter-spacing: 4px;
    color: #fff;
-   display: flex;
+   line-height: 1.2;
+ }
+
+ .system-badge {
+   font-family: var(--font-code);
+   font-size: 0.58rem;
+   color: var(--primary);
+   letter-spacing: 1.5px;
+   background: rgba(0, 242, 255, 0.04);
+   border: 1px solid rgba(0, 242, 255, 0.15);
+   padding: 2px 8px;
+   border-radius: 100px;
+   text-transform: uppercase;
+   display: inline-flex;
    align-items: center;
-   gap: 10px;
+   gap: 5px;
+   margin-top: 2px;
+   box-shadow: 0 0 10px rgba(0, 242, 255, 0.05);
+ }
+
+ .system-badge span {
+   width: 5px;
+   height: 5px;
+   background-color: #10b981;
+   border-radius: 50%;
+   display: inline-block;
+   box-shadow: 0 0 6px #10b981;
+   animation: blink 1.5s infinite;
+ }
+
+ @keyframes blink {
+   0%, 100% { opacity: 0.4; }
+   50% { opacity: 1; }
  }
 
  /* --- SAYFA TAB DÜZENLERİ --- */
@@ -229,38 +266,6 @@
    max-width: 1100px;
    margin: 40px auto 30px auto;
    text-align: center;
- }
-
- .system-badge {
-   font-family: var(--font-code);
-   font-size: 0.7rem;
-   color: var(--primary);
-   letter-spacing: 3px;
-   background: rgba(0, 242, 255, 0.04);
-   border: 1px solid rgba(0, 242, 255, 0.15);
-   padding: 6px 16px;
-   border-radius: 100px;
-   margin: 0 auto 24px auto;
-   text-transform: uppercase;
-   display: inline-flex;
-   align-items: center;
-   gap: 8px;
-   box-shadow: 0 0 15px rgba(0, 242, 255, 0.05);
- }
-
- .system-badge span {
-   width: 6px;
-   height: 6px;
-   background-color: #10b981;
-   border-radius: 50%;
-   display: inline-block;
-   box-shadow: 0 0 8px #10b981;
-   animation: blink 1.5s infinite;
- }
-
- @keyframes blink {
-   0%, 100% { opacity: 0.4; }
-   50% { opacity: 1; }
  }
 
  .home-subtitle {
@@ -539,7 +544,7 @@
    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4) !important;
  }
 
- /* --- REVIEWS SECTION (YENİ SEKME OLARAK) --- */
+ /* --- REVIEWS SECTION --- */
  #tab-reviews {
    padding: 40px 20px;
  }
@@ -722,7 +727,8 @@
  @media (max-width: 650px) {
    .navbar { padding: 0 15px; }
    .nav-item { padding: 8px 10px; font-size: 0.65rem; }
-   .nav-brand { font-size: 0.85rem; }
+   .brand-title { font-size: 0.85rem; }
+   .system-badge { font-size: 0.5rem; }
  }
  </style>
 </head>
@@ -750,7 +756,7 @@
  <div class="grid-overlay"></div>
  <div class="glow"></div>
 
- <!-- ÜST SABİT NAVİGASYON (SOL ÜST MENÜ) -->
+ <!-- ÜST SABİT NAVİGASYON -->
  <nav class="navbar">
    <div class="nav-left">
      <a class="nav-item active" id="nav-home" onclick="switchTab('home')">
@@ -763,22 +769,21 @@
        <i class="fa-solid fa-terminal"></i> EXECUTOR
      </a>
      <a class="nav-item" id="nav-spoofer" onclick="switchTab('spoofer')">
-       <i class="fa-brands fa-discord"></i> SPOOFER
+       <i class="fa-solid fa-microchip"></i> SPOOFER
      </a>
      <a class="nav-item" id="nav-reviews" onclick="switchTab('reviews')">
        <i class="fa-solid fa-comments"></i> REVIEWS
      </a>
    </div>
    <div class="nav-brand">
-     KSCRIPT.GG
+     <span class="brand-title">KSCRIPT.GG</span>
+     <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
    </div>
  </nav>
 
  <!-- 1. HOME SAYFASI -->
  <div id="tab-home" class="page-tab active-tab">
    <div class="hero-container">
-     <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
-     <br>
      <p class="home-subtitle">Scripts/Executor/Spoofer Whatever You Want.</p>
    </div>
 
@@ -806,9 +811,9 @@
        <p class="feature-desc">Maximum stealth powered by low-level memory protection and dynamic obfuscation.</p>
      </div>
      <div class="feature-box">
-       <i class="fa-solid fa-bolt feature-icon"></i>
-       <h3 class="feature-title">Instant Delivery</h3>
-       <p class="feature-desc">Fast cloud updates for all scripts and software automatically.</p>
+       <i class="fa-solid fa-circle-question feature-icon"></i>
+       <h3 class="feature-title">How to Install</h3>
+       <p class="feature-desc">Detailed installation guide available on our YouTube channel. You can follow along simply by watching the video.</p>
      </div>
      <div class="feature-box">
        <i class="fa-solid fa-sliders feature-icon"></i>
@@ -880,7 +885,7 @@
    </div>
  </div>
 
- <!-- 3. EXECUTOR SAYFASI (KAYDIRMASIZ - EKRANA SIĞAN) -->
+ <!-- 3. EXECUTOR SAYFASI -->
  <div id="tab-executor" class="page-tab fit-screen-page">
    <div class="fit-container">
      <h2 class="fit-title">KSCRIPT EXECUTOR</h2>
@@ -893,7 +898,7 @@
    </div>
  </div>
 
- <!-- 4. SPOOFER SAYFASI (KAYDIRMASIZ - EKRANA SIĞAN) -->
+ <!-- 4. SPOOFER SAYFASI -->
  <div id="tab-spoofer" class="page-tab fit-screen-page">
    <div class="fit-container">
      <h2 class="fit-title" style="color: var(--secondary);">KSCRIPT SPOOFER</h2>
@@ -906,7 +911,7 @@
    </div>
  </div>
 
- <!-- 5. REVIEWS SAYFASI (SEKME OLARAK) -->
+ <!-- 5. REVIEWS SAYFASI -->
  <div id="tab-reviews" class="page-tab">
    <div class="reviews-container">
      <h2 class="reviews-title">USER REVIEWS</h2>
@@ -947,19 +952,15 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
-   // --- TAB DEĞİŞTİRME MANTIĞI ---
    function switchTab(tabName) {
-     // Bütün sekmeleri gizle
      document.querySelectorAll('.page-tab').forEach(tab => {
        tab.classList.remove('active-tab');
      });
      
-     // Butonların aktifliğini kaldır
      document.querySelectorAll('.nav-item').forEach(item => {
        item.classList.remove('active');
      });
 
-     // İstenen sekmeyi aç
      const targetTab = document.getElementById('tab-' + tabName);
      const targetBtn = document.getElementById('nav-' + tabName);
 
@@ -973,7 +974,6 @@
      window.scrollTo(0, 0);
    }
 
-   // Cloudflare Simülasyonu
    document.addEventListener("DOMContentLoaded", () => {
      const gate = document.getElementById("security-gate");
      const fill = document.getElementById("gate-progress");
@@ -1028,7 +1028,6 @@
      }, 100);
    });
 
-   // Toast & İndirme Bildirimleri
    function showToast(message) {
      const toast = document.getElementById('toast');
      toast.textContent = message;
@@ -1057,7 +1056,6 @@
      window.open(url, '_blank');
    }
 
-   // ========== YORUM SİSTEMİ + FORMSPREE =========
    let selectedRating = 0;
    const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
@@ -1205,7 +1203,6 @@
      }
    }
 
-   // Sayfa yüklendiğinde yorumları göster 
    renderAllReviews();
  </script>
 </body>
