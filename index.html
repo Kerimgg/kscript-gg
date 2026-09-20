@@ -3,526 +3,425 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>KscriptGG | Premium Experience</title>
+ <title>KscriptGG | Control Panel</title>
  <link rel="icon" type="image/png" href="https://i.ibb.co/q3Ls0TWK/kscript-circle.png">
- <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  <style>
  :root { 
- /* Yeni Premium Renk Paleti - Derin Uzay ve Aurora */
- --bg-dark: #050505;
- --text-main: #ffffff;
- --text-muted: #8892b0;
- --accent-1: #8b5cf6; /* Mor */
- --accent-2: #3b82f6; /* Mavi */
- --accent-3: #10b981; /* Zümrüt */
- --glass-bg: rgba(255, 255, 255, 0.03);
- --glass-border: rgba(255, 255, 255, 0.08);
- --font-main: 'Outfit', sans-serif;
- --font-code: 'JetBrains Mono', monospace;
+ --bg-base: #09090b;
+ --bg-surface: #18181b;
+ --bg-panel: #27272a;
+ --text-main: #f4f4f5;
+ --text-dim: #a1a1aa;
+ --neon-cyan: #06b6d4;
+ --neon-pink: #ec4899;
+ --neon-green: #10b981;
+ --border-color: rgba(255, 255, 255, 0.08);
  }
  
  * { box-sizing: border-box; margin: 0; padding: 0; }
-
  body { 
- background-color: var(--bg-dark);
- color: var(--text-main); 
- font-family: var(--font-main); 
- overflow-x: hidden;
- line-height: 1.6;
+ background-color: var(--bg-base); color: var(--text-main); 
+ font-family: 'Space Grotesk', sans-serif; 
+ overflow-x: hidden; display: flex; height: 100vh;
+ /* Cyber Grid Arkaplan */
+ background-image: 
+   linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+   linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+ background-size: 30px 30px;
  }
 
- /* --- YENİ ARKAPLAN: AURORA GLOW --- */
- .aurora-bg {
- position: fixed;
- top: 0; left: 0; width: 100vw; height: 100vh;
- z-index: -2;
- background: var(--bg-dark);
- overflow: hidden;
- }
- .aurora-blob {
- position: absolute;
- border-radius: 50%;
- filter: blur(120px);
- opacity: 0.5;
- animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
- }
- .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--accent-1); }
- .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--accent-2); animation-delay: -5s; }
- .blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: rgba(16, 185, 129, 0.2); animation-delay: -10s; }
- 
- @keyframes float {
- 0% { transform: translate(0, 0) scale(1); }
- 100% { transform: translate(10%, 15%) scale(1.2); }
- }
-
- .noise-overlay {
- position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
- background: url('https://grainy-gradients.vercel.app/noise.svg');
- opacity: 0.15; pointer-events: none;
- }
-
- /* --- YENİ GATE TASARIMI (MODERN YÜKLEME EKRANI) --- */
- #security-gate {
+ /* --- BOOT EKRANI (GATE) --- */
+ #terminal-gate {
  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
- background-color: var(--bg-dark); z-index: 999999;
- display: flex; flex-direction: column; justify-content: center; align-items: center;
- transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.8s;
+ background-color: #000; z-index: 999999;
+ display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;
+ font-family: 'Fira Code', monospace; color: var(--neon-cyan);
+ transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+ }
+ .boot-log { font-size: 1rem; margin-bottom: 5px; opacity: 0.8; }
+ .boot-cursor { display: inline-block; width: 10px; height: 1rem; background: var(--neon-cyan); animation: blink 1s step-end infinite; }
+ @keyframes blink { 50% { opacity: 0; } }
+
+ /* --- YAN MENÜ (SIDEBAR) --- */
+ .sidebar {
+ width: 100px; height: 100vh; background: var(--bg-surface);
+ border-right: 1px solid var(--border-color); display: flex;
+ flex-direction: column; align-items: center; padding: 30px 0;
+ z-index: 100; flex-shrink: 0;
+ }
+ .sidebar-logo {
+ width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+ display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.5rem; color: #fff;
+ margin-bottom: 50px; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+ }
+ .nav-items { display: flex; flex-direction: column; gap: 30px; width: 100%; }
+ .nav-btn {
+ background: transparent; border: none; color: var(--text-dim); font-size: 1.5rem;
+ cursor: pointer; transition: 0.3s; position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+ }
+ .nav-btn span { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0; transition: 0.3s; transform: translateY(5px); }
+ .nav-btn:hover { color: var(--neon-cyan); }
+ .nav-btn:hover span { opacity: 1; transform: translateY(0); }
+ .nav-btn.active { color: var(--text-main); }
+ .nav-btn.active::before {
+ content: ''; position: absolute; left: 0; top: 20%; height: 60%; width: 3px; background: var(--neon-cyan);
+ border-radius: 0 4px 4px 0; box-shadow: 0 0 10px var(--neon-cyan);
  }
 
- .gate-container {
- display: flex; flex-direction: column; align-items: center;
- gap: 20px;
+ /* --- ANA İÇERİK (DASHBOARD) --- */
+ .dashboard-container {
+ flex-grow: 1; height: 100vh; overflow-y: auto; padding: 40px; scroll-behavior: smooth;
  }
-
- .cloudflare-shield {
- font-size: 2.5rem; color: var(--text-main);
- animation: pulse-soft 2s infinite;
+ .dashboard-header { margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; }
+ .title-group h1 { font-size: 3rem; font-weight: 700; letter-spacing: -2px; }
+ .title-group p { color: var(--text-dim); font-family: 'Fira Code', monospace; font-size: 0.9rem; }
+ .status-badge {
+ display: flex; align-items: center; gap: 10px; background: rgba(16, 185, 129, 0.1);
+ color: var(--neon-green); padding: 10px 20px; border-radius: 8px; font-family: 'Fira Code', monospace; border: 1px solid rgba(16, 185, 129, 0.2);
  }
+ .status-dot { width: 10px; height: 10px; background: var(--neon-green); border-radius: 50%; box-shadow: 0 0 10px var(--neon-green); animation: pulse 2s infinite; }
 
- .gate-title {
- font-size: 0.9rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted);
+ /* BENTO GRID (KUTU KUTU TASARIM) */
+ .bento-grid {
+ display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 250px; gap: 20px;
  }
-
- .progress-bar-bg {
- width: 300px; height: 2px; background: var(--glass-border); position: relative; overflow: hidden; border-radius: 2px;
+ .bento-card {
+ background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px;
+ padding: 30px; display: flex; flex-direction: column; justify-content: space-between;
+ transition: 0.3s; cursor: pointer; position: relative; overflow: hidden;
  }
+ .bento-card:hover { transform: translateY(-5px); border-color: var(--neon-cyan); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+ 
+ .card-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--text-dim); transition: 0.3s; }
+ .bento-card:hover .card-icon { color: var(--neon-cyan); transform: scale(1.1); }
+ 
+ .card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; }
+ .card-desc { color: var(--text-dim); font-size: 0.9rem; }
+ 
+ /* Kutu Boyutlandırmaları */
+ .card-large { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(236,72,153,0.05)), var(--bg-surface); }
+ .card-large .card-title { font-size: 3rem; margin-top: auto; }
+ 
+ .executor-card { border-top: 3px solid var(--neon-cyan); }
+ .spoofer-card { border-top: 3px solid var(--neon-pink); }
 
- .progress-bar-fill {
- position: absolute; left: 0; top: 0; height: 100%; width: 0%;
- background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
- transition: width 0.1s linear;
- box-shadow: 0 0 10px var(--accent-2);
+ .action-arrow { position: absolute; bottom: 30px; right: 30px; font-size: 1.5rem; opacity: 0; transform: translateX(-10px); transition: 0.3s; }
+ .bento-card:hover .action-arrow { opacity: 1; transform: translateX(0); }
+
+ /* --- YENİ KAYAN PANELLER (DRAWER - MODAL YERİNE) --- */
+ .drawer {
+ position: fixed; top: 0; right: -100%; width: 450px; height: 100vh;
+ background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(20px); border-left: 1px solid var(--border-color);
+ z-index: 1000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+ display: flex; flex-direction: column; padding: 40px; box-shadow: -20px 0 50px rgba(0,0,0,0.5);
  }
+ .drawer.open { right: 0; }
+ .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+ .drawer-title { font-size: 2rem; font-weight: 700; }
+ .close-drawer { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+ .close-drawer:hover { color: var(--neon-pink); transform: rotate(90deg); }
+ .drawer-content { flex-grow: 1; overflow-y: auto; padding-right: 10px; }
+ /* Scrollbar gizleme */
+ .drawer-content::-webkit-scrollbar { width: 5px; }
+ .drawer-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
 
- #gate-log {
- font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted); margin-top: 10px;
+ /* SCRIPTS LIST IN DRAWER */
+ .script-item {
+ display: flex; gap: 15px; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);
+ margin-bottom: 15px; cursor: pointer; transition: 0.3s; background: var(--bg-base);
  }
+ .script-item:hover { border-color: var(--neon-cyan); background: rgba(6,182,212,0.05); }
+ .script-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+ .script-info h4 { margin-bottom: 5px; font-size: 1.1rem; }
+ .script-info p { font-size: 0.8rem; color: var(--text-dim); }
 
- @keyframes pulse-soft { 0%, 100% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1.05); } }
-
- /* --- YENİ ANA SAYFA DİZAYNI --- */
- #main-page {
- display: flex; flex-direction: column; justify-content: center; align-items: center;
- min-height: 100vh; width: 100%; padding: 40px 20px; position: relative;
+ /* PRODUCT PREVIEWS (Exec/Spoofer) */
+ .product-banner { width: 100%; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+ .download-btn {
+ width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; font-family: 'Space Grotesk'; font-size: 1rem;
+ cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; border: none;
  }
+ .btn-cyan { background: var(--neon-cyan); color: #000; }
+ .btn-cyan:hover { box-shadow: 0 0 20px var(--neon-cyan); }
+ .btn-pink { background: var(--neon-pink); color: #fff; }
+ .btn-pink:hover { box-shadow: 0 0 20px var(--neon-pink); }
 
- .system-badge {
- font-family: var(--font-code); font-size: 0.7rem; color: var(--text-main);
- background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
- padding: 8px 24px; border-radius: 100px; margin-bottom: 40px;
- backdrop-filter: blur(10px); display: flex; align-items: center; gap: 10px;
+ /* --- YENİ YORUMLAR (TERMINAL FEED STİLİ) --- */
+ .feed-section { margin-top: 60px; }
+ .feed-section h2 { margin-bottom: 30px; font-size: 2rem; }
+ .reviews-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+ 
+ .review-form-box { background: var(--bg-surface); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); height: fit-content; }
+ .review-form-box input, .review-form-box textarea {
+ width: 100%; background: var(--bg-base); border: 1px solid var(--border-color); color: #fff;
+ padding: 15px; border-radius: 8px; margin-bottom: 15px; font-family: 'Space Grotesk';
  }
- .system-badge span { width: 8px; height: 8px; background-color: var(--accent-3); border-radius: 50%; box-shadow: 0 0 10px var(--accent-3); }
+ .review-form-box input:focus, .review-form-box textarea:focus { outline: none; border-color: var(--neon-cyan); }
+ .star-selector { font-size: 1.5rem; margin-bottom: 20px; cursor: pointer; color: var(--text-dim); }
+ .star-selector .star:hover, .star-selector .star.active { color: #fbbf24; }
+ .submit-feed-btn { width: 100%; background: #fff; color: #000; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+ .submit-feed-btn:hover { background: var(--neon-cyan); }
 
- /* MERKEZDEKİ DEVASA YENİ LOGO */
- .logo { 
- font-size: clamp(4rem, 12vw, 10rem); 
- font-weight: 900; 
- letter-spacing: -2px; /* Daha modern, bitişik görünüm */
- line-height: 1;
- margin-bottom: 50px;
- background: linear-gradient(to right, #fff, #a5b4fc, #c084fc);
- -webkit-background-clip: text; 
- -webkit-text-fill-color: transparent; 
- text-align: center;
- filter: drop-shadow(0 20px 40px rgba(139, 92, 246, 0.3));
+ .reviews-feed { display: flex; flex-direction: column; gap: 15px; }
+ .feed-item { 
+ background: var(--bg-surface); border-left: 3px solid var(--neon-cyan); padding: 20px; border-radius: 0 12px 12px 0;
+ display: flex; flex-direction: column; position: relative;
  }
+ .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+ .feed-user { font-weight: 700; font-family: 'Fira Code', monospace; color: var(--neon-cyan); }
+ .feed-stars { color: #fbbf24; font-size: 0.9rem; }
+ .feed-text { color: var(--text-main); font-size: 0.95rem; }
 
- /* YENİ NAVİGASYON (HAP / PILL ŞEKLİNDE MERKEZİ MENÜ) */
- .btn-container { 
- display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; 
- background: rgba(10, 10, 10, 0.4);
- padding: 10px; border-radius: 100px;
- border: 1px solid var(--glass-border);
- backdrop-filter: blur(20px);
- box-shadow: 0 20px 40px rgba(0,0,0,0.5);
- }
+ .toast { position: fixed; bottom: 30px; right: 30px; background: var(--neon-cyan); color: #000; padding: 15px 25px; border-radius: 8px; font-weight: 700; display: none; z-index: 9999; }
 
- .nav-btn { 
- padding: 15px 35px; 
- background: transparent; 
- color: var(--text-muted); 
- border-radius: 100px;
- font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; 
- transition: all 0.4s ease; 
- cursor: pointer; border: none;
- display: flex; align-items: center; gap: 10px;
- text-decoration: none;
- }
-
- .nav-btn:hover { 
- background: rgba(255,255,255,0.1); color: var(--text-main); 
- transform: translateY(-2px);
- }
-
- .exec-btn-style:hover { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2)); color: #fff; }
-
- .scroll-indicator {
- position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
- display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; opacity: 0.6; transition: 0.3s;
- }
- .scroll-indicator:hover { opacity: 1; transform: translateX(-50%) translateY(5px); }
- .scroll-text { font-family: var(--font-code); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
- .scroll-arrow { font-size: 1.2rem; }
-
- /* --- YENİ YORUMLAR BÖLÜMÜ (MODERN KART SİSTEMİ) --- */
- .reviews-section {
- min-height: 100vh; padding: 120px 20px; position: relative; z-index: 10;
- }
- .reviews-container { max-width: 1200px; margin: 0 auto; }
-
- .reviews-title {
- font-size: 2.5rem; font-weight: 800; color: var(--text-main); text-align: center; margin-bottom: 60px; letter-spacing: -1px;
- }
-
- .review-form {
- background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 40px;
- border-radius: 24px; backdrop-filter: blur(20px); max-width: 600px; margin: 0 auto 60px;
- box-shadow: 0 30px 60px rgba(0,0,0,0.4);
- }
-
- .form-group { margin-bottom: 25px; }
- .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
- .form-group input, .form-group textarea {
- width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 15px 20px;
- border-radius: 12px; color: #fff; font-family: var(--font-main); font-size: 0.95rem; transition: 0.3s;
- }
- .form-group input:focus, .form-group textarea:focus {
- outline: none; border-color: var(--accent-1); background: rgba(139, 92, 246, 0.05); box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
- }
-
- .rating-stars { display: flex; gap: 5px; }
- .star { font-size: 28px; color: #333; cursor: pointer; transition: 0.2s; }
- .star:hover, .star.active { color: #fbbf24; transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5)); }
-
- .submit-btn {
- background: var(--text-main); color: var(--bg-dark); padding: 16px; font-weight: 800; font-family: var(--font-main);
- font-size: 0.9rem; cursor: pointer; border-radius: 12px; transition: 0.3s; width: 100%; border: none; letter-spacing: 1px;
- }
- .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
- .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
- .thank-you-message {
- text-align: center; color: var(--accent-3); background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);
- border-radius: 16px; padding: 30px; margin: 0 auto 50px; max-width: 600px;
- }
-
- .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-
- .review-card {
- background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 30px; border-radius: 20px;
- backdrop-filter: blur(10px); transition: 0.4s; display: flex; flex-direction: column;
- }
- .review-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
- .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
- .review-username { font-weight: 700; color: #fff; font-size: 1.1rem; }
- .review-rating { color: #fbbf24; font-size: 0.9rem; }
- .review-comment { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; }
- .review-date { color: #555; font-size: 0.75rem; margin-top: 20px; font-family: var(--font-code); }
-
- /* --- YENİ MODAL VE KART SİSTEMİ (PREMIUM ARAYÜZ) --- */
- .overlay, .ks-modal {
- display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
- background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(25px); overflow-y: auto; padding: 20px;
- }
-
- .ks-modal-content {
- background: rgba(15, 15, 20, 0.8); margin: 5vh auto; padding: 40px; width: 100%; max-width: 500px;
- border-radius: 30px; border: 1px solid var(--glass-border); position: relative;
- box-shadow: 0 40px 100px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center;
- }
-
- #script-overlay .ks-modal-content {
- max-width: 1300px; background: transparent; border: none; box-shadow: none; margin: 0 auto; padding-top: 10vh;
- }
-
- .close-btn, .ks-close {
- position: absolute; right: 25px; top: 25px; width: 40px; height: 40px; background: rgba(255,255,255,0.1);
- border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff;
- font-size: 1.2rem; cursor: pointer; transition: 0.3s; z-index: 10; border: 1px solid transparent;
- }
- .close-btn:hover, .ks-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); border-color: rgba(255,255,255,0.3); }
-
- #script-overlay h2 { font-size: 3rem; font-weight: 900; text-align: center; margin-bottom: 10px; letter-spacing: -1px; }
- #script-overlay > p { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 50px; }
-
- #menu-list {
- display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; margin: 0 auto;
- }
-
- .script-card { 
- background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 24px; 
- transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; overflow: hidden;
- display: flex; flex-direction: column; backdrop-filter: blur(10px); padding: 10px;
- }
- .script-img { width: 100%; height: 200px; object-fit: cover; border-radius: 16px; transition: 0.5s; background: #0a0a0a; }
- .script-card:hover .script-img { transform: scale(1.03); }
- .script-card-content { padding: 25px 15px 15px; }
- .script-card:hover { 
- background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-10px);
- box-shadow: 0 20px 40px rgba(0,0,0,0.5);
- }
- .script-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
- .script-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
-
- /* Modal İçi Özelleştirmeler */
- .ks-modal-content h2 { font-size: 2rem; font-weight: 800; margin-bottom: 30px; letter-spacing: -1px; }
- .preview-box {
- width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 30px;
- background: #000; border: 1px solid var(--glass-border); position: relative;
- }
- .product-preview-img { width: 100%; display: block; object-fit: cover; opacity: 0.8; transition: 0.3s; }
- .preview-box:hover .product-preview-img { opacity: 1; transform: scale(1.05); }
-
- .download-action-btn {
- width: 100%; padding: 20px; background: #fff; color: #000; font-weight: 800; font-size: 1rem;
- border-radius: 16px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; border: none;
- }
- .download-action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.3); }
-
- .spoofer-btn-color { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); color: #fff; }
- .spoofer-btn-color:hover { box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4); }
-
- .toast-notification {
- position: fixed; bottom: 40px; right: 40px; background: #fff; color: #000; padding: 16px 24px;
- border-radius: 12px; font-weight: 600; font-size: 0.9rem; display: none; z-index: 99999;
- box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: slideIn 0.3s forwards;
- }
- @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
- html { scroll-behavior: smooth; }
- @media (max-width: 768px) {
-   .btn-container { flex-direction: column; border-radius: 24px; width: 100%; max-width: 300px; }
-   .nav-btn { width: 100%; justify-content: center; }
-   .logo { font-size: 3.5rem; }
+ /* MOBİL UYUMLULUK (SIDEBAR -> TAB BAR) */
+ @media (max-width: 900px) {
+ body { flex-direction: column; }
+ .sidebar { width: 100%; height: 80px; flex-direction: row; justify-content: space-around; padding: 0; border-right: none; border-top: 1px solid var(--border-color); position: fixed; bottom: 0; z-index: 2000; }
+ .sidebar-logo { display: none; }
+ .nav-btn span { display: none; }
+ .nav-btn.active::before { width: 40%; height: 3px; top: -10px; left: 30%; border-radius: 0 0 4px 4px; }
+ .dashboard-container { padding: 20px; padding-bottom: 100px; }
+ .bento-grid { grid-template-columns: 1fr; }
+ .card-large { grid-column: span 1; grid-row: span 1; }
+ .drawer { width: 100%; right: -100%; }
+ .reviews-layout { grid-template-columns: 1fr; }
  }
  </style>
 </head>
 <body>
 
- <div class="aurora-bg">
-   <div class="aurora-blob blob-1"></div>
-   <div class="aurora-blob blob-2"></div>
-   <div class="aurora-blob blob-3"></div>
- </div>
- <div class="noise-overlay"></div>
-
- <div id="security-gate">
-   <div class="gate-container">
-     <div class="cloudflare-shield"><i class="fa-solid fa-fingerprint"></i></div>
-     <div class="gate-title">Authenticating Connection</div>
-     <div class="progress-bar-bg"><div id="gate-progress" class="progress-bar-fill"></div></div>
-     <div id="gate-log">Initializing secure handshake...</div>
-   </div>
+ <!-- TERMINAL BOOT GATE -->
+ <div id="terminal-gate">
+   <div id="boot-text"></div>
+   <div><span class="boot-cursor"></span></div>
  </div>
 
- <div id="main-page">
-   <div class="system-badge"><span></span> SYSTEM ONLINE</div>
-   
-   <div class="logo">KSCRIPT.GG</div>
-   
-   <div class="btn-container">
-     <button class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-layer-group"></i> Scripts</button>
-     <button class="nav-btn exec-btn-style" onclick="openExecutorModal()"><i class="fa-solid fa-terminal"></i> Executor</button>
-     <button class="nav-btn" onclick="openSpooferModal()"><i class="fa-brands fa-discord"></i> Spoofer</button>
+ <!-- SIDEBAR NAV -->
+ <nav class="sidebar">
+   <div class="sidebar-logo">KS</div>
+   <div class="nav-items">
+     <button class="nav-btn active" onclick="scrollToTop()"><i class="fa-solid fa-house"></i><span>Home</span></button>
+     <button class="nav-btn" onclick="openDrawer('scripts-drawer')"><i class="fa-solid fa-code"></i><span>Library</span></button>
+     <button class="nav-btn" onclick="openDrawer('exec-drawer')"><i class="fa-solid fa-terminal"></i><span>Exec</span></button>
+     <button class="nav-btn" onclick="scrollToReviews()"><i class="fa-solid fa-comments"></i><span>Feed</span></button>
+   </div>
+ </nav>
+
+ <!-- MAIN DASHBOARD -->
+ <main class="dashboard-container" id="dash-top">
+   <div class="dashboard-header">
+     <div class="title-group">
+       <h1>Dashboard</h1>
+       <p>> system.initialize() ... OK</p>
+     </div>
+     <div class="status-badge">
+       <div class="status-dot"></div> CLIENT SECURED
+     </div>
    </div>
 
-   <div class="scroll-indicator" onclick="scrollToReviews()">
-     <span class="scroll-text">Discover</span>
-     <span class="scroll-arrow"><i class="fa-solid fa-chevron-down"></i></span>
-   </div>
- </div>
-
- <div id="reviews" class="reviews-section">
-   <div class="reviews-container">
-     <h2 class="reviews-title">Community Feedback</h2>
+   <!-- BENTO GRID -->
+   <div class="bento-grid">
      
-     <div id="reviewFormContainer">
-       <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
-         <div class="form-group">
-           <label>Display Name</label>
-           <input type="text" name="username" id="reviewUsername" placeholder="Enter your alias" maxlength="30" required>
-         </div>
-         
-         <div class="form-group">
-           <label>Your Experience</label>
-           <textarea name="comment" id="reviewComment" placeholder="Tell us what you think..." rows="4" maxlength="500" required></textarea>
-         </div>
-         
-         <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
-           <div>
-             <label style="margin-bottom: 2px;">Rating</label>
-             <div class="rating-stars" id="ratingStars">
-               <span class="star" data-rating="1">★</span><span class="star" data-rating="2">★</span><span class="star" data-rating="3">★</span><span class="star" data-rating="4">★</span><span class="star" data-rating="5">★</span>
-             </div>
+     <!-- Hero Card -->
+     <div class="bento-card card-large" onclick="openDrawer('scripts-drawer')">
+       <i class="fa-solid fa-layer-group card-icon"></i>
+       <div class="card-desc">CORE SYSTEM</div>
+       <div class="card-title">Script Library<br>Access Database</div>
+       <i class="fa-solid fa-arrow-right action-arrow"></i>
+     </div>
+
+     <!-- Executor Card -->
+     <div class="bento-card executor-card" onclick="openDrawer('exec-drawer')">
+       <i class="fa-solid fa-bolt card-icon"></i>
+       <div>
+         <div class="card-title">Executor</div>
+         <div class="card-desc">V1.3.60 Engine</div>
+       </div>
+       <i class="fa-solid fa-download action-arrow"></i>
+     </div>
+
+     <!-- Spoofer Card -->
+     <div class="bento-card spoofer-card" onclick="openDrawer('spoofer-drawer')">
+       <i class="fa-brands fa-discord card-icon"></i>
+       <div>
+         <div class="card-title">HWID Spoofer</div>
+         <div class="card-desc">Bypass Security</div>
+       </div>
+       <i class="fa-solid fa-download action-arrow"></i>
+     </div>
+   </div>
+
+   <!-- REVIEWS FEED -->
+   <div id="reviews-section" class="feed-section">
+     <h2>System Feed_</h2>
+     <div class="reviews-layout">
+       
+       <div class="review-form-box">
+         <h3 style="margin-bottom: 20px;">Leave a log</h3>
+         <form id="reviewForm" onsubmit="submitReview(event)">
+           <input type="text" id="reviewUsername" placeholder="Enter Alias..." required>
+           <textarea id="reviewComment" placeholder="Enter message..." rows="3" required></textarea>
+           
+           <div class="star-selector" id="ratingStars">
+             <span class="star" data-rating="1">★</span>
+             <span class="star" data-rating="2">★</span>
+             <span class="star" data-rating="3">★</span>
+             <span class="star" data-rating="4">★</span>
+             <span class="star" data-rating="5">★</span>
            </div>
-           <input type="hidden" name="rating" id="ratingInput" value="0" required>
-         </div>
-         
-         <button type="submit" class="submit-btn" id="submitReviewBtn">Submit Review</button>
-         <div id="formError" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; text-align: center;"></div>
-       </form>
-     </div>
-     
-     <div id="reviews-list" class="reviews-grid"></div>
-   </div>
- </div>
+           <input type="hidden" id="ratingInput" value="0" required>
+           <div id="formError" style="color: var(--neon-pink); font-size: 0.85rem; margin-bottom: 10px;"></div>
+           <button type="submit" class="submit-feed-btn" id="submitReviewBtn">Broadcast Log</button>
+         </form>
+       </div>
 
- <!-- SCRIPTS MODAL -->
- <div id="script-overlay" class="overlay">
-   <div class="ks-modal-content">
-     <div class="close-btn" onclick="closeMenu()"><i class="fa-solid fa-xmark"></i></div>
-     <h2>Script Library</h2>
-     <p>Select a module to inject into your client.</p>
-     
-     <div id="menu-list">
-       <!-- 1. Universal Script -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/dltcfye5zo7rej9/KscriptV7.3.lua/file')">
-         <img src="./universal.png" alt="Universal Script" class="script-img" onerror="this.src='https://i.ibb.co/ZzCbkWLN/kscriptv73.png'">
-         <div class="script-card-content">
-           <h3>Universal Script V.7.3</h3>
-           <p>Everything You Are Looking For İs Here</p>
-         </div>
+       <div class="reviews-feed" id="reviews-list">
+         <!-- Yorumlar buraya akacak -->
        </div>
-       <!-- 2.Driving Empire Script -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/7yxzfcasqgz31ba/Kscript+Driving+Empire.lua/file')">
-         <img src="./button.png" alt="Driving Empire Script" class="script-img" onerror="this.src='https://i.ibb.co/Sh3zqDq/Drive-empire.png'">
-         <div class="script-card-content">
-           <h3>Driving Empire Script</h3>
-           <p>The Script Of Driving Empire Game İn Roblox</p>
-         </div>
-       </div>
-       <!-- 3. +18 Emote -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/jwdz7nrzq04iwj6/+18+script.lua/file')">
-         <img src="./brainrot.png" alt="Brainrot Script" class="script-img" onerror="this.src='https://i.ibb.co/RpM3vg9t/18.png'">
-         <div class="script-card-content">
-           <h3>+18 Emote</h3>
-           <p>+18 Emotes :O</p>
-         </div>
-       </div>
-       <!-- 4. C00lkid Gui -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
-         <img src="./c00lkid.png" alt="C00lkid Gui" class="script-img" onerror="this.src='https://i.ibb.co/RkXQNqKh/coolkid.png'">
-         <div class="script-card-content">
-           <h3>C00lkid Gui</h3>
-           <p>You might think you're like c00lkid :)</p>
-         </div>
-       </div>
-       <!-- 5. Murder Mystery 2 Script -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
-         <img src="./mm2.png" alt="Murder Mystery 2" class="script-img" onerror="this.src='https://i.ibb.co/4wd4L6Nj/MM2.png'">
-         <div class="script-card-content">
-           <h3>Murder Mystery 2 Script</h3>
-           <p>MM2 Also Do What You Want</p>
-         </div>
-       </div>
-       <!-- 6. Fling Script -->
-       <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
-         <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/N2D6gzFf/Fling.png'">
-         <div class="script-card-content">
-           <h3>Fling Script</h3>
-           <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
-         </div>
-       </div>
+
+     </div>
+   </div>
+ </main>
+
+ <!-- RIGHT DRAWERS (Paneller) -->
+ <div class="drawer" id="scripts-drawer">
+   <div class="drawer-header">
+     <div class="drawer-title">Library</div>
+     <button class="close-drawer" onclick="closeAllDrawers()"><i class="fa-solid fa-xmark"></i></button>
+   </div>
+   <div class="drawer-content">
+     <!-- Script 1 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/dltcfye5zo7rej9/KscriptV7.3.lua/file', 'Universal Script')">
+       <img src="./universal.png" class="script-img" onerror="this.src='https://i.ibb.co/ZzCbkWLN/kscriptv73.png'">
+       <div class="script-info"><h4>Universal V.7.3</h4><p>Full suite access.</p></div>
+     </div>
+     <!-- Script 2 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/7yxzfcasqgz31ba/Kscript+Driving+Empire.lua/file', 'Driving Empire')">
+       <img src="./button.png" class="script-img" onerror="this.src='https://i.ibb.co/Sh3zqDq/Drive-empire.png'">
+       <div class="script-info"><h4>Driving Empire</h4><p>Auto farm & features.</p></div>
+     </div>
+     <!-- Script 3 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/jwdz7nrzq04iwj6/+18+script.lua/file', '+18 Emote')">
+       <img src="./brainrot.png" class="script-img" onerror="this.src='https://i.ibb.co/RpM3vg9t/18.png'">
+       <div class="script-info"><h4>+18 Emote</h4><p>Custom animations.</p></div>
+     </div>
+     <!-- Script 4 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file', 'C00lkid Gui')">
+       <img src="./c00lkid.png" class="script-img" onerror="this.src='https://i.ibb.co/RkXQNqKh/coolkid.png'">
+       <div class="script-info"><h4>C00lkid Gui</h4><p>Classic trolling UI.</p></div>
+     </div>
+     <!-- Script 5 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file', 'MM2 Script')">
+       <img src="./mm2.png" class="script-img" onerror="this.src='https://i.ibb.co/4wd4L6Nj/MM2.png'">
+       <div class="script-info"><h4>Murder Mystery 2</h4><p>God mode & ESP.</p></div>
+     </div>
+     <!-- Script 6 -->
+     <div class="script-item" onclick="triggerDownload('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file', 'Fling Script')">
+       <img src="./fling.png" class="script-img" onerror="this.src='https://i.ibb.co/N2D6gzFf/Fling.png'">
+       <div class="script-info"><h4>Fling Target</h4><p>Select & fly.</p></div>
      </div>
    </div>
  </div>
 
- <!-- EXECUTOR MODAL -->
- <div id="executor-modal" class="ks-modal">
-   <div class="ks-modal-content">
-     <div class="ks-close" onclick="closeExecutorModal()"><i class="fa-solid fa-xmark"></i></div>
-     <h2>Executor</h2>
-     <div class="preview-box">
-       <img src="https://i.ibb.co/G3sbsWGB/Ekran-g-r-nt-s-2026-09-20-122551.png" alt="Executor Preview" class="product-preview-img" onerror="this.src='./universal.png'">
-     </div>
-     <button class="download-action-btn" onclick="recordExecClick('https://www.mediafire.com/file/iujlbugrpsi78tl/Xeno-v1.3.60.rar/file')">
-       Download Executor <i class="fa-solid fa-arrow-right"></i>
-     </button>
+ <div class="drawer" id="exec-drawer">
+   <div class="drawer-header">
+     <div class="drawer-title">Executor</div>
+     <button class="close-drawer" onclick="closeAllDrawers()"><i class="fa-solid fa-xmark"></i></button>
+   </div>
+   <div class="drawer-content">
+     <img src="https://i.ibb.co/G3sbsWGB/Ekran-g-r-nt-s-2026-09-20-122551.png" class="product-banner" onerror="this.src='https://i.ibb.co/ZzCbkWLN/kscriptv73.png'">
+     <p style="color: var(--text-dim); margin-bottom: 20px;">Inject unsigned scripts directly into the client memory with our custom V1.3.60 Engine.</p>
+     <button class="download-btn btn-cyan" onclick="triggerDownload('https://www.mediafire.com/file/iujlbugrpsi78tl/Xeno-v1.3.60.rar/file', 'Executor')"><i class="fa-solid fa-download"></i> Download Xeno Engine</button>
    </div>
  </div>
 
- <!-- SPOOFER MODAL -->
- <div id="spoofer-modal" class="ks-modal">
-   <div class="ks-modal-content">
-     <div class="ks-close" onclick="closeSpooferModal()"><i class="fa-solid fa-xmark"></i></div>
-     <h2>KScript Spoofer</h2>
-     <div class="preview-box">
-       <img src="https://i.ibb.co/8g32WVg5/Ekran-g-r-nt-s-2026-09-20-120837.png" alt="Spoofer Preview" class="product-preview-img" onerror="this.src='./universal.png'">
-     </div>
-     <button class="download-action-btn spoofer-btn-color" onclick="recordSpooferClick('https://www.mediafire.com/file/bp5gkxiekh06w93/KscriptSpooferV2.rar/file')">
-       Download Spoofer <i class="fa-solid fa-arrow-right"></i>
-     </button>
+ <div class="drawer" id="spoofer-drawer">
+   <div class="drawer-header">
+     <div class="drawer-title">Spoofer</div>
+     <button class="close-drawer" onclick="closeAllDrawers()"><i class="fa-solid fa-xmark"></i></button>
+   </div>
+   <div class="drawer-content">
+     <img src="https://i.ibb.co/8g32WVg5/Ekran-g-r-nt-s-2026-09-20-120837.png" class="product-banner" onerror="this.src='https://i.ibb.co/ZzCbkWLN/kscriptv73.png'">
+     <p style="color: var(--text-dim); margin-bottom: 20px;">Bypass HWID bans seamlessly. Cleans trace files and spoofs serials on the fly.</p>
+     <button class="download-btn btn-pink" onclick="triggerDownload('https://www.mediafire.com/file/bp5gkxiekh06w93/KscriptSpooferV2.rar/file', 'Spoofer')"><i class="fa-solid fa-download"></i> Download Spoofer V2</button>
    </div>
  </div>
 
- <div id="toast" class="toast-notification"></div>
+ <div id="toast" class="toast"></div>
 
  <script>
-   // --- CORE LOGIC (DEĞİŞTİRİLMEDİ, EFEKTLER UYARLANDI) ---
+   // --- TERMINAL BOOT ANIMASYONU ---
    document.addEventListener("DOMContentLoaded", () => {
-     const gate = document.getElementById("security-gate");
-     const fill = document.getElementById("gate-progress");
-     const log = document.getElementById("gate-log");
-
-     if (sessionStorage.getItem("ks_verified") === "true") {
+     const gate = document.getElementById("terminal-gate");
+     const textContainer = document.getElementById("boot-text");
+     
+     if (sessionStorage.getItem("ks_dash_verified") === "true") {
        gate.style.display = "none"; return;
      }
 
-     const logs = ["Connecting...", "Verifying client...", "Checking handshake...", "Establishing secure tunnel...", "Welcome to KScript."];
-     let progress = 0; let logIndex = 0;
-
-     const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 10) + 5;
-       if (progress > 100) progress = 100;
-       fill.style.width = progress + "%";
-
-       if (progress >= 20 && logIndex === 0) logIndex = 1;
-       if (progress >= 40 && logIndex === 1) logIndex = 2;
-       if (progress >= 70 && logIndex === 2) logIndex = 3;
-       if (progress >= 90 && logIndex === 3) logIndex = 4;
-       
-       log.textContent = logs[logIndex];
-
-       if (progress >= 100) {
-         clearInterval(interval);
+     const logs = [
+       "KScript OS v9.2.1 loading...",
+       "Bypassing security protocols... [OK]",
+       "Connecting to remote server... [OK]",
+       "Fetching HWID keys... [DONE]",
+       "Welcome, Administrator."
+     ];
+     
+     let i = 0;
+     function typeLog() {
+       if (i < logs.length) {
+         const p = document.createElement("div");
+         p.className = "boot-log";
+         p.textContent = "> " + logs[i];
+         textContainer.appendChild(p);
+         i++;
+         setTimeout(typeLog, 300 + Math.random() * 400);
+       } else {
          setTimeout(() => {
-           gate.style.opacity = "0";
-           gate.style.backdropFilter = "blur(0px)";
-           sessionStorage.setItem("ks_verified", "true");
-           setTimeout(() => { gate.style.display = "none"; }, 800);
-         }, 500);
+           gate.style.transform = "translateY(-100%)";
+           sessionStorage.setItem("ks_dash_verified", "true");
+           setTimeout(() => gate.style.display = "none", 600);
+         }, 800);
        }
-     }, 120);
+     }
+     typeLog();
    });
 
-   function openMenu() { document.getElementById('script-overlay').style.display = 'block'; }
-   function closeMenu() { document.getElementById('script-overlay').style.display = 'none'; }
-   function openExecutorModal() { document.getElementById('executor-modal').style.display = 'flex'; }
-   function closeExecutorModal() { document.getElementById('executor-modal').style.display = 'none'; }
-   function openSpooferModal() { document.getElementById('spoofer-modal').style.display = 'flex'; }
-   function closeSpooferModal() { document.getElementById('spoofer-modal').style.display = 'none'; }
-   function scrollToReviews() { document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' }); }
-
-   function showToast(message) {
-     const toast = document.getElementById('toast');
-     toast.textContent = message; toast.style.display = 'block';
-     setTimeout(() => { toast.style.display = 'none'; }, 3000);
+   // --- NAVIGATION & DRAWERS ---
+   function closeAllDrawers() {
+     document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
    }
 
-   function recordScriptClick(url) {
-     if(url === '#') { showToast("Link will be added soon!"); return; }
-     showToast("Redirecting to download..."); window.open(url, '_blank');
+   function openDrawer(id) {
+     closeAllDrawers();
+     document.getElementById(id).classList.add('open');
    }
-   function recordExecClick(url) { showToast("Starting Executor download..."); window.open(url, '_blank'); }
-   function recordSpooferClick(url) { showToast("Starting Spoofer download..."); window.open(url, '_blank'); }
 
-   document.getElementById('script-overlay').addEventListener('click', function(e) { if(e.target === this) closeMenu(); });
-   document.getElementById('executor-modal').addEventListener('click', function(e) { if(e.target === this) closeExecutorModal(); });
-   document.getElementById('spoofer-modal').addEventListener('click', function(e) { if(e.target === this) closeSpooferModal(); });
+   function scrollToTop() {
+     closeAllDrawers();
+     document.querySelector('.dashboard-container').scrollTo(0, 0);
+   }
 
-   // --- REVIEW SİSTEMİ (DEĞİŞTİRİLMEDİ) ---
+   function scrollToReviews() {
+     closeAllDrawers();
+     document.getElementById('reviews-section').scrollIntoView();
+   }
+
+   function showToast(msg) {
+     const t = document.getElementById('toast');
+     t.textContent = msg; t.style.display = 'block';
+     setTimeout(() => t.style.display = 'none', 3000);
+   }
+
+   function triggerDownload(url, name) {
+     showToast(`Downloading ${name}...`);
+     window.open(url, '_blank');
+   }
+
+   // --- REVIEW SİSTEMİ MANTIĞI KORUNDU ---
    let selectedRating = 0;
    const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
 
@@ -532,14 +431,6 @@
        document.getElementById('ratingInput').value = selectedRating;
        document.querySelectorAll('.star').forEach((s, i) => { s.classList.toggle('active', i < selectedRating); });
      });
-     star.addEventListener('mouseover', function() {
-       const rating = parseInt(this.dataset.rating);
-       document.querySelectorAll('.star').forEach((s, i) => { s.style.color = i < rating ? '#fbbf24' : '#333'; });
-     });
-   });
-
-   document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
-     document.querySelectorAll('.star').forEach((s, i) => { s.style.color = i < selectedRating ? '#fbbf24' : '#333'; });
    });
 
    async function submitReview(event) {
@@ -549,8 +440,8 @@
      const rating = parseInt(document.getElementById('ratingInput').value);
      const errorDiv = document.getElementById('formError');
      
-     if (localStorage.getItem('kscript_review_submitted')) { errorDiv.textContent = 'You have already submitted a review.'; return; }
-     if (rating === 0) { errorDiv.textContent = 'Please select a rating.'; return; }
+     if (localStorage.getItem('kscript_review_submitted')) { errorDiv.textContent = 'Already submitted.'; return; }
+     if (rating === 0) { errorDiv.textContent = 'Select a rating.'; return; }
      errorDiv.textContent = '';
      
      const submitBtn = document.getElementById('submitReviewBtn');
@@ -559,7 +450,7 @@
      try {
        const response = await fetch(FORMSPREE_URL, {
          method: 'POST', headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({ username, comment, rating, date: new Date().toISOString(), page: 'KScript.gg Reviews' })
+         body: JSON.stringify({ username, comment, rating, date: new Date().toISOString() })
        });
        
        if (response.ok) {
@@ -568,12 +459,12 @@
          localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
          localStorage.setItem('kscript_review_submitted', 'true');
          
-         document.getElementById('reviewFormContainer').innerHTML = `<div class="thank-you-message"><h3>Thank You!</h3><p style="font-size:0.9rem; margin-top:5px;">Your review has been submitted for approval.</p></div>`;
+         document.querySelector('.review-form-box').innerHTML = `<h3 style="color:var(--neon-green)">Log Submitted</h3><p style="font-size:0.9rem; color:var(--text-dim)">Feed updated successfully.</p>`;
          renderAllReviews();
        } else { throw new Error('Failed'); }
      } catch (error) {
-       errorDiv.textContent = 'Something went wrong. Try again.';
-       submitBtn.disabled = false; submitBtn.textContent = 'Submit Review';
+       errorDiv.textContent = 'Connection error.';
+       submitBtn.disabled = false; submitBtn.textContent = 'Broadcast Log';
      }
    }
 
@@ -593,26 +484,19 @@
      Promise.all([ loadReviewsFromFile(), Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]')) ])
      .then(([fileReviews, localReviews]) => {
        const allReviews = [...localReviews, ...fileReviews];
-       if (allReviews.length === 0) { reviewsList.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:#555; padding: 40px;">No reviews yet. Be the first!</div>'; return; }
+       if (allReviews.length === 0) { reviewsList.innerHTML = '<div style="color:var(--text-dim)">No logs found.</div>'; return; }
        
        reviewsList.innerHTML = allReviews.map(r => `
-         <div class="review-card">
-           <div class="review-header">
-             <span class="review-username">${r.username || 'Anonymous'}</span>
-             <span class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+         <div class="feed-item">
+           <div class="feed-header">
+             <span class="feed-user">${r.username || 'Anon'}</span>
+             <span class="feed-stars">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
            </div>
-           <p class="review-comment">${r.comment || ''}</p>
-           ${r.date ? `<div class="review-date">${new Date(r.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</div>` : ''}
+           <p class="feed-text">${r.comment || ''}</p>
          </div>
        `).join('');
      });
-     
-     if (localStorage.getItem('kscript_review_submitted')) {
-       const container = document.getElementById('reviewFormContainer');
-       if (container.querySelector('form')) { container.innerHTML = `<div class="thank-you-message"><h3>Thank You!</h3><p style="font-size:0.9rem; margin-top:5px;">Your review has been submitted for approval.</p></div>`; }
-     }
    }
-
    renderAllReviews();
  </script>
 </body>
