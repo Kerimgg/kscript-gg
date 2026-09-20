@@ -227,7 +227,7 @@
 
  .hero-container {
    max-width: 1100px;
-   margin: 20px auto 50px auto;
+   margin: 40px auto 30px auto;
    text-align: center;
  }
 
@@ -263,69 +263,64 @@
    50% { opacity: 1; }
  }
 
- .logo { 
-   font-family: 'Orbitron', sans-serif; 
-   font-size: clamp(2.2rem, 7vw, 4.2rem); 
-   font-weight: 900; 
-   letter-spacing: 12px;
-   background: linear-gradient(180deg, #ffffff 40%, #888888 100%); 
-   -webkit-background-clip: text; 
-   -webkit-text-fill-color: transparent; 
-   filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.25));
-   margin-bottom: 20px;
-   text-transform: uppercase;
-   position: relative;
-   display: inline-block;
- }
-
  .home-subtitle {
    color: #94a3b8;
-   font-size: 0.95rem;
-   max-width: 600px;
+   font-size: 1.05rem;
+   max-width: 700px;
    margin: 0 auto 40px auto;
-   line-height: 1.6;
+   line-height: 1.8;
+   text-align: center;
  }
 
- /* Stats Grid */
- .stats-grid {
+ /* Social Grid Buttons */
+ .social-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
    gap: 20px;
-   max-width: 1000px;
+   max-width: 900px;
    margin: 0 auto 60px auto;
  }
 
- .stat-card {
+ .social-card {
    background: rgba(5, 5, 10, 0.5);
    border: 1px solid var(--border);
    border-radius: 6px;
-   padding: 20px;
+   padding: 22px 15px;
    backdrop-filter: blur(10px);
    text-align: center;
    transition: 0.3s;
+   text-decoration: none;
+   color: #fff;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
  }
 
- .stat-card:hover {
-   border-color: var(--primary);
-   transform: translateY(-3px);
-   box-shadow: 0 10px 25px rgba(0, 242, 255, 0.08);
- }
-
- .stat-value {
-   font-family: 'Orbitron', sans-serif;
-   font-size: 1.8rem;
-   font-weight: 700;
+ .social-card i {
+   font-size: 2rem;
    color: var(--primary);
-   margin-bottom: 5px;
+   transition: 0.3s;
  }
 
- .stat-label {
-   font-family: var(--font-code);
-   font-size: 0.7rem;
-   color: #64748b;
-   letter-spacing: 1.5px;
+ .social-card span {
+   font-family: 'Orbitron', sans-serif;
+   font-size: 0.9rem;
+   letter-spacing: 2px;
    text-transform: uppercase;
  }
+
+ .social-card:hover {
+   border-color: var(--primary);
+   transform: translateY(-4px);
+   box-shadow: 0 10px 25px rgba(0, 242, 255, 0.15);
+   background: rgba(0, 242, 255, 0.05);
+ }
+
+ .social-card.discord:hover i { color: #5865F2; }
+ .social-card.instagram:hover i { color: #E1306C; }
+ .social-card.youtube:hover i { color: #FF0000; }
 
  /* Features Grid */
  .features-grid {
@@ -544,13 +539,9 @@
    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4) !important;
  }
 
- /* --- REVIEWS SECTION (HOME ALTINDA) --- */
- .reviews-section {
-   width: 100%;
-   padding: 60px 20px;
-   background: rgba(2, 2, 4, 0.85);
-   border-top: 1px solid rgba(255, 255, 255, 0.03);
-   margin-top: 40px;
+ /* --- REVIEWS SECTION (YENİ SEKME OLARAK) --- */
+ #tab-reviews {
+   padding: 40px 20px;
  }
 
  .reviews-container {
@@ -560,23 +551,12 @@
 
  .reviews-title {
    font-family: 'Orbitron', sans-serif;
-   font-size: 1.1rem;
+   font-size: 1.3rem;
    letter-spacing: 6px;
-   color: rgba(255, 255, 255, 0.6);
+   color: #fff;
    text-align: center;
-   margin-bottom: 40px;
+   margin-bottom: 30px;
    text-transform: uppercase;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   gap: 15px;
- }
-
- .reviews-title::before, .reviews-title::after {
-   content: '';
-   height: 1px;
-   width: 40px;
-   background: rgba(255, 255, 255, 0.1);
  }
 
  .review-form {
@@ -785,6 +765,9 @@
      <a class="nav-item" id="nav-spoofer" onclick="switchTab('spoofer')">
        <i class="fa-brands fa-discord"></i> SPOOFER
      </a>
+     <a class="nav-item" id="nav-reviews" onclick="switchTab('reviews')">
+       <i class="fa-solid fa-comments"></i> REVIEWS
+     </a>
    </div>
    <div class="nav-brand">
      KSCRIPT.GG
@@ -796,28 +779,23 @@
    <div class="hero-container">
      <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
      <br>
-     <div class="logo">KSCRIPT.GG</div>
      <p class="home-subtitle">Next-Generation Lua Script Architecture & Gaming Utilities. Powered by Advanced Encryption and Unmatched Execution Speed.</p>
    </div>
 
-   <!-- İstatistik Kartları -->
-   <div class="stats-grid">
-     <div class="stat-card">
-       <div class="stat-value">1,420+</div>
-       <div class="stat-label">Active Users</div>
-     </div>
-     <div class="stat-card">
-       <div class="stat-value">2.4M+</div>
-       <div class="stat-label">Executions</div>
-     </div>
-     <div class="stat-card">
-       <div class="stat-value">99.9%</div>
-       <div class="stat-label">Uptime Rate</div>
-     </div>
-     <div class="stat-card">
-       <div class="stat-value">0.01ms</div>
-       <div class="stat-label">Response Time</div>
-     </div>
+   <!-- Sosyal Medya Bağlantı Butonları -->
+   <div class="social-grid">
+     <a href="#" target="_blank" class="social-card discord">
+       <i class="fa-brands fa-discord"></i>
+       <span>Discord</span>
+     </a>
+     <a href="#" target="_blank" class="social-card instagram">
+       <i class="fa-brands fa-instagram"></i>
+       <span>Instagram</span>
+     </a>
+     <a href="#" target="_blank" class="social-card youtube">
+       <i class="fa-brands fa-youtube"></i>
+       <span>YouTube</span>
+     </a>
    </div>
 
    <!-- Özellik Kartları -->
@@ -836,44 +814,6 @@
        <i class="fa-solid fa-sliders feature-icon"></i>
        <h3 class="feature-title">Customizable UI</h3>
        <p class="feature-desc">Sleek user interfaces with intuitive controls, keybinds, and feature toggles.</p>
-     </div>
-   </div>
-
-   <!-- Yorumlar Bölümü -->
-   <div id="reviews" class="reviews-section">
-     <div class="reviews-container">
-       <h2 class="reviews-title">USER REVIEWS</h2>
-       
-       <div id="reviewFormContainer">
-         <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
-           <div class="form-group">
-             <label>Your Name</label>
-             <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
-           </div>
-           
-           <div class="form-group">
-             <label>Your Review</label>
-             <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500" required></textarea>
-           </div>
-           
-           <div class="form-group">
-             <label>Rating</label>
-             <div class="rating-stars" id="ratingStars">
-               <span class="star" data-rating="1">★</span>
-               <span class="star" data-rating="2">★</span>
-               <span class="star" data-rating="3">★</span>
-               <span class="star" data-rating="4">★</span>
-               <span class="star" data-rating="5">★</span>
-             </div>
-             <input type="hidden" name="rating" id="ratingInput" value="0" required>
-           </div>
-           
-           <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
-           <div id="formError" class="error-message" style="color:#ef4444; font-size:0.75rem; text-align:center; margin-top:10px;"></div>
-         </form>
-       </div>
-       
-       <div id="reviews-list" class="reviews-grid"></div>
      </div>
    </div>
  </div>
@@ -963,6 +903,44 @@
      <button class="download-action-btn spoofer-theme-btn" onclick="recordSpooferClick('https://www.mediafire.com/file/bp5gkxiekh06w93/KscriptSpooferV2.rar/file')">
        <i class="fa-solid fa-download"></i> DOWNLOAD SPOOFER
      </button>
+   </div>
+ </div>
+
+ <!-- 5. REVIEWS SAYFASI (SEKME OLARAK) -->
+ <div id="tab-reviews" class="page-tab">
+   <div class="reviews-container">
+     <h2 class="reviews-title">USER REVIEWS</h2>
+     
+     <div id="reviewFormContainer">
+       <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
+         <div class="form-group">
+           <label>Your Name</label>
+           <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
+         </div>
+         
+         <div class="form-group">
+           <label>Your Review</label>
+           <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="3" maxlength="500" required></textarea>
+         </div>
+         
+         <div class="form-group">
+           <label>Rating</label>
+           <div class="rating-stars" id="ratingStars">
+             <span class="star" data-rating="1">★</span>
+             <span class="star" data-rating="2">★</span>
+             <span class="star" data-rating="3">★</span>
+             <span class="star" data-rating="4">★</span>
+             <span class="star" data-rating="5">★</span>
+           </div>
+           <input type="hidden" name="rating" id="ratingInput" value="0" required>
+         </div>
+         
+         <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
+         <div id="formError" class="error-message" style="color:#ef4444; font-size:0.75rem; text-align:center; margin-top:10px;"></div>
+       </form>
+     </div>
+     
+     <div id="reviews-list" class="reviews-grid"></div>
    </div>
  </div>
 
