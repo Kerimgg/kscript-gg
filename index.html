@@ -693,6 +693,67 @@
  box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
  }
 
+ /* --- YENİ EKLENEN ÖZEL GÖRSEL VE İNDİRME MODALI STİLLERİ --- */
+ .preview-box {
+ width: 100%;
+ background: rgba(0, 0, 0, 0.5);
+ border: 1px solid var(--border);
+ border-radius: 6px;
+ overflow: hidden;
+ margin-bottom: 20px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 10px;
+ }
+
+ .product-preview-img {
+ width: 100%;
+ max-height: 240px;
+ object-fit: contain;
+ border-radius: 4px;
+ display: block;
+ }
+
+ .download-action-btn {
+ width: 100%;
+ padding: 15px;
+ background: rgba(0, 242, 255, 0.05);
+ border: 1px solid var(--primary);
+ color: var(--primary);
+ font-family: 'Orbitron', sans-serif;
+ font-size: 0.85rem;
+ letter-spacing: 3px;
+ border-radius: 4px;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ text-decoration: none;
+ text-transform: uppercase;
+ }
+
+ .download-action-btn:hover {
+ background: var(--primary);
+ color: #000;
+ box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+ transform: translateY(-2px);
+ }
+
+ .spoofer-btn-color {
+ border-color: var(--secondary);
+ color: var(--secondary);
+ background: rgba(139, 92, 246, 0.05);
+ }
+
+ .spoofer-btn-color:hover {
+ background: var(--secondary);
+ color: #fff;
+ box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+ }
+
  html { scroll-behavior: smooth; }
  </style>
 </head>
@@ -724,8 +785,8 @@
    <div class="logo">KSCRIPT.GG</div>
    <div class="btn-container">
      <div class="nav-btn" onclick="openMenu()"><i class="fa-solid fa-code" style="font-size:0.75rem;"></i> SCRIPTS</div>
-     <div class="nav-btn exec-btn-style" onclick="recordExecClick('https://www.mediafire.com/file/j3kgf8cpx0qprp0/Xeno-v1.3.60.rar/file')"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
-     <div class="nav-btn" onclick="window.open('https://www.mediafire.com/file/6awo2y0ckf94xcu/KscriptSpooferV2.rar/file', '_blank')"><i class="fa-brands fa-discord" style="font-size:0.75rem;"></i>SPOOFER</div>
+     <div class="nav-btn exec-btn-style" onclick="openExecutorModal()"><i class="fa-solid fa-terminal" style="font-size:0.75rem;"></i> EXECUTOR</div>
+     <div class="nav-btn" onclick="openSpooferModal()"><i class="fa-brands fa-discord" style="font-size:0.75rem;"></i> SPOOFER</div>
    </div>
 
    <div class="scroll-indicator" onclick="scrollToReviews()">
@@ -771,6 +832,7 @@
    </div>
  </div>
 
+ <!-- SCRIPTS MODAL -->
  <div id="script-overlay" class="overlay">
    <span class="close-btn" onclick="closeMenu()">&times;</span>
    <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 100px; letter-spacing: 8px; text-align: center; width: 100%;">AVAILABLE SCRIPTS</h2>
@@ -831,6 +893,34 @@
          <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
        </div>
      </div>
+   </div>
+ </div>
+
+ <!-- EXECUTOR MODAL -->
+ <div id="executor-modal" class="ks-modal">
+   <div class="ks-modal-content">
+     <span class="ks-close" onclick="closeExecutorModal()">&times;</span>
+     <h2>XENO EXECUTOR</h2>
+     <div class="preview-box">
+       <img src="https://i.ibb.co/G3sbsWGB/Ekran-g-r-nt-s-2026-09-20-122551.png" alt="Executor Preview" class="product-preview-img" onerror="this.src='./universal.png'">
+     </div>
+     <button class="download-action-btn" onclick="recordExecClick('https://www.mediafire.com/file/j3kgf8cpx0qprp0/Xeno-v1.3.60.rar/file')">
+       <i class="fa-solid fa-download"></i> DOWNLOAD EXECUTOR
+     </button>
+   </div>
+ </div>
+
+ <!-- SPOOFER MODAL -->
+ <div id="spoofer-modal" class="ks-modal">
+   <div class="ks-modal-content" style="border-color: var(--secondary);">
+     <span class="ks-close" onclick="closeSpooferModal()" style="color: var(--secondary);">&times;</span>
+     <h2 style="color: var(--secondary);">KSCRIPT SPOOFER</h2>
+     <div class="preview-box" style="border-color: rgba(139, 92, 246, 0.2);">
+       <img src="https://i.ibb.co/8g32WVg5/Ekran-g-r-nt-s-2026-09-20-120837.png" alt="Spoofer Preview" class="product-preview-img" onerror="this.src='./universal.png'">
+     </div>
+     <button class="download-action-btn spoofer-btn-color" onclick="recordSpooferClick('https://www.mediafire.com/file/6awo2y0ckf94xcu/KscriptSpooferV2.rar/file')">
+       <i class="fa-solid fa-download"></i> DOWNLOAD SPOOFER
+     </button>
    </div>
  </div>
 
@@ -901,6 +991,22 @@
      document.getElementById('script-overlay').style.display = 'none'; 
    }
 
+   function openExecutorModal() {
+     document.getElementById('executor-modal').style.display = 'block';
+   }
+
+   function closeExecutorModal() {
+     document.getElementById('executor-modal').style.display = 'none';
+   }
+
+   function openSpooferModal() {
+     document.getElementById('spoofer-modal').style.display = 'block';
+   }
+
+   function closeSpooferModal() {
+     document.getElementById('spoofer-modal').style.display = 'none';
+   }
+
    function scrollToReviews() {
      document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
    }
@@ -928,8 +1034,21 @@
      window.open(url, '_blank');
    }
 
+   function recordSpooferClick(url) {
+     showToast("Spoofer Download is Starting...");
+     window.open(url, '_blank');
+   }
+
    document.getElementById('script-overlay').addEventListener('click', function(e) {
      if(e.target === this) closeMenu();
+   });
+
+   document.getElementById('executor-modal').addEventListener('click', function(e) {
+     if(e.target === this) closeExecutorModal();
+   });
+
+   document.getElementById('spoofer-modal').addEventListener('click', function(e) {
+     if(e.target === this) closeSpooferModal();
    });
 
    // ========== YORUM SİSTEMİ + FORMSPREE =========
