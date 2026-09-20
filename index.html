@@ -282,7 +282,7 @@
 
  .home-content-wrapper {
    width: 100%;
-   max-width: 1100px;
+   max-width: 950px;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -358,24 +358,25 @@
  .social-card.youtube:hover i { color: #FF0000; }
 
  .features-grid {
-   display: grid;
-   grid-template-columns: repeat(3, 1fr);
-   gap: 25px;
+   display: flex;
+   justify-content: center;
    width: 100%;
-   max-width: 1100px;
+   max-width: 950px;
  }
 
  .feature-box {
    background: rgba(5, 5, 8, 0.65);
    border: 1px solid var(--border);
    border-radius: 8px;
-   padding: 28px 22px;
-   text-align: left;
+   padding: 35px 30px;
+   text-align: center;
    backdrop-filter: blur(10px);
    transition: all 0.3s ease;
    display: flex;
    flex-direction: column;
-   justify-content: flex-start;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
  }
 
  .feature-box:hover {
@@ -385,23 +386,24 @@
  }
 
  .feature-icon {
-   font-size: 2rem;
+   font-size: 2.8rem;
    color: var(--primary);
    margin-bottom: 16px;
  }
 
  .feature-title {
    font-family: 'Orbitron', sans-serif;
-   font-size: 1rem;
+   font-size: 1.25rem;
    color: #fff;
-   margin-bottom: 10px;
-   letter-spacing: 1.5px;
+   margin-bottom: 12px;
+   letter-spacing: 2px;
  }
 
  .feature-desc {
    color: #94a3b8;
-   font-size: 0.83rem;
+   font-size: 0.95rem;
    line-height: 1.6;
+   max-width: 750px;
  }
 
  /* --- 2. SCRIPTS SECTION --- */
@@ -772,7 +774,7 @@
  }
 
  @media (max-width: 900px) {
-   .social-grid, .features-grid {
+   .social-grid {
      grid-template-columns: 1fr;
    }
    .navbar { padding: 0 15px; }
@@ -854,23 +856,12 @@
        </a>
      </div>
 
-     <!-- Özellik Kartları -->
+     <!-- Özellik Kartı (How to Install) -->
      <div class="features-grid">
-       <div class="feature-box">
-         <i class="fa-solid fa-shield-cat feature-icon"></i>
-         <h3 class="feature-title">Undetected Engine</h3>
-         <p class="feature-desc">Maximum stealth powered by low-level memory protection and dynamic obfuscation.</p>
-       </div>
        <div class="feature-box">
          <i class="fa-solid fa-circle-question feature-icon"></i>
          <h3 class="feature-title">How to Install</h3>
-         <p class="feature-desc">The detailed installation guide is available on our YouTube channel. those who do not speak Turkish can follow by watching the video only.
-</p>
-       </div>
-       <div class="feature-box">
-         <i class="fa-solid fa-sliders feature-icon"></i>
-         <h3 class="feature-title">Customizable UI</h3>
-         <p class="feature-desc">Sleek interface with intuitive controls, keybinds, and feature toggles.</p>
+         <p class="feature-desc">The detailed installation guide is available on our YouTube channel. those who do not speak Turkish can follow by watching the video only.</p>
        </div>
      </div>
    </div>
