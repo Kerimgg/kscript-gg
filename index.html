@@ -4,7 +4,6 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Kscriptgg</title>
- <!-- Favicon (Sekme Logosu) -->
  <link rel="icon" type="image/png" href="https://i.ibb.co/q3Ls0TWK/kscript-circle.png">
  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +20,6 @@
  
  * { box-sizing: border-box; margin: 0; padding: 0; }
 
- /* TÜM SİTEDE VE DİĞER SAYFALARDA KAYDIRMA ÇUBUĞUNU GİZLE */
  html, body { 
    background-color: var(--bg);
    color: #f8fafc; 
@@ -35,7 +33,6 @@
     linear-gradient(to bottom, #020204 0%, #050508 100%);
  }
 
- /* --- CLOUDFLARE GATE --- */
  #security-gate {
    position: fixed;
    top: 0; left: 0; width: 100%; height: 100%;
@@ -156,7 +153,6 @@
    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
  }
 
- /* --- ÜST NAVBAR --- */
  .navbar {
    position: fixed;
    top: 0; left: 0; width: 100%;
@@ -215,7 +211,6 @@
    line-height: 1;
  }
 
- /* --- SAYFA TAB DÜZENLERİ --- */
  .page-tab {
    margin-top: 70px;
    width: 100%;
@@ -228,16 +223,14 @@
    display: block;
  }
 
- /* --- GÖRÜNMEZ SCROLLBAR AYARLARI --- */
  .no-scrollbar {
-   -ms-overflow-style: none;  /* IE ve Edge */
-   scrollbar-width: none;  /* Firefox */
+   -ms-overflow-style: none;
+   scrollbar-width: none;
  }
  .no-scrollbar::-webkit-scrollbar {
-   display: none; /* Chrome, Safari ve Opera */
+   display: none;
  }
 
- /* --- 1. HOME SECTION --- */
  #tab-home.active-tab {
    display: flex;
    flex-direction: column;
@@ -373,7 +366,6 @@
    max-width: 750px;
  }
 
- /* --- 2. SCRIPTS SECTION --- */
  #tab-scripts {
    overflow-y: auto !important;
    padding: 30px 20px;
@@ -445,7 +437,6 @@
  .script-card h3 { font-family: 'Orbitron'; margin: 0 0 10px 0; color: #fff; font-size: 0.95rem; letter-spacing: 1px; }
  .script-card p { color:#64748b; font-size:0.75rem; margin: 0; line-height: 1.5; }
 
- /* --- EXECUTOR & SPOOFER --- */
  .fit-screen-page {
    height: calc(100vh - 70px);
    overflow: hidden !important;
@@ -547,7 +538,6 @@
    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4) !important;
  }
 
- /* --- REVIEWS SECTION --- */
  #tab-reviews {
    padding: 20px;
    display: none;
@@ -752,7 +742,6 @@
 </head>
 <body>
 
- <!-- CLOUDFLARE SECURITY GUARD -->
  <div id="security-gate">
    <div class="gate-container">
      <div class="cloudflare-shield">
@@ -774,7 +763,6 @@
  <div class="grid-overlay"></div>
  <div class="glow"></div>
 
- <!-- ÜST SABİT NAVİGASYON -->
  <nav class="navbar">
    <div class="nav-left">
      <a class="nav-item active" id="nav-home" onclick="switchTab('home')">
@@ -798,14 +786,12 @@
    </div>
  </nav>
 
- <!-- 1. HOME SAYFASI -->
  <div id="tab-home" class="page-tab active-tab no-scrollbar">
    <div class="home-content-wrapper">
      <div class="hero-container">
        <p class="home-subtitle">Scripts/Executor/Spoofer Whatever You Want.</p>
      </div>
 
-     <!-- Sosyal Medya Bağlantı Butonları -->
      <div class="social-grid">
        <a href="https://discord.gg/CmsjwgkaZV" target="_blank" class="social-card discord">
          <i class="fa-brands fa-discord"></i>
@@ -825,7 +811,6 @@
        </a>
      </div>
 
-     <!-- Özellik Kartı (How to Install) -->
      <div class="features-grid">
        <div class="feature-box">
          <i class="fa-solid fa-circle-question feature-icon"></i>
@@ -836,13 +821,11 @@
    </div>
  </div>
 
- <!-- 2. SCRIPTS SAYFASI (GÖRÜNMEZ KAYDIRMA EKLENDİ) -->
  <div id="tab-scripts" class="page-tab no-scrollbar">
    <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 10px; letter-spacing: 8px; text-align: center; width: 100%;">SCRIPTS</h2>
    <p style="color: #64748b; font-family: 'Fira Code', monospace; font-size: 0.75rem; letter-spacing: 2px; text-align: center; width: 100%; margin-top: 8px;">Choose What You Want.</p>
    
    <div id="menu-list">
-     <!-- 1. Universal Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/dltcfye5zo7rej9/KscriptV7.3.lua/file')">
        <img src="./universal.png" alt="Universal Script" class="script-img" onerror="this.src='https://i.ibb.co/ZzCbkWLN/kscriptv73.png'">
        <div class="script-card-content">
@@ -851,7 +834,6 @@
        </div>
      </div>
 
-     <!-- 2. Driving Empire Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/7yxzfcasqgz31ba/Kscript+Driving+Empire.lua/file')">
        <img src="./button.png" alt="Driving Empire Script" class="script-img" onerror="this.src='https://i.ibb.co/Sh3zqDq/Drive-empire.png'">
        <div class="script-card-content">
@@ -860,7 +842,6 @@
        </div>
      </div>
 
-     <!-- 3. +18 Emote -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/jwdz7nrzq04iwj6/+18+script.lua/file')">
        <img src="./brainrot.png" alt="Brainrot Script" class="script-img" onerror="this.src='https://i.ibb.co/RpM3vg9t/18.png'">
        <div class="script-card-content">
@@ -869,7 +850,6 @@
        </div>
      </div>
 
-     <!-- 4. C00lkid Gui -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/96v5x1hz1bz1g64/c00lkid_Gu%25C4%25B1.lua/file')">
        <img src="./c00lkid.png" alt="C00lkid Gui" class="script-img" onerror="this.src='https://i.ibb.co/RkXQNqKh/coolkid.png'">
        <div class="script-card-content">
@@ -878,7 +858,6 @@
        </div>
      </div>
 
-     <!-- 5. Murder Mystery 2 Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/redp2cevuynv04x/MM2_SCR%25C4%25B0PTT.lua/file')">
        <img src="./mm2.png" alt="Murder Mystery 2" class="script-img" onerror="this.src='https://i.ibb.co/4wd4L6Nj/MM2.png'">
        <div class="script-card-content">
@@ -887,7 +866,6 @@
        </div>
      </div>
 
-     <!-- 6. Fling Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/2ngkacntgm5pg68/Fling_script_By_kscript.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/N2D6gzFf/Fling.png'">
        <div class="script-card-content">
@@ -896,7 +874,6 @@
        </div>
      </div>
     
- <!-- 7. Car-Motorcycle Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/trpzxy2dtab6txm/Car-Motorcycle_Booster.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/s9Wk6M5s/Ekran-g-r-nt-s-2026-09-23-205647.png'">
        <div class="script-card-content">
@@ -905,7 +882,6 @@
        </div>
      </div>
 
- <!-- 8. Auto Clicker Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/rgljic44rn6h3d7/Autoclicker.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/Pz9TCb1F/Ekran-g-r-nt-s-2026-09-23-205903.png'">
        <div class="script-card-content">
@@ -914,7 +890,6 @@
        </div>
      </div>
 
- <!-- 9. Race Suit Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/tnlfochk5fx92wc/Race_Suit.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/pBzGf22j/Ekran-g-r-nt-s-2026-09-23-210104.png'">
        <div class="script-card-content">
@@ -923,7 +898,6 @@
        </div>
      </div>
 
- <!-- 10. Emote Script -->
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/wu8oxy59n0q7ld2/Emote+Script.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/NdsyZShT/Ekran-g-r-nt-s-2026-09-25-230834.png'">
        <div class="script-card-content">
@@ -934,7 +908,6 @@
    </div>
  </div>
 
- <!-- 3. EXECUTOR SAYFASI -->
  <div id="tab-executor" class="page-tab fit-screen-page">
    <div class="fit-container">
      <h2 class="fit-title">EXECUTOR</h2>
@@ -947,7 +920,6 @@
    </div>
  </div>
 
- <!-- 4. SPOOFER SAYFASI -->
  <div id="tab-spoofer" class="page-tab fit-screen-page">
    <div class="fit-container">
      <h2 class="fit-title" style="color: var(--secondary);">SPOOFER</h2>
@@ -960,7 +932,6 @@
    </div>
  </div>
 
- <!-- 5. REVIEWS SAYFASI (GÖRÜNÜR KAYDIRMA ÇUBUĞU TEMİZLENDİ) -->
  <div id="tab-reviews" class="page-tab">
    <div class="reviews-container">
      <h2 class="reviews-title">USER REVIEWS</h2>
