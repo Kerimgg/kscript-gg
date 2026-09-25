@@ -202,8 +202,7 @@
 
  .nav-brand {
    display: flex;
-   flex-direction: column;
-   align-items: flex-end;
+   align-items: center;
    justify-content: center;
  }
 
@@ -213,39 +212,7 @@
    font-weight: 900;
    letter-spacing: 4px;
    color: #fff;
-   line-height: 1.2;
- }
-
- .system-badge {
-   font-family: var(--font-code);
-   font-size: 0.58rem;
-   color: var(--primary);
-   letter-spacing: 1.5px;
-   background: rgba(0, 242, 255, 0.04);
-   border: 1px solid rgba(0, 242, 255, 0.15);
-   padding: 2px 8px;
-   border-radius: 100px;
-   text-transform: uppercase;
-   display: inline-flex;
-   align-items: center;
-   gap: 5px;
-   margin-top: 2px;
-   box-shadow: 0 0 10px rgba(0, 242, 255, 0.05);
- }
-
- .system-badge span {
-   width: 5px;
-   height: 5px;
-   background-color: #10b981;
-   border-radius: 50%;
-   display: inline-block;
-   box-shadow: 0 0 6px #10b981;
-   animation: blink 1.5s infinite;
- }
-
- @keyframes blink {
-   0%, 100% { opacity: 0.4; }
-   50% { opacity: 1; }
+   line-height: 1;
  }
 
  /* --- SAYFA TAB DÜZENLERİ --- */
@@ -780,7 +747,6 @@
    .navbar { padding: 0 15px; }
    .nav-item { padding: 8px 10px; font-size: 0.65rem; }
    .brand-title { font-size: 0.85rem; }
-   .system-badge { font-size: 0.5rem; }
  }
  </style>
 </head>
@@ -829,7 +795,6 @@
    </div>
    <div class="nav-brand">
      <span class="brand-title">KSCRIPT.GG</span>
-     <div class="system-badge"><span></span>SYSTEM STATUS: SECURE</div>
    </div>
  </nav>
 
