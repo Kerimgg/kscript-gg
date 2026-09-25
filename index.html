@@ -309,8 +309,8 @@
 
  .social-grid {
    display: grid;
-   grid-template-columns: repeat(3, 1fr);
-   gap: 20px;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 15px;
    width: 100%;
    max-width: 950px;
  }
@@ -319,7 +319,7 @@
    background: rgba(5, 5, 10, 0.6);
    border: 1px solid var(--border);
    border-radius: 8px;
-   padding: 24px 15px;
+   padding: 24px 10px;
    backdrop-filter: blur(10px);
    text-align: center;
    transition: all 0.3s ease;
@@ -340,8 +340,8 @@
 
  .social-card span {
    font-family: 'Orbitron', sans-serif;
-   font-size: 0.95rem;
-   letter-spacing: 2px;
+   font-size: 0.8rem;
+   letter-spacing: 1px;
    text-transform: uppercase;
    font-weight: 700;
  }
@@ -775,7 +775,7 @@
 
  @media (max-width: 900px) {
    .social-grid {
-     grid-template-columns: 1fr;
+     grid-template-columns: repeat(2, 1fr);
    }
    .navbar { padding: 0 15px; }
    .nav-item { padding: 8px 10px; font-size: 0.65rem; }
@@ -844,7 +844,11 @@
      <div class="social-grid">
        <a href="https://discord.gg/CmsjwgkaZV" target="_blank" class="social-card discord">
          <i class="fa-brands fa-discord"></i>
-         <span>Discord</span>
+         <span>Discord (TR CHANNEL)</span>
+       </a>
+       <a href="https://discord.gg/CmsjwgkaZV" target="_blank" class="social-card discord">
+         <i class="fa-brands fa-discord"></i>
+         <span>Discord (ENG CHANNEL)</span>
        </a>
        <a href="https://instagram.com/kscript.gg" target="_blank" class="social-card instagram">
          <i class="fa-brands fa-instagram"></i>
@@ -861,7 +865,7 @@
        <div class="feature-box">
          <i class="fa-solid fa-circle-question feature-icon"></i>
          <h3 class="feature-title">How to Install</h3>
-         <p class="feature-desc">The detailed installation guide is available on our YouTube channel. those who do not speak Turkish can follow by watching the video only.</p>
+         <p class="feature-desc">The detailed installation guide is available on our YouTube channel. Non-Turkish speakers can join our English Discord server where step-by-step instructions on how to install are provided in detail.</p>
        </div>
      </div>
    </div>
