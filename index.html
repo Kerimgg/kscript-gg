@@ -790,8 +790,8 @@
        <i class="fa-solid fa-terminal"></i> EXECUTOR
      </a>
      <a class="nav-item" id="nav-datacleaner" onclick="switchTab('datacleaner')">
-  <i class="fa-solid fa-trash-can"></i> DATACLEANER
-</a>
+       <i class="fa-solid fa-trash-can"></i> DATACLEANER
+     </a>
      <a class="nav-item" id="nav-spoofer" onclick="switchTab('spoofer')">
        <i class="fa-solid fa-microchip"></i> SPOOFER
      </a>
@@ -891,7 +891,7 @@
          <p>This İs A Fling Script You Can Select A Player From The Menu And Make Them Fly.</p>
        </div>
      </div>
-
+    
      <div class="script-card" onclick="recordScriptClick('https://www.mediafire.com/file/trpzxy2dtab6txm/Car-Motorcycle_Booster.lua/file')">
        <img src="./fling.png" alt="Fling Script" class="script-img" onerror="this.src='https://i.ibb.co/s9Wk6M5s/Ekran-g-r-nt-s-2026-09-23-205647.png'">
        <div class="script-card-content">
@@ -941,13 +941,10 @@
  <div id="tab-datacleaner" class="page-tab fit-screen-page">
    <div class="fit-container">
      <h2 class="fit-title" style="color: var(--datacleaner);">EXECUTOR DATA CLEANER</h2>
-     <p style="color: #94a3b8; font-size: 0.8rem; font-family: 'Fira Code', monospace; max-width: 650px; margin-bottom: 5px;">
-       Let's say the executor downloaded, but it won't open or run? Don't worry! Delete all the files you downloaded, and handle the rest by running this app as an administrator.
-     </p>
      <div class="fit-img-box datacleaner-theme-border">
-       <img src="https://i.ibb.co/WNQK2XGb/Ekran-g-r-nt-s-2026-09-30-175848.png" alt="Data Cleaner Preview" class="fit-img" onerror="this.src='./universal.png'">
+       <img src="https://i.ibb.co/XxVqGJxC/Ekran-g-r-nt-s-2026-09-20-195354.png" alt="Data Cleaner Preview" class="fit-img" onerror="this.src='./universal.png'">
      </div>
-     <button class="download-action-btn datacleaner-theme-btn" onclick="recordDataCleanerClick('https://www.mediafire.com/file/79xsgrnct9lovvu/ExecutorDataCleaner.rar/file')">
+     <button class="download-action-btn datacleaner-theme-btn" onclick="recordDataCleanerClick('#')">
        <i class="fa-solid fa-download"></i> DOWNLOAD DATA CLEANER
      </button>
    </div>
@@ -968,16 +965,19 @@
  <div id="tab-reviews" class="page-tab">
    <div class="reviews-container">
      <h2 class="reviews-title">USER REVIEWS</h2>
+     
      <div id="reviewFormContainer">
        <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
          <div class="form-group">
            <label>Your Name</label>
            <input type="text" name="username" id="reviewUsername" placeholder="Enter your name..." maxlength="30" required>
          </div>
+         
          <div class="form-group">
            <label>Your Review</label>
            <textarea name="comment" id="reviewComment" placeholder="Write your review..." rows="2" maxlength="500" required></textarea>
          </div>
+         
          <div class="form-group">
            <label>Rating</label>
            <div class="rating-stars" id="ratingStars">
@@ -989,10 +989,12 @@
            </div>
            <input type="hidden" name="rating" id="ratingInput" value="0" required>
          </div>
+         
          <button type="submit" class="submit-btn" id="submitReviewBtn">SUBMIT REVIEW</button>
          <div id="formError" class="error-message" style="color:#ef4444; font-size:0.75rem; text-align:center; margin-top:5px;"></div>
        </form>
      </div>
+     
      <div id="reviews-list" class="reviews-grid no-scrollbar"></div>
    </div>
  </div>
@@ -1000,77 +1002,267 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
- function switchTab(tabName) {
-   document.querySelectorAll('.page-tab').forEach(tab => {
-     tab.classList.remove('active-tab');
-   });
-   document.querySelectorAll('.nav-item').forEach(item => {
-     item.classList.remove('active');
-   });
-   const targetTab = document.getElementById('tab-' + tabName);
-   const targetBtn = document.getElementById('nav-' + tabName);
-   if (targetTab) {
-     targetTab.classList.add('active-tab');
-   }
-   if (targetBtn) {
-     targetBtn.classList.add('active');
-   }
-   window.scrollTo(0, 0);
- }
+   function switchTab(tabName) {
+     document.querySelectorAll('.page-tab').forEach(tab => {
+       tab.classList.remove('active-tab');
+     });
+     
+     document.querySelectorAll('.nav-item').forEach(item => {
+       item.classList.remove('active');
+     });
 
- function recordScriptClick(link) { window.open(link, '_blank'); }
- function recordExecClick(link) { window.open(link, '_blank'); }
- function recordSpooferClick(link) { window.open(link, '_blank'); }
- function recordDataCleanerClick(link) { window.open(link, '_blank'); }
+     const targetTab = document.getElementById('tab-' + tabName);
+     const targetBtn = document.getElementById('nav-' + tabName);
 
- document.addEventListener("DOMContentLoaded", () => {
-   const gate = document.getElementById("security-gate");
-   const fill = document.getElementById("gate-progress");
-   const log = document.getElementById("gate-log");
-
-   if (sessionStorage.getItem("ks_verified") === "true") {
-     gate.style.display = "none";
-     return;
-   }
-
-   const logs = [
-     "Connecting to secure gateway...",
-     "Filtering HTTP headers...",
-     "Checking browser handshake...",
-     "Verifying SSL certificates...",
-     "Analyzing behavioral patterns...",
-     "Access Granted! Redirecting..."
-   ];
-
-   let progress = 0;
-   let logIndex = 0;
-
-   const interval = setInterval(() => {
-     progress += Math.floor(Math.random() * 8) + 3;
-     if (progress > 100) progress = 100;
-     fill.style.width = progress + "%";
-
-     if (progress >= 15 && logIndex === 0) { logIndex = 1; }
-     if (progress >= 35 && logIndex === 1) { logIndex = 2; }
-     if (progress >= 55 && logIndex === 2) { logIndex = 3; }
-     if (progress >= 75 && logIndex === 3) { logIndex = 4; }
-     if (progress >= 95 && logIndex === 4) { logIndex = 5; }
-
-     log.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${logs[logIndex]}`;
-
-     if (progress === 100) {
-       clearInterval(interval);
-       setTimeout(() => {
-         gate.style.opacity = "0";
-         gate.style.transform = "scale(1.05)";
-         sessionStorage.setItem("ks_verified", "true");
-         setTimeout(() => {
-           gate.style.display = "none";
-         }, 600);
-       }, 400);
+     if (targetTab) {
+       targetTab.classList.add('active-tab');
      }
-   }, 120);
- });
+     if (targetBtn) {
+       targetBtn.classList.add('active');
+     }
+
+     window.scrollTo(0, 0);
+   }
+
+   document.addEventListener("DOMContentLoaded", () => {
+     const gate = document.getElementById("security-gate");
+     const fill = document.getElementById("gate-progress");
+     const log = document.getElementById("gate-log");
+
+     if (sessionStorage.getItem("ks_verified") === "true") {
+       gate.style.display = "none";
+       return;
+     }
+
+     const logs = [
+       "Connecting to secure gateway...",
+       "Filtering HTTP headers...",
+       "Checking browser handshake...",
+       "Verifying SSL certificates...",
+       "Analyzing behavioral patterns...",
+       "Access Granted! Redirecting..."
+     ];
+
+     let progress = 0;
+     let logIndex = 0;
+
+     const interval = setInterval(() => {
+       progress += Math.floor(Math.random() * 8) + 3;
+       if (progress > 100) progress = 100;
+
+       fill.style.width = progress + "%";
+
+       if (progress >= 15 && logIndex === 0) { logIndex = 1; }
+       if (progress >= 35 && logIndex === 1) { logIndex = 2; }
+       if (progress >= 55 && logIndex === 2) { logIndex = 3; }
+       if (progress >= 75 && logIndex === 3) { logIndex = 4; }
+       if (progress >= 95 && logIndex === 4) { logIndex = 5; }
+
+       if (logIndex === 5) {
+         log.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${logs[logIndex]}`;
+       } else {
+         log.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${logs[logIndex]}`;
+       }
+
+       if (progress >= 100) {
+         clearInterval(interval);
+         setTimeout(() => {
+           gate.style.opacity = "0";
+           gate.style.transform = "scale(1.05)";
+           sessionStorage.setItem("ks_verified", "true");
+           setTimeout(() => {
+             gate.style.display = "none";
+           }, 600);
+         }, 400);
+       }
+     }, 100);
+   });
+
+   function showToast(message) {
+     const toast = document.getElementById('toast');
+     toast.textContent = message;
+     toast.style.display = 'block';
+     setTimeout(() => {
+       toast.style.display = 'none';
+     }, 3000);
+   }
+
+   function recordScriptClick(url) {
+     if(url === '#') {
+       showToast("The script link will be added soon!");
+       return;
+     }
+     showToast("You are being redirected...");
+     window.open(url, '_blank');
+   }
+
+   function recordExecClick(url) {
+     showToast("Executor Download is Starting...");
+     window.open(url, '_blank');
+   }
+
+   function recordDataCleanerClick(url) {
+     if(url === '#') {
+       showToast("Data Cleaner Download link will be added soon!");
+       return;
+     }
+     showToast("Data Cleaner Download is Starting...");
+     window.open(url, '_blank');
+   }
+
+   function recordSpooferClick(url) {
+     showToast("Spoofer Download is Starting...");
+     window.open(url, '_blank');
+   }
+
+   let selectedRating = 0;
+   const FORMSPREE_URL = "https://formspree.io/f/mojpokpa";
+
+   document.querySelectorAll('.star').forEach(star => {
+     star.addEventListener('click', function() {
+       selectedRating = parseInt(this.dataset.rating);
+       document.getElementById('ratingInput').value = selectedRating;
+       document.querySelectorAll('.star').forEach((s, i) => {
+         s.classList.toggle('active', i < selectedRating);
+       });
+     });
+     
+     star.addEventListener('mouseover', function() {
+       const rating = parseInt(this.dataset.rating);
+       document.querySelectorAll('.star').forEach((s, i) => {
+         s.style.color = i < rating ? '#ffca08' : '#333';
+       });
+     });
+   });
+
+   document.querySelector('.rating-stars').addEventListener('mouseleave', function() {
+     document.querySelectorAll('.star').forEach((s, i) => {
+       s.style.color = i < selectedRating ? '#ffca08' : '#333';
+     });
+   });
+
+   async function submitReview(event) {
+     event.preventDefault();
+     
+     const username = document.getElementById('reviewUsername').value.trim();
+     const comment = document.getElementById('reviewComment').value.trim();
+     const rating = parseInt(document.getElementById('ratingInput').value);
+     const errorDiv = document.getElementById('formError');
+     
+     if (localStorage.getItem('kscript_review_submitted')) {
+       errorDiv.textContent = 'You have already submitted a review!';
+       return;
+     }
+     
+     if (rating === 0) {
+       errorDiv.textContent = 'Please select a rating!';
+       return;
+     }
+     
+     errorDiv.textContent = '';
+     
+     const submitBtn = document.getElementById('submitReviewBtn');
+     submitBtn.disabled = true;
+     submitBtn.textContent = 'SENDING...';
+     
+     try {
+       const response = await fetch(FORMSPREE_URL, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+           username: username,
+           comment: comment,
+           rating: rating,
+           date: new Date().toISOString(),
+           page: 'KScript.gg Reviews'
+         })
+       });
+       
+       if (response.ok) {
+         let localReviews = JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]');
+         localReviews.unshift({ 
+           username, 
+           comment, 
+           rating,
+           date: new Date().toISOString()
+         });
+         localStorage.setItem('kscript_local_reviews', JSON.stringify(localReviews));
+         localStorage.setItem('kscript_review_submitted', 'true');
+         
+         document.getElementById('reviewFormContainer').innerHTML = `
+           <div class="thank-you-message">
+             ★ THANK YOU FOR YOUR REVIEW! ★<br>
+             <span style="font-size:0.7rem; color:#555; margin-top:5px; display:block;">Your feedback has been sent for approval.</span>
+           </div>
+         `;
+         
+         renderAllReviews();
+       } else {
+         throw new Error('Form gönderilemedi');
+       }
+     } catch (error) {
+       console.error('Hata:', error);
+       errorDiv.textContent = 'Something went wrong. Please try again.';
+       submitBtn.disabled = false;
+       submitBtn.textContent = 'SUBMIT REVIEW';
+     }
+   }
+
+   async function loadReviewsFromFile() {
+     try {
+       const response = await fetch("./comments.js");
+       if (response.ok) {
+         const jsText = await response.text();
+         const globalComments = eval(jsText + "; globalComments;");
+         return (globalComments && Array.isArray(globalComments)) ? globalComments : [];
+       }
+     } catch (error) {
+       console.log("comments.js yüklenemedi.");
+     }
+     return [];
+   }
+
+   function renderAllReviews() {
+     const reviewsList = document.getElementById('reviews-list');
+     if(!reviewsList) return;
+     
+     Promise.all([
+       loadReviewsFromFile(),
+       Promise.resolve(JSON.parse(localStorage.getItem('kscript_local_reviews') || '[]'))
+     ]).then(([fileReviews, localReviews]) => {
+       const allReviews = [...localReviews, ...fileReviews];
+       
+       if (allReviews.length === 0) {
+         reviewsList.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+         return;
+       }
+       
+       reviewsList.innerHTML = allReviews.map(r => `
+         <div class="review-card">
+           <div class="review-header">
+             <span class="review-username">${r.username || 'Anonymous'}</span>
+             <span class="review-rating">${'★'.repeat(r.rating || 5)}${'☆'.repeat(5 - (r.rating || 5))}</span>
+           </div>
+           <p class="review-comment">${r.comment || ''}</p>
+           ${r.date ? `<div class="review-date">${new Date(r.date).toLocaleDateString('tr-TR')}</div>` : ''}
+         </div>
+       `).join('');
+     });
+     
+     if (localStorage.getItem('kscript_review_submitted')) {
+       const container = document.getElementById('reviewFormContainer');
+       if (container && container.querySelector('form')) {
+         container.innerHTML = `
+           <div class="thank-you-message">
+             ★ THANK YOU FOR YOUR REVIEW! ★<br>
+             <span style="font-size:0.7rem; color:#555; margin-top:5px; display:block;">Your feedback has been sent for approval.</span>
+           </div>
+         `;
+       }
+     }
+   }
+
+   renderAllReviews();
  </script>
 </body>
 </html>
