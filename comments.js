@@ -31,4 +31,11 @@ const globalComments = [
         comment: "bu executor bayadır yoktu sonunda geldiiiiiiiiiiiii",
         rating: 4
     },
+
+    {
+        username: "ruzgarcık06",
+        comment: "kanka mükemmel olmuş eline ayağına hatta daşşağına sağlık",
+        rating: 5
+    },
+
 ];
