@@ -68,7 +68,7 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
-   /* Siyah ekranda tam 0.6 saniye bomboş durur, sonra birinci yazı başlar */
+   /* BAŞTA BEKLEME: Siyah ekran tam 0.6 saniye bomboş durur, sonra 1. yazı başlar */
    animation: introTextFade 2.0s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
  }
 
@@ -82,7 +82,7 @@
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
    opacity: 0;
    transform: scale(0.85);
-   /* Birinci yazı bittikten hemen sonra KSCRIPT.GG gelir */
+   /* 1. yazı biter bitmez KSCRIPT.GG gelir */
    animation: brandFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) 2.4s forwards;
  }
 
@@ -1122,12 +1122,12 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // Ortak intro kapatma fonksiyonu (İster ilk giriş olsun ister F5/yeniden giriş)
+     // Ortak intro başlatıcı (İlk giriş ve F5 yenilemede ortak çalışır, fazladan bekleme yapmaz)
      function startIntroSequence() {
        showToast("✓ Cloudflare Verification Passed! Loading Intro...");
        gate.style.display = "none";
        
-       // Intro arka planı siyah şekilde görünür, 4.4 saniye sonra intro biter ve site açılır
+       // Toplam intro süresi (~4.4 saniye sonra intro tamamen kaybolur ve site açılır)
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => {
@@ -1136,7 +1136,7 @@
        }, 4400);
      }
 
-     // Eğer daha önceden Cloudflare geçilmişse (F5 veya yeniden yükleme)
+     // Eğer Cloudflare daha önceden geçilmişse (F5 atıldığında)
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
        startIntroSequence();
