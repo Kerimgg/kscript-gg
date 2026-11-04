@@ -41,20 +41,13 @@
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: #020204;
+   background-color: #020204; /* Tam siyah/koyu site arka planı */
    z-index: 999998;
    display: flex;
    justify-content: center;
    align-items: center;
-   opacity: 0;
-   pointer-events: none;
-   transition: opacity 0.5s ease;
- }
-
- /* Cloudflare biter bitmez bu class eklenir, siyah ekran direkt görünür olur */
- #intro-overlay.active-intro {
-   opacity: 1;
-   pointer-events: auto;
+   opacity: 1; /* Baştan beri tam opak, siteyi gizler */
+   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
  }
 
  .intro-content {
@@ -75,10 +68,7 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
- }
-
- /* Siyah ekran geldikten 2 saniye sonra birinci yazı başlar */
- .active-intro .intro-subtitle {
+   /* Cloudflare bittikten sonra tam 2 saniye arkaplan durur, sonra yazı başlar */
    animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
  }
 
@@ -92,10 +82,6 @@
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
    opacity: 0;
    transform: scale(0.85);
- }
-
- /* Birinci yazı biter bitmez (4.2. saniyede) marka ismi gelir */
- .active-intro .intro-brand {
    animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 4.2s forwards;
  }
 
@@ -631,7 +617,7 @@
  .datacleaner-theme-btn:hover {
    background: var(--datacleaner) !important;
    color: #000 !important;
-   box-shadow: 0 0 136, 136, 136, 0.4) !important;
+   box-shadow: 0 0 25px rgba(136, 136, 136, 0.4) !important;
  }
 
  #tab-reviews {
@@ -838,7 +824,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Önce arkaplan görünür, 2sn sonra yazılar akmaya başlar) -->
+ <!-- INTRO EKRANI (Baştan beri tam siyah ve aktif, site asla arka planda görünmez) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1107,22 +1093,6 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
-   function runIntroAnimation() {
-     const intro = document.getElementById("intro-overlay");
-     if (!intro) return;
-     
-     // Cloudflare kaybolur kaybolmaz siyah arkaplan ANINDA aktif olur
-     intro.classList.add("active-intro");
-     
-     // 2 saniye siyah bekler + animasyonlar tamamlanır ve intro yumuşakça kapanır
-     setTimeout(() => {
-       intro.style.opacity = "0";
-       setTimeout(() => {
-         intro.style.display = "none";
-       }, 500);
-     }, 6200);
-   }
-
    function switchTab(tabName) {
      document.querySelectorAll('.page-tab').forEach(tab => {
        tab.classList.remove('active-tab');
@@ -1149,10 +1119,16 @@
      const gate = document.getElementById("security-gate");
      const fill = document.getElementById("gate-progress");
      const log = document.getElementById("gate-log");
+     const intro = document.getElementById("intro-overlay");
 
+     // Eğer daha önceden Cloudflare geçilmişse intro hemen başlasın
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
-       runIntroAnimation();
+       // 2 saniye arkaplan durur, ardından intro animasyonları bittikten sonra kapanır
+       setTimeout(() => {
+         intro.style.opacity = "0";
+         setTimeout(() => intro.style.display = "none", 800);
+       }, 6200);
        return;
      }
 
@@ -1189,15 +1165,18 @@
        if (progress >= 100) {
          clearInterval(interval);
          setTimeout(() => {
-           // Cloudflare ekranı ortadan kalkar kalkmaz hemen siyah intro ekranı açılır
            gate.style.opacity = "0";
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
-           
-           runIntroAnimation(); // Siyah ekran hemen yerleşir, 2sn bekler ve yazılar gelir
-           
            setTimeout(() => {
-             gate.style.display = "none";
+             gate.style.display = "none"; // Cloudflare tamamen kalktı
+             // Cloudflare bittikten sonra intro arkaplanı üstünde 2sn durur, yazılar oynar ve kapanır
+             setTimeout(() => {
+               intro.style.opacity = "0";
+               setTimeout(() => {
+                 intro.style.display = "none";
+               }, 800);
+             }, 6200);
            }, 600);
          }, 400);
        }
