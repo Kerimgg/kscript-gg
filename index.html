@@ -68,8 +68,8 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
-   /* Siyah ekran geldikten sonra tam 2 saniye bekler, sonra yazı akmaya başlar */
-   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
+   /* Cloudflare bittikten sonra tam 0.6 saniye siyah ekran bomboş durur, sonra yazı başlar */
+   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
  }
 
  .intro-brand {
@@ -82,7 +82,8 @@
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
    opacity: 0;
    transform: scale(0.85);
-   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 4.2s forwards;
+   /* Birinci yazıdan sonra KSCRIPT.GG gelir */
+   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards;
  }
 
  @keyframes introTextFade {
@@ -824,7 +825,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Baştan beri tam siyah ve aktif, site asla arka planda görünmez) -->
+ <!-- INTRO EKRANI -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1127,7 +1128,7 @@
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => intro.style.display = "none", 800);
-       }, 6200);
+       }, 4800);
        return;
      }
 
@@ -1168,22 +1169,22 @@
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
            
-           // Cloudflare bittiği anda bildirim gösterelim
+           // Cloudflare bitti, bildirim çakıyoruz
            showToast("✓ Cloudflare Verification Passed! Loading Intro...");
 
            setTimeout(() => {
              gate.style.display = "none";
-             // Cloudflare kalktı, intro siyah ekranı arkada 2sn duruyor, yazılar oynuyor ve kapanıyor
+             // Cloudflare kalktıktan sonra intro arka planı (siyah ekran) biraz boşluk bırakıp introyu başlatır
              setTimeout(() => {
                intro.style.opacity = "0";
                setTimeout(() => {
                  intro.style.display = "none";
                }, 800);
-             }, 6200);
+             }, 4800);
            }, 600);
          }, 400);
        }
-     }, 100); // <-- Cloudflare yüklenme hızını buradan ayarlayabilirsin (küçültürsen hızlanır)
+     }, 100);
    });
 
    function showToast(message) {
