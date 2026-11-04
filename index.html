@@ -1144,7 +1144,7 @@
      let logIndex = 0;
 
      const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 8) + 5;
+       progress += Math.floor(Math.random() * 8) + 3;
        if (progress > 100) progress = 100;
 
        fill.style.width = progress + "%";
@@ -1167,6 +1167,10 @@
            gate.style.opacity = "0";
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
+           
+           // Cloudflare bittiği anda bildirim gösterelim
+           showToast("✓ Cloudflare Verification Passed! Loading Intro...");
+
            setTimeout(() => {
              gate.style.display = "none";
              // Cloudflare kalktı, intro siyah ekranı arkada 2sn duruyor, yazılar oynuyor ve kapanıyor
@@ -1179,7 +1183,7 @@
            }, 600);
          }, 400);
        }
-     }, 100);
+     }, 100); // <-- Cloudflare yüklenme hızını buradan ayarlayabilirsin (küçültürsen hızlanır)
    });
 
    function showToast(message) {
@@ -1188,7 +1192,7 @@
      toast.style.display = 'block';
      setTimeout(() => {
        toast.style.display = 'none';
-     }, 3000);
+     }, 3500);
    }
 
    function recordScriptClick(url) {
