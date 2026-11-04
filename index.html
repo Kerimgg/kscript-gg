@@ -41,16 +41,17 @@
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: rgba(2, 2, 4, 0.85); /* Site arkaplanı hafif şeffaf/koyu durur */
+   background-color: #020204;
    z-index: 999998;
    display: flex;
    justify-content: center;
    align-items: center;
    opacity: 0;
    pointer-events: none;
-   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+   transition: opacity 0.5s ease;
  }
 
+ /* Cloudflare biter bitmez bu class eklenir, siyah ekran direkt görünür olur */
  #intro-overlay.active-intro {
    opacity: 1;
    pointer-events: auto;
@@ -76,9 +77,9 @@
    transform: scale(0.9);
  }
 
- /* Arkaplan geldikten hemen sonra (örn: 0.3s sonra) intro yazıları üstüne gelir */
+ /* Siyah ekran geldikten 2 saniye sonra birinci yazı başlar */
  .active-intro .intro-subtitle {
-   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
  }
 
  .intro-brand {
@@ -93,8 +94,9 @@
    transform: scale(0.85);
  }
 
+ /* Birinci yazı biter bitmez (4.2. saniyede) marka ismi gelir */
  .active-intro .intro-brand {
-   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.5s forwards;
+   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 4.2s forwards;
  }
 
  @keyframes introTextFade {
@@ -629,7 +631,7 @@
  .datacleaner-theme-btn:hover {
    background: var(--datacleaner) !important;
    color: #000 !important;
-   box-shadow: 0 0 25px rgba(136, 136, 136, 0.4) !important;
+   box-shadow: 0 0 136, 136, 136, 0.4) !important;
  }
 
  #tab-reviews {
@@ -836,7 +838,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Cloudflare bittikten hemen sonra arkaplan belirir, 2sn sonra intro başlar) -->
+ <!-- INTRO EKRANI (Önce arkaplan görünür, 2sn sonra yazılar akmaya başlar) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1109,16 +1111,16 @@
      const intro = document.getElementById("intro-overlay");
      if (!intro) return;
      
-     // Cloudflare biter bitmez arkaplan görünür olur ve intro hemen üstüne gelmeye başlar
+     // Cloudflare kaybolur kaybolmaz siyah arkaplan ANINDA aktif olur
      intro.classList.add("active-intro");
      
-     // Toplam süre (~4.8 saniye sonra intro katmanı tamamen kaybolur ve site netleşir)
+     // 2 saniye siyah bekler + animasyonlar tamamlanır ve intro yumuşakça kapanır
      setTimeout(() => {
        intro.style.opacity = "0";
        setTimeout(() => {
          intro.style.display = "none";
-       }, 800);
-     }, 4800);
+       }, 500);
+     }, 6200);
    }
 
    function switchTab(tabName) {
@@ -1187,12 +1189,15 @@
        if (progress >= 100) {
          clearInterval(interval);
          setTimeout(() => {
+           // Cloudflare ekranı ortadan kalkar kalkmaz hemen siyah intro ekranı açılır
            gate.style.opacity = "0";
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
+           
+           runIntroAnimation(); // Siyah ekran hemen yerleşir, 2sn bekler ve yazılar gelir
+           
            setTimeout(() => {
              gate.style.display = "none";
-             runIntroAnimation(); // Cloudflare bittikten hemen sonra arkaplan ve intro devreye girer
            }, 600);
          }, 400);
        }
