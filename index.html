@@ -68,8 +68,8 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
-   /* Cloudflare bittikten sonra tam 0.6 saniye siyah ekran bomboş durur, sonra yazı başlar */
-   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+   /* Siyah ekranda tam 0.6 saniye bomboş durur, sonra birinci yazı başlar */
+   animation: introTextFade 2.0s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
  }
 
  .intro-brand {
@@ -82,8 +82,8 @@
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
    opacity: 0;
    transform: scale(0.85);
-   /* Birinci yazıdan sonra KSCRIPT.GG gelir */
-   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards;
+   /* Birinci yazı bittikten hemen sonra KSCRIPT.GG gelir */
+   animation: brandFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) 2.4s forwards;
  }
 
  @keyframes introTextFade {
@@ -1122,13 +1122,24 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // Daha önceden Cloudflare geçilmişse
-     if (sessionStorage.getItem("ks_verified") === "true") {
+     // Ortak intro kapatma fonksiyonu (İster ilk giriş olsun ister F5/yeniden giriş)
+     function startIntroSequence() {
+       showToast("✓ Cloudflare Verification Passed! Loading Intro...");
        gate.style.display = "none";
+       
+       // Intro arka planı siyah şekilde görünür, 4.4 saniye sonra intro biter ve site açılır
        setTimeout(() => {
          intro.style.opacity = "0";
-         setTimeout(() => intro.style.display = "none", 800);
-       }, 4800);
+         setTimeout(() => {
+           intro.style.display = "none";
+         }, 800);
+       }, 4400);
+     }
+
+     // Eğer daha önceden Cloudflare geçilmişse (F5 veya yeniden yükleme)
+     if (sessionStorage.getItem("ks_verified") === "true") {
+       gate.style.display = "none";
+       startIntroSequence();
        return;
      }
 
@@ -1169,18 +1180,8 @@
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
            
-           // Cloudflare bitti, bildirim çakıyoruz
-           showToast("✓ Cloudflare Verification Passed! Loading Intro...");
-
            setTimeout(() => {
-             gate.style.display = "none";
-             // Cloudflare kalktıktan sonra intro arka planı (siyah ekran) biraz boşluk bırakıp introyu başlatır
-             setTimeout(() => {
-               intro.style.opacity = "0";
-               setTimeout(() => {
-                 intro.style.display = "none";
-               }, 800);
-             }, 4800);
+             startIntroSequence();
            }, 600);
          }, 400);
        }
