@@ -43,7 +43,7 @@
    height: 100vh;
    background-color: #020204;
    z-index: 999998;
-   display: flex;
+   display: none; /* Başlangıçta gizli, Cloudflare bitince tetiklenecek */
    justify-content: center;
    align-items: center;
    opacity: 1;
@@ -824,7 +824,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI -->
+ <!-- INTRO EKRANI (Cloudflare bittikten sonra açılacak) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1097,7 +1097,11 @@
      const intro = document.getElementById("intro-overlay");
      if (!intro) return;
      
-     // Animasyon süresi (toplam ~3.8 saniye)
+     // Cloudflare bittiği anda intro görünür olur ve animasyonu baştan başlar
+     intro.style.display = "flex";
+     intro.style.opacity = "1";
+     
+     // Toplam intro süresi (3.8 saniye sonra yumuşakça kaybolur)
      setTimeout(() => {
        intro.style.opacity = "0";
        setTimeout(() => {
@@ -1177,7 +1181,7 @@
            sessionStorage.setItem("ks_verified", "true");
            setTimeout(() => {
              gate.style.display = "none";
-             runIntroAnimation();
+             runIntroAnimation(); // Cloudflare tamamen kalktıktan sonra intro tetikleniyor
            }, 600);
          }, 400);
        }
