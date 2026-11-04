@@ -34,6 +34,72 @@
     linear-gradient(to bottom, #020204 0%, #050508 100%);
  }
 
+ /* --- INTRO OVERLAY STYLES --- */
+ #intro-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background-color: #020204;
+   z-index: 999998;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   opacity: 1;
+   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+   pointer-events: auto;
+ }
+
+ .intro-content {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   padding: 0 20px;
+   text-align: center;
+ }
+
+ .intro-subtitle {
+   color: #e2e8f0;
+   font-family: 'Orbitron', sans-serif;
+   font-size: clamp(1.2rem, 3vw, 2rem);
+   letter-spacing: 4px;
+   text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
+   opacity: 0;
+   transform: scale(0.9);
+   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+ }
+
+ .intro-brand {
+   position: absolute;
+   font-family: 'Orbitron', sans-serif;
+   font-size: clamp(2rem, 5vw, 3.5rem);
+   font-weight: 900;
+   letter-spacing: 8px;
+   color: #fff;
+   text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
+   opacity: 0;
+   transform: scale(0.85);
+   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
+ }
+
+ @keyframes introTextFade {
+   0% { opacity: 0; transform: scale(0.9); filter: blur(10px); }
+   30% { opacity: 1; transform: scale(1); filter: blur(0px); }
+   75% { opacity: 1; transform: scale(1); filter: blur(0px); }
+   100% { opacity: 0; transform: scale(1.05); filter: blur(10px); }
+ }
+
+ @keyframes brandFade {
+   0% { opacity: 0; transform: scale(0.85); filter: blur(8px); }
+   30% { opacity: 1; transform: scale(1); filter: blur(0px); }
+   80% { opacity: 1; transform: scale(1); filter: blur(0px); }
+   100% { opacity: 0; transform: scale(1.1); filter: blur(5px); }
+ }
+ /* ---------------------------- */
+
  #security-gate {
    position: fixed;
    top: 0; left: 0; width: 100%; height: 100%;
@@ -398,7 +464,6 @@
    flex-direction: column;
  }
 
- /* YENİ GÖRSEL DÜZENLEMESİ: Görseller daha büyük ve tam oturacak şekilde ayarlandı */
  .script-img {
    width: 100%;
    height: 220px;
@@ -759,6 +824,14 @@
 </head>
 <body>
 
+ <!-- INTRO EKRANI -->
+ <div id="intro-overlay">
+   <div class="intro-content">
+     <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
+     <div class="intro-brand">KSCRIPT.GG</div>
+   </div>
+ </div>
+
  <div id="security-gate">
    <div class="gate-container">
      <div class="cloudflare-shield">
@@ -1020,6 +1093,19 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
+   function runIntroAnimation() {
+     const intro = document.getElementById("intro-overlay");
+     if (!intro) return;
+     
+     // Animasyon süresi (toplam ~3.8 saniye)
+     setTimeout(() => {
+       intro.style.opacity = "0";
+       setTimeout(() => {
+         intro.style.display = "none";
+       }, 800);
+     }, 3800);
+   }
+
    function switchTab(tabName) {
      document.querySelectorAll('.page-tab').forEach(tab => {
        tab.classList.remove('active-tab');
@@ -1049,6 +1135,7 @@
 
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
+       runIntroAnimation();
        return;
      }
 
@@ -1090,6 +1177,7 @@
            sessionStorage.setItem("ks_verified", "true");
            setTimeout(() => {
              gate.style.display = "none";
+             runIntroAnimation();
            }, 600);
          }, 400);
        }
