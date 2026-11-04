@@ -41,12 +41,12 @@
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: #020204;
+   background-color: rgba(2, 2, 4, 0.85); /* Site arkaplanı hafif şeffaf/koyu durur */
    z-index: 999998;
-   display: flex; /* Başlangıçtan beri aktif ama arkada bekliyor */
+   display: flex;
    justify-content: center;
    align-items: center;
-   opacity: 0; /* Başta görünmez */
+   opacity: 0;
    pointer-events: none;
    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
  }
@@ -76,8 +76,9 @@
    transform: scale(0.9);
  }
 
+ /* Arkaplan geldikten hemen sonra (örn: 0.3s sonra) intro yazıları üstüne gelir */
  .active-intro .intro-subtitle {
-   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+   animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
  }
 
  .intro-brand {
@@ -93,7 +94,7 @@
  }
 
  .active-intro .intro-brand {
-   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
+   animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.5s forwards;
  }
 
  @keyframes introTextFade {
@@ -835,7 +836,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Cloudflare bittiği anda anında devreye girer) -->
+ <!-- INTRO EKRANI (Cloudflare bittikten hemen sonra arkaplan belirir, 2sn sonra intro başlar) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1108,16 +1109,16 @@
      const intro = document.getElementById("intro-overlay");
      if (!intro) return;
      
-     // Cloudflare biter bitmez anında intro katmanını görünür yapıyoruz (gecikme yok)
+     // Cloudflare biter bitmez arkaplan görünür olur ve intro hemen üstüne gelmeye başlar
      intro.classList.add("active-intro");
      
-     // Toplam intro süresi (3.8 saniye sonra kaybolur)
+     // Toplam süre (~4.8 saniye sonra intro katmanı tamamen kaybolur ve site netleşir)
      setTimeout(() => {
        intro.style.opacity = "0";
        setTimeout(() => {
          intro.style.display = "none";
        }, 800);
-     }, 3800);
+     }, 4800);
    }
 
    function switchTab(tabName) {
@@ -1191,7 +1192,7 @@
            sessionStorage.setItem("ks_verified", "true");
            setTimeout(() => {
              gate.style.display = "none";
-             runIntroAnimation(); // Anında sıfır gecikmeyle başlar
+             runIntroAnimation(); // Cloudflare bittikten hemen sonra arkaplan ve intro devreye girer
            }, 600);
          }, 400);
        }
