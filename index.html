@@ -41,12 +41,12 @@
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: #020204; /* Tam siyah/koyu site arka planı */
+   background-color: #020204;
    z-index: 999998;
    display: flex;
    justify-content: center;
    align-items: center;
-   opacity: 1; /* Baştan beri tam opak, siteyi gizler */
+   opacity: 1;
    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
  }
 
@@ -68,7 +68,7 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
-   /* Cloudflare bittikten sonra tam 2 saniye arkaplan durur, sonra yazı başlar */
+   /* Siyah ekran geldikten sonra tam 2 saniye bekler, sonra yazı akmaya başlar */
    animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
  }
 
@@ -1121,10 +1121,9 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // Eğer daha önceden Cloudflare geçilmişse intro hemen başlasın
+     // Daha önceden Cloudflare geçilmişse
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
-       // 2 saniye arkaplan durur, ardından intro animasyonları bittikten sonra kapanır
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => intro.style.display = "none", 800);
@@ -1169,8 +1168,8 @@
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
            setTimeout(() => {
-             gate.style.display = "none"; // Cloudflare tamamen kalktı
-             // Cloudflare bittikten sonra intro arkaplanı üstünde 2sn durur, yazılar oynar ve kapanır
+             gate.style.display = "none";
+             // Cloudflare kalktı, intro siyah ekranı arkada 2sn duruyor, yazılar oynuyor ve kapanıyor
              setTimeout(() => {
                intro.style.opacity = "0";
                setTimeout(() => {
