@@ -43,11 +43,16 @@
    height: 100vh;
    background-color: #020204;
    z-index: 999998;
-   display: none; /* Başlangıçta gizli, Cloudflare bitince tetiklenecek */
+   display: flex; /* Başlangıçtan beri aktif ama arkada bekliyor */
    justify-content: center;
    align-items: center;
-   opacity: 1;
+   opacity: 0; /* Başta görünmez */
+   pointer-events: none;
    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+
+ #intro-overlay.active-intro {
+   opacity: 1;
    pointer-events: auto;
  }
 
@@ -69,6 +74,9 @@
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
    opacity: 0;
    transform: scale(0.9);
+ }
+
+ .active-intro .intro-subtitle {
    animation: introTextFade 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
  }
 
@@ -82,6 +90,9 @@
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
    opacity: 0;
    transform: scale(0.85);
+ }
+
+ .active-intro .intro-brand {
    animation: brandFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
  }
 
@@ -824,7 +835,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Cloudflare bittikten sonra açılacak) -->
+ <!-- INTRO EKRANI (Cloudflare bittiği anda anında devreye girer) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1097,11 +1108,10 @@
      const intro = document.getElementById("intro-overlay");
      if (!intro) return;
      
-     // Cloudflare bittiği anda intro görünür olur ve animasyonu baştan başlar
-     intro.style.display = "flex";
-     intro.style.opacity = "1";
+     // Cloudflare biter bitmez anında intro katmanını görünür yapıyoruz (gecikme yok)
+     intro.classList.add("active-intro");
      
-     // Toplam intro süresi (3.8 saniye sonra yumuşakça kaybolur)
+     // Toplam intro süresi (3.8 saniye sonra kaybolur)
      setTimeout(() => {
        intro.style.opacity = "0";
        setTimeout(() => {
@@ -1181,7 +1191,7 @@
            sessionStorage.setItem("ks_verified", "true");
            setTimeout(() => {
              gate.style.display = "none";
-             runIntroAnimation(); // Cloudflare tamamen kalktıktan sonra intro tetikleniyor
+             runIntroAnimation(); // Anında sıfır gecikmeyle başlar
            }, 600);
          }, 400);
        }
