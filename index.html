@@ -47,7 +47,7 @@
    justify-content: center;
    align-items: center;
    opacity: 1;
-   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
  }
 
  .intro-content {
@@ -69,7 +69,7 @@
    opacity: 0;
    transform: scale(0.9);
    /* BAŞTA BEKLEME: Siyah ekran tam 0.6 saniye bomboş durur, sonra 1. yazı başlar */
-   animation: introTextFade 2.0s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+   animation: introTextFade 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
  }
 
  .intro-brand {
@@ -83,7 +83,7 @@
    opacity: 0;
    transform: scale(0.85);
    /* 1. yazı biter bitmez KSCRIPT.GG gelir */
-   animation: brandFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) 2.4s forwards;
+   animation: brandFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) 2.3s forwards;
  }
 
  @keyframes introTextFade {
@@ -1122,18 +1122,18 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // Ortak intro başlatıcı (İlk giriş ve F5 yenilemede ortak çalışır, fazladan bekleme yapmaz)
+     // Ortak intro başlatıcı
      function startIntroSequence() {
        showToast("✓ Cloudflare Verification Passed! Loading Intro...");
        gate.style.display = "none";
        
-       // Toplam intro süresi (~4.4 saniye sonra intro tamamen kaybolur ve site açılır)
+       // Yazılar bittiği an (tam 3.7 saniye sonra) intro arka planı kaybolur ve site açılır
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => {
            intro.style.display = "none";
-         }, 800);
-       }, 4400);
+         }, 600);
+       }, 3700);
      }
 
      // Eğer Cloudflare daha önceden geçilmişse (F5 atıldığında)
@@ -1182,7 +1182,7 @@
            
            setTimeout(() => {
              startIntroSequence();
-           }, 600);
+           }, 400);
          }, 400);
        }
      }, 100);
