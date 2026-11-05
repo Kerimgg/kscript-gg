@@ -65,12 +65,13 @@
    transform: scale(0.9);
  }
 
+ /* Intronun başında tam 0.8 saniye sadece siyah arkaplan bekler, sonra yazılar başlar */
  #intro-overlay.play-intro .intro-subtitle {
-   animation: introTextFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+   animation: introTextFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
  }
 
  #intro-overlay.play-intro .intro-brand {
-   animation: brandFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
+   animation: brandFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards;
  }
 
  .intro-subtitle {
@@ -1133,12 +1134,13 @@
        
        intro.classList.add("play-intro");
 
+       // Toplam intro süresi +0.8 sn eklendiği için (3200ms -> 4000ms) uzatıldı
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => {
            intro.style.display = "none";
          }, 500);
-       }, 3200);
+       }, 4000);
      }
 
      if (sessionStorage.getItem("ks_verified") === "true") {
@@ -1156,7 +1158,6 @@
      let progress = 0;
      let logIndex = 0;
 
-     // DDoS ekranının süresi belirgin şekilde uzatıldı (İdeal ve net süre)
      const interval = setInterval(() => {
        progress += Math.floor(Math.random() * 3) + 2; 
        if (progress > 100) progress = 100;
