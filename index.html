@@ -60,16 +60,27 @@
    text-align: center;
  }
 
+ /* Başlangıçta animasyonlar kapalı (DDoS'a bakarken arka planda oynamasın diye) */
+ .intro-subtitle, .intro-brand {
+   opacity: 0;
+   transform: scale(0.9);
+ }
+
+ /* JavaScript tetikleyince intro animasyonları sırayla başlar */
+ #intro-overlay.play-intro .intro-subtitle {
+   animation: introTextFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+ }
+
+ #intro-overlay.play-intro .intro-brand {
+   animation: brandFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
+ }
+
  .intro-subtitle {
    color: #e2e8f0;
    font-family: 'Orbitron', sans-serif;
    font-size: clamp(1.2rem, 3vw, 2rem);
    letter-spacing: 4px;
    text-shadow: 0 0 20px rgba(0, 242, 255, 0.6), 0 0 40px rgba(0, 242, 255, 0.2);
-   opacity: 0;
-   transform: scale(0.9);
-   /* DDoS biter bitmez minik bir siyah ekran duraksaması ve yazı başlar */
-   animation: introTextFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
  }
 
  .intro-brand {
@@ -80,10 +91,6 @@
    letter-spacing: 8px;
    color: #fff;
    text-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 50px rgba(139, 92, 246, 0.5);
-   opacity: 0;
-   transform: scale(0.85);
-   /* 1. yazı biter bitmez KSCRIPT.GG gelir */
-   animation: brandFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.6s forwards;
  }
 
  @keyframes introTextFade {
@@ -825,7 +832,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI -->
+ <!-- INTRO EKRANI (Başlangıçta tamamen düz siyah ve durgun, DDoS bitmeden asla oynamaz) -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1122,11 +1129,15 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // Cloudflare bittikten sonra çalışan intro fonksiyonu (Toplam süre ~3.2 saniye)
-     function startIntroSequence() {
+     // DDoS bittiği SÂNİYE çağrılan fonksiyon (Sadece burada intro başlar)
+     function triggerIntro() {
        showToast("✓ Cloudflare Verification Passed! Loading Intro...");
        gate.style.display = "none";
        
+       // Siyah intro ekranına animasyonu tetikleyecek class'ı ekliyoruz
+       intro.classList.add("play-intro");
+
+       // Toplam intro süresi bitince intro tamamen kaybolur ve site açılır (~3.2 saniye)
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => {
@@ -1135,9 +1146,10 @@
        }, 3200);
      }
 
+     // Daha önceden doğrulandıysa (F5 atıldıysa)
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
-       startIntroSequence();
+       triggerIntro();
        return;
      }
 
@@ -1150,15 +1162,15 @@
      let progress = 0;
      let logIndex = 0;
 
-     // DDoS çubuğu çok daha hızlı dolsun diye artış miktarını büyüttük ve süreyi kısalttık
+     // DDoS çubuğu hızlıca akar
      const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 15) + 10; // Hızlı artış
+       progress += Math.floor(Math.random() * 15) + 12;
        if (progress > 100) progress = 100;
 
        fill.style.width = progress + "%";
 
-       if (progress >= 40 && logIndex === 0) { logIndex = 1; }
-       if (progress >= 80 && logIndex === 1) { logIndex = 2; }
+       if (progress >= 45 && logIndex === 0) { logIndex = 1; }
+       if (progress >= 85 && logIndex === 1) { logIndex = 2; }
 
        if (logIndex === 2) {
          log.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${logs[logIndex]}`;
@@ -1173,13 +1185,13 @@
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
            
-           // DDoS ekranı bittiği an Beklemeden Saniyesinde Introya Geçiş
+           // DDoS barı %100 doldu, ekran kapandı ve SÂNİYESİNDE intro başladı
            setTimeout(() => {
-             startIntroSequence();
-           }, 200);
+             triggerIntro();
+           }, 150);
          }, 200);
        }
-     }, 60); // Hızlandırılmış interval (Daha çabuk bitiyor)
+     }, 50);
    });
 
    function showToast(message) {
