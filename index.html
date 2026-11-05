@@ -60,13 +60,11 @@
    text-align: center;
  }
 
- /* Başlangıçta animasyonlar kapalı (DDoS'a bakarken arka planda oynamasın diye) */
  .intro-subtitle, .intro-brand {
    opacity: 0;
    transform: scale(0.9);
  }
 
- /* JavaScript tetikleyince intro animasyonları sırayla başlar */
  #intro-overlay.play-intro .intro-subtitle {
    animation: introTextFade 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
  }
@@ -832,7 +830,7 @@
 </head>
 <body>
 
- <!-- INTRO EKRANI (Başlangıçta tamamen düz siyah ve durgun, DDoS bitmeden asla oynamaz) -->
+ <!-- INTRO EKRANI -->
  <div id="intro-overlay">
    <div class="intro-content">
      <div class="intro-subtitle">Scripts/Executor/Spoofer Whatever You Want.</div>
@@ -1129,15 +1127,12 @@
      const log = document.getElementById("gate-log");
      const intro = document.getElementById("intro-overlay");
 
-     // DDoS bittiği SÂNİYE çağrılan fonksiyon (Sadece burada intro başlar)
      function triggerIntro() {
        showToast("✓ Cloudflare Verification Passed! Loading Intro...");
        gate.style.display = "none";
        
-       // Siyah intro ekranına animasyonu tetikleyecek class'ı ekliyoruz
        intro.classList.add("play-intro");
 
-       // Toplam intro süresi bitince intro tamamen kaybolur ve site açılır (~3.2 saniye)
        setTimeout(() => {
          intro.style.opacity = "0";
          setTimeout(() => {
@@ -1146,7 +1141,6 @@
        }, 3200);
      }
 
-     // Daha önceden doğrulandıysa (F5 atıldıysa)
      if (sessionStorage.getItem("ks_verified") === "true") {
        gate.style.display = "none";
        triggerIntro();
@@ -1162,15 +1156,15 @@
      let progress = 0;
      let logIndex = 0;
 
-     // DDoS çubuğu hızlıca akar
+     // DDoS ekranının süresi yaklaşık 1 saniye uzatıldı (Daha dengeli ve ideal akış)
      const interval = setInterval(() => {
-       progress += Math.floor(Math.random() * 15) + 12;
+       progress += Math.floor(Math.random() * 5) + 3; 
        if (progress > 100) progress = 100;
 
        fill.style.width = progress + "%";
 
-       if (progress >= 45 && logIndex === 0) { logIndex = 1; }
-       if (progress >= 85 && logIndex === 1) { logIndex = 2; }
+       if (progress >= 35 && logIndex === 0) { logIndex = 1; }
+       if (progress >= 75 && logIndex === 1) { logIndex = 2; }
 
        if (logIndex === 2) {
          log.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${logs[logIndex]}`;
@@ -1185,7 +1179,6 @@
            gate.style.transform = "scale(1.05)";
            sessionStorage.setItem("ks_verified", "true");
            
-           // DDoS barı %100 doldu, ekran kapandı ve SÂNİYESİNDE intro başladı
            setTimeout(() => {
              triggerIntro();
            }, 150);
