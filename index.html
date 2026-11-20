@@ -445,6 +445,51 @@
    padding: 30px 20px;
  }
 
+ /* --- SCRIPT ARAMA --- */
+ .search-wrap {
+   position: relative;
+   max-width: 500px;
+   width: 100%;
+   margin: 20px auto 0;
+ }
+ .search-wrap i {
+   position: absolute;
+   left: 16px; top: 50%;
+   transform: translateY(-50%);
+   color: var(--primary);
+   font-size: 0.85rem;
+   pointer-events: none;
+ }
+ #script-search {
+   width: 100%;
+   background: rgba(5, 5, 10, 0.7);
+   border: 1px solid var(--border);
+   border-radius: 4px;
+   padding: 12px 16px 12px 42px;
+   color: #fff;
+   font-family: var(--font-code);
+   font-size: 0.8rem;
+   letter-spacing: 1px;
+   backdrop-filter: blur(10px);
+   transition: 0.3s;
+ }
+ #script-search:focus {
+   outline: none;
+   border-color: var(--primary);
+   box-shadow: 0 0 15px rgba(0, 242, 255, 0.12);
+ }
+ #script-search::placeholder { color: #475569; }
+ #no-script-result {
+   display: none;
+   width: 100%;
+   text-align: center;
+   color: #475569;
+   font-family: var(--font-code);
+   font-size: 0.8rem;
+   padding: 30px 0;
+ }
+ /* -------------------- */
+
  #menu-list {
    display: flex;
    flex-wrap: wrap;
@@ -924,6 +969,12 @@
  <div id="tab-scripts" class="page-tab no-scrollbar">
    <h2 style="font-family:'Orbitron'; color:#fff; margin-top: 10px; letter-spacing: 8px; text-align: center; width: 100%;">SCRIPTS</h2>
    <p style="color: #64748b; font-family: 'Fira Code', monospace; font-size: 0.75rem; letter-spacing: 2px; text-align: center; width: 100%; margin-top: 8px;">Choose What You Want.</p>
+
+   <!-- ARAMA KUTUSU -->
+   <div class="search-wrap">
+     <i class="fa-solid fa-magnifying-glass"></i>
+     <input type="text" id="script-search" placeholder="Search scripts..." autocomplete="off">
+   </div>
    
    <div id="menu-list">
      <!-- Universal Script -->
@@ -1060,6 +1111,9 @@
          <p>It Shows What You Did</p>
        </div>
      </div>
+
+     <!-- Sonuç yok mesajı -->
+     <div id="no-script-result">No script found.</div>
    </div>
  </div>
  
@@ -1142,6 +1196,71 @@
  <div id="toast" class="toast-notification"></div>
 
  <script>
+   // ---- SCRIPT ARAMA ----
+   function normalizeText(s) {
+     return (s || '')
+       .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i')
+       .toLowerCase()
+       .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+   }
+
+   (function initScriptSearch() {
+     const list = document.getElementById('menu-list');
+     const input = document.getElementById('script-search');
+     const emptyMsg = document.getElementById('no-script-result');
+     if (!list || !input) return;
+
+     const cards = Array.from(list.querySelectorAll('.script-card')).map((el, i) => ({
+       el,
+       index: i,
+       title: normalizeText(el.querySelector('h3')?.textContent),
+       desc: normalizeText(el.querySelector('p')?.textContent)
+     }));
+
+     function scoreCard(card, tokens) {
+       let total = 0;
+       for (const t of tokens) {
+         let s = 0;
+         const titleWords = card.title.split(/\s+/);
+         if (card.title.startsWith(t)) s = 100;
+         else if (titleWords.some(w => w.startsWith(t))) s = 80;
+         else if (card.title.includes(t)) s = 60;
+         else if (card.desc.split(/\s+/).some(w => w.startsWith(t))) s = 35;
+         else if (card.desc.includes(t)) s = 25;
+         if (s === 0) return 0; // her kelime eşleşmeli
+         total += s;
+       }
+       return total;
+     }
+
+     function runSearch() {
+       const q = normalizeText(input.value).trim();
+       const tokens = q.split(/\s+/).filter(Boolean);
+
+       let results;
+       if (tokens.length === 0) {
+         results = cards.map(c => ({ c, score: 1 }));
+       } else {
+         results = cards
+           .map(c => ({ c, score: scoreCard(c, tokens) }))
+           .filter(r => r.score > 0);
+       }
+
+       results.sort((a, b) => b.score - a.score || a.c.index - b.c.index);
+
+       cards.forEach(c => { c.el.style.display = 'none'; });
+       results.forEach(r => {
+         r.c.el.style.display = '';
+         list.insertBefore(r.c.el, emptyMsg); // sıralamayı uygula
+       });
+
+       emptyMsg.style.display = results.length === 0 ? 'block' : 'none';
+     }
+
+     input.addEventListener('input', runSearch);
+   })();
+   // ----------------------
+
    function switchTab(tabName) {
      document.querySelectorAll('.page-tab').forEach(tab => {
        tab.classList.remove('active-tab');
